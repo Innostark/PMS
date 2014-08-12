@@ -34,10 +34,12 @@ namespace IdentitySample
                 .Include("~/Scripts/respond.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                 "~/Scripts/bootstrap.js"));
+                 "~/Scripts/bootstrap.js").Include(
+                 "~/Scripts/bootstrap-datepicker.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css"));
+                      "~/Content/bootstrap.css").Include(
+                      "~/Content/datepicker.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-rtl").Include(
            "~/Scripts/bootstrap-rtl.js"));

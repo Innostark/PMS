@@ -46,7 +46,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Building.BuiltDate, "Built Date", new { @class = "col-md-3 control-label-row" })
-                                @Html.TextBoxFor(model => model.Building.BuiltDate, new { @class = "col-md-9 form-control date-picker mandatory", @placeholder = "dd/mm/yyyy", @id = "Built Date" })
+                                @Html.TextBoxFor(model => model.Building.BuiltDate, new { @class = "col-md-9 form-control datepicker mandatory", @placeholder = "mm/dd/yyyy", @id = "Built Date" })
                             </div>
                         </div>
                     </div>
@@ -81,3 +81,12 @@
     </div>
 }
 <script type="text/javascript" src="~/Scripts/App/ValidateFields.js"></script> 
+<script type="text/javascript" >
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            autoclose: true,
+            startDate: '-3d'
+        });
+    });
+</script> 

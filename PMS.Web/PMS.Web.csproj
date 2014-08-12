@@ -284,6 +284,7 @@
     <Content Include="Content\CSS\layout.css" />
     <Content Include="Content\CSS\PagedList.css" />
     <Content Include="Content\CSS\spinner.gif" />
+    <Content Include="Content\datepicker.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\arrow-down.png" />
     <Content Include="Content\Images\arrow-up.png" />
@@ -717,6 +718,7 @@
     <Content Include="Scripts\App\architecture.js" />
     <Content Include="Scripts\App\requireConfig.js" />
     <Content Include="Scripts\App\ValidateFields.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-rtl.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
