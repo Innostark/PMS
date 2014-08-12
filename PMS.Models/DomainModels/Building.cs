@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PMS.Models.DomainModels
 {
@@ -17,5 +19,6 @@ namespace PMS.Models.DomainModels
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public virtual IdentityUser User { get; set; }
     }
 }
