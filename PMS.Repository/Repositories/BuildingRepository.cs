@@ -2,9 +2,7 @@
 using System.Linq;
 using Microsoft.Practices.Unity;
 using PMS.Interfaces.Repository;
-using PMS.Models.Common;
 using PMS.Models.DomainModels;
-using PMS.Models.RequestModels;
 using PMS.Models.ResponseModels;
 using PMS.Repository.BaseRepository;
 
@@ -41,6 +39,15 @@ namespace PMS.Repository.Repositories
                        Buildings = DbSet.ToList(),
                        TotalCount = DbSet.ToList().Count
                    };
+        }
+        public Building GetBuildingByName(string name, int id)
+        {
+            return DbSet.FirstOrDefault(building => building.Name == name && building.BuildingId == id);
+        }
+
+        public Building FindBuildingById(int buildingId)
+        {
+            return DbSet.FirstOrDefault(building => building.BuildingId == buildingId);
         }
     }
 }

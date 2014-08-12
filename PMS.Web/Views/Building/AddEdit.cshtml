@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PMS.Web.ViewModels.Buildings.BuildingViewModel
+@{
     ViewBag.Title = "Add/Edit";
 }
 @using (Html.BeginForm())
@@ -13,83 +14,70 @@
                         <h2><span class="caption-subject font-green-haze bold uppercase">Building Add/Edit</span></h2>
                     </div>
                     <div class="col-md-offset-10 col-md-2">
-                        <button type="submit" class="btn green">Submit</button>
+                        <button type="submit" onclick="return (ValidateFields())" class=" btn green">Submit</button>
                         <button type="button" class="btn default">Cancel</button>
                     </div>
                     <h3 class="form-section">Basic Info</h3>
+                    @Html.HiddenFor(model => model.Building.BuildingId)
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                @*@Html.LabelFor(model => model.CategoryId, new { @class = "control-label col-md-2" })*@
-                                <label class="col-md-3 control-label-row">First Name</label>
-                                <input type="text" id="firstName" class="col-md-9 form-control" placeholder="Asad">
+                                @Html.LabelFor(model => model.Building.Name, new { @class = "col-md-3 control-label-row" })
+                                @Html.TextBoxFor(model => model.Building.Name, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Name", @id = "Name" })
                                 <span class="help-block">
-                                    @*This is inline help*@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-3 control-label-row">Built Date</label>
-                                <input type="text" id="builtDate" class="col-md-9 form-control" placeholder="dd/mm/yyyy">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label-row">No. of Floors</label>
-                                <input type="text" id="builtDate" class="col-md-9 form-control" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                @*@Html.LabelFor(model => model.CategoryId, new { @class = "control-label col-md-2" })*@
-                                <label class="col-md-3 control-label-row">No. Of Elevators</label>
-                                <input type="text" id="noOfElevators" class="col-md-9 form-control" placeholder="">
-                                <span class="help-block">
-                                    @*This is inline help*@
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label-row">Comments</label>
-                                <textarea id="comments" class="col-md-9 form-control" placeholder=""></textarea>
+                                @Html.LabelFor(model => model.Building.PhoneNumber, "Phone Number", new { @class = "col-md-3 control-label-row" })
+                                @Html.TextBoxFor(model => model.Building.PhoneNumber, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Phone Number", @id = "Phone Number" })
                             </div>
                         </div>
                         
                     </div>
-                    <h3 class="form-section">Extended Information</h3>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                @*@Html.LabelFor(model => model.CategoryId, new { @class = "control-label col-md-2" })*@
-                                <label class="col-md-3 control-label-row">Name</label>
-                                <input type="text" id="name" class="col-md-9 form-control" placeholder="">
-                                <span class="help-block">
-                                    @*This is inline help*@
-                                </span>
+                                @Html.LabelFor(model => model.Building.Email, "Email", new { @class = "col-md-3 control-label-row" })
+                                @Html.TextBoxFor(model => model.Building.Email, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Email", @id = "Email" })
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-3 control-label-row">Phone No.</label>
-                                <input type="text" id="phoneNumber" class="col-md-9 form-control" placeholder="">
+                                @Html.LabelFor(model => model.Building.BuiltDate, "Built Date", new { @class = "col-md-3 control-label-row" })
+                                @Html.TextBoxFor(model => model.Building.BuiltDate, new { @class = "col-md-9 form-control date-picker mandatory", @placeholder = "dd/mm/yyyy", @id = "Built Date" })
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label-row">Email</label>
-                                <input type="text" id="email" class="col-md-9 form-control" placeholder="">
-                            </div>
-                        </div>
-
                     </div>
-                </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Building.NoOfFloors, "No of Floors", new { @class = "col-md-3 control-label-row" })
+                                    @Html.TextBoxFor(model => model.Building.NoOfFloors, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Number Of Floors", @id = "No of Floors" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Building.NoOfElevators, "No of Elevators", new { @class = "col-md-3 control-label-row" })
+                                    @Html.TextBoxFor(model => model.Building.NoOfElevators, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Number Of Elevators", @id = "No of Elevators" })
+                                    <span class="help-block">
+                                    
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Building.Comment, "Comments", new { @class = " col-md-3 control-label-row" })
+                                    @Html.TextAreaFor(model => model.Building.Comment, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Comments", @id = "Comments" })
+                                </div>
+                            </div>
+                        </div>                   
                 </div>
             </div>
         </div> 
- 
-
-        }
+    </div>
+}
+<script type="text/javascript" src="~/Scripts/App/ValidateFields.js"></script> 

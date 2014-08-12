@@ -716,6 +716,7 @@
     <Content Include="Areas\Common\Views\Shared\_Pager.cshtml" />
     <Content Include="Scripts\App\architecture.js" />
     <Content Include="Scripts\App\requireConfig.js" />
+    <Content Include="Scripts\App\ValidateFields.js" />
     <Content Include="Scripts\bootstrap-rtl.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

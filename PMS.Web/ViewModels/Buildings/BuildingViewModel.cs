@@ -6,10 +6,10 @@ namespace PMS.Web.ViewModels.Buildings
 {
     public class BuildingViewModel
     {
-        //To Show List On ClientSide
+        //Show List On ClientSide
         public IList BuildingsList { get; set; }
 
-        //To Take Data For Edit
+        //Take Data For Edit
         public Building Building { get; set; }
     }
 }

@@ -61,34 +61,12 @@ namespace PMS.Implementation.Services
 
         public bool Update(Product product)
         {
-
-            //Product productDbVersion =  productRepository.Find(product.Id);
-
-            //if (productDbVersion != null)
-            //{
-            //    //productDbVersion.Category =
-            //    //    categoryRepository.GetAllCategories().Where(x => x.Id == product.CategoryId).FirstOrDefault();
-            //    using (TransactionScope transaction = new TransactionScope())
-            //    {
-            //        productDbVersion.Category.Name = "KHurram U" + DateTime.Now.Minute;
-            //        productDbVersion.Name = product.Name;
-
-            //        //Thread.Sleep(20*1000);
-            //        productRepository.SaveChanges();
-            //        throw new Exception();
-
-            //        transaction.Complete();
-
-            //    }
-            //}
-
             if (ValidateProduct(product))
             {
                 productRepository.Update(product);
                 productRepository.SaveChanges();
                 return true;
             }
-
             return false;
         }
 
