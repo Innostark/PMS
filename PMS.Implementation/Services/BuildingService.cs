@@ -42,8 +42,10 @@ namespace PMS.Implementation.Services
 
             return false;
         }
-        public void DeleteBuilding(Building product)
+        public void DeleteBuilding(Building building)
         {
+            buildingRepository.Delete(building);
+            buildingRepository.SaveChanges();
         }
 
         public Building FindBuilding(int? buildingId)

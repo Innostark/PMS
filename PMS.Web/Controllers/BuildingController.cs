@@ -19,9 +19,13 @@ namespace PMS.Web.Controllers
             this.buildingService = buildingService;
         }
         // GET: Building
-        
 
-        public BuildingViewModel GetAll()
+        public ActionResult Index()
+        {
+            var buildingViewModel = GetAll();
+            return View(buildingViewModel);
+        }
+        private BuildingViewModel GetAll()
         {
             var buildings = buildingService.GetAllBuildings();
             return new BuildingViewModel
@@ -67,7 +71,14 @@ namespace PMS.Web.Controllers
                         messageViewModel.IsSaved = true;
                     }
                 }
-            return RedirectToAction("GetAll");
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int? buildingId)
+        {
+            var buildingToBeDeleted = buildingService.FindBuilding(buildingId);
+            buildingService.DeleteBuilding(buildingToBeDeleted);
+            return RedirectToAction("Index");
         }
 
     }

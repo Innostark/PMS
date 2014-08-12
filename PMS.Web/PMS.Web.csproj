@@ -298,6 +298,7 @@
     <Content Include="Content\Images\photo1.jpg" />
     <Content Include="Content\Images\spinner.gif" />
     <Content Include="Content\jquery-ui-1.11.0.min.css" />
+    <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -751,6 +752,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -837,6 +839,7 @@
     <Content Include="Views\Building\AddEdit.cshtml" />
     <Content Include="Views\Apartment\AddEdit.cshtml" />
     <Content Include="Views\LandLord\AddEdit.cshtml" />
+    <Content Include="Views\Building\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />

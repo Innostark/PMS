@@ -1,0 +1,58 @@
+﻿@model PMS.Web.ViewModels.Buildings.BuildingViewModel
+@{
+    ViewBag.Title = "Index";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="page-container">
+        <a class="btn btn-success col-md-offset-10 col-md-2" href="AddEdit">Create New</a>
+        <table id="buildingTable" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Built Date</th>
+                    <th>No Of Floors</th>
+                    <th>No Of Elevators</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            @*<tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Age</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                </tr>
+            </tfoot>*@
+            <tbody>
+                @foreach (var item in Model.BuildingsList)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.BuiltDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NoOfFloors)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NoOfElevators)</td>
+                        @*<td>@Html.DisplayFor(modelItem => item.BuildingId)</td>*@
+                        <td>@Html.ActionLink("Edit", "AddEdit", new { id = item.BuildingId }) |</td>
+                        <td>@Html.ActionLink("Delete", "Delete", new { buildingId = item.BuildingId })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#buildingTable').dataTable();
+    });
+</script>

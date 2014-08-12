@@ -19,6 +19,6 @@ namespace PMS.Models.DomainModels
         public string UpdatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public virtual IdentityUser User { get; set; }
+        //public virtual IdentityUser User { get; set; }
     }
 }

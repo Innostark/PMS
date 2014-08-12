@@ -31,7 +31,8 @@ namespace IdentitySample
                 .Include("~/Scripts/toastr.js")
                 .Include("~/Scripts/require.js")
                 .Include("~/Scripts/amplify.js")
-                .Include("~/Scripts/respond.js"));
+                .Include("~/Scripts/respond.js")
+                .Include("~/Scripts/jquery.dataTables.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                  "~/Scripts/bootstrap.js").Include(
@@ -54,7 +55,8 @@ namespace IdentitySample
                       "~/Content/CSS/layout.css",
                       "~/Content/CSS/default.css",
                       "~/Content/CSS/components.css",
-                      "~/Content/CSS/IstLayout.css"));
+                      "~/Content/CSS/IstLayout.css",
+                      "~/Content/jquery.dataTables.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                                         "~/Content/themes/base/jquery.ui.core.css",
