@@ -48,7 +48,11 @@ namespace IdentitySample
             bundles.Add(new StyleBundle("~/Content/siteCss").Include(
                       "~/Content/toastr.css",
                       "~/Content/site.css",
-                      "~/Content/CSS/architecture.css"));
+                      "~/Content/CSS/architecture.css",
+                      "~/Content/CSS/layout.css",
+                      "~/Content/CSS/default.css",
+                      "~/Content/CSS/components.css",
+                      "~/Content/CSS/IstLayout.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                                         "~/Content/themes/base/jquery.ui.core.css",

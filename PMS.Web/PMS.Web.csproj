@@ -221,7 +221,10 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApartmentController.cs" />
+    <Compile Include="Controllers\BuildingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LandLordController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -272,13 +275,23 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CSS\architecture.css" />
     <Content Include="Content\CSS\bootstrap-rtl.css" />
+    <Content Include="Content\CSS\components.css" />
+    <Content Include="Content\CSS\default.css" />
+    <Content Include="Content\CSS\IstLayout.css" />
+    <Content Include="Content\CSS\layout.css" />
     <Content Include="Content\CSS\PagedList.css" />
     <Content Include="Content\CSS\spinner.gif" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\arrow-down.png" />
     <Content Include="Content\Images\arrow-up.png" />
+    <Content Include="Content\Images\avatar3.jpg" />
+    <Content Include="Content\Images\avatar3_small.jpg" />
     <Content Include="Content\Images\delete.png" />
     <Content Include="Content\Images\edit.png" />
+    <Content Include="Content\Images\logo-big.png" />
+    <Content Include="Content\Images\logo-invert.png" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\photo1.jpg" />
     <Content Include="Content\Images\spinner.gif" />
     <Content Include="Content\jquery-ui-1.11.0.min.css" />
     <Content Include="Content\PagedList.css" />
@@ -815,6 +828,9 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Shared\_ConfirmationDialog.cshtml" />
     <Content Include="Views\Shared\_Product.cshtml" />
+    <Content Include="Views\Building\AddEdit.cshtml" />
+    <Content Include="Views\Apartment\AddEdit.cshtml" />
+    <Content Include="Views\LandLord\AddEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
