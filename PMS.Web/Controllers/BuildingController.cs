@@ -10,7 +10,7 @@ using PMS.Web.ViewModels.Common;
 
 namespace PMS.Web.Controllers
 {
-    public class BuildingController : Controller
+    public class BuildingController : BaseController
     {
         private readonly IBuildingService buildingService;
 
@@ -19,7 +19,7 @@ namespace PMS.Web.Controllers
             this.buildingService = buildingService;
         }
         // GET: Building
-
+        [Authorize]
         public ActionResult Index()
         {
             var buildingViewModel = GetAll();
@@ -33,7 +33,7 @@ namespace PMS.Web.Controllers
                        BuildingsList = buildings.Buildings.Select(x => x.CreateFrom()).ToList()
                    };
         }
-
+        [Authorize]
         public ActionResult AddEdit(int? id)
         {
             if (id != null)
@@ -50,7 +50,7 @@ namespace PMS.Web.Controllers
             }
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public ActionResult AddEdit(BuildingViewModel buildingViewModel)
         {
@@ -73,7 +73,7 @@ namespace PMS.Web.Controllers
                 }
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public ActionResult Delete(int? buildingId)
         {
             var buildingToBeDeleted = buildingService.FindBuilding(buildingId);

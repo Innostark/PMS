@@ -16,11 +16,12 @@ using PMS.Implementation.Identity;
 using PMS.Interfaces.IServices;
 using PMS.Models.IdentityModels;
 using PMS.Models.IdentityModels.ViewModels;
+using PMS.Web.Controllers;
 
 namespace IdentitySample.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         #region Private
 
@@ -44,6 +45,15 @@ namespace IdentitySample.Controllers
             //IList<IdentityUserRole> roles = userResult.Roles.ToList();
             //menuRightService.FindMenuItemsByRoleId(roles[0].RoleId);
 
+        }
+
+        private void CreateRoles()
+        {
+            var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
+            if (!roleManager.RoleExists("Admin"))
+                roleManager.Create(new IdentityRole("Admin"));
+            if (!roleManager.RoleExists("Landlord"))
+                roleManager.Create(new IdentityRole("Landlord"));
         }
 
         #endregion
@@ -78,8 +88,12 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                return View();
+            }
+            return RedirectToAction("Index", "Dashboard");
         }
 
         public ApplicationSignInManager SignInManager
@@ -194,13 +208,7 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
-                #region Creating Roles
-                var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
-                if (!roleManager.RoleExists("Admin"))
-                    roleManager.Create(new IdentityRole("Admin"));
-                if (!roleManager.RoleExists("Landlord"))
-                    roleManager.Create(new IdentityRole("Landlord"));
-                #endregion End Creating Role
+                CreateRoles();
 
                 var user = new ApplicationUser {FirstName = model.FirstName,LastName = model.LastName,UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -464,6 +472,36 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult Profile()
+        {
+                ApplicationUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+                var ProfileViewModel = new ProfileViewModel
+                                       {
+                                           Address = result.Address,
+                                           Email = result.Email,
+                                           FirstName = result.FirstName,
+                                           LastName = result.LastName,
+                                           PhoneNumber = result.PhoneNumber != null ?Int32.Parse(result.PhoneNumber): (int?)null
+                                       };
+             return View(ProfileViewModel); 
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Profile(ProfileViewModel profileViewModel)
+        {
+            ApplicationUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+            //Updating Data
+            result.FirstName = profileViewModel.FirstName;
+            result.LastName = profileViewModel.LastName;
+            result.PhoneNumber = profileViewModel.PhoneNumber.ToString();
+            result.Address = profileViewModel.Address;
+
+            var updationResult = UserManager.UpdateAsync(result);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
         #endregion
 
         #region Helpers

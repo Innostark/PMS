@@ -53,83 +53,86 @@
             <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
             <!-- DOC: This is desktop version of the horizontal menu. The mobile version is defined(duplicated) sidebar menu below. So the horizontal menu has 2 seperate versions -->
             <div class="hor-menu hidden-sm hidden-xs">
-                <ul class="nav navbar-nav">
-                    <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
+                @if (@User.Identity.GetUserName() != null && @User.Identity.GetUserName() != "")
+                {
+                    <ul class="nav navbar-nav">
+                        <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
                     
-                    <li class="classic-menu-dropdown">
-                        <a data-toggle="dropdown" href="javascript:;">
-                            Property <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu pull-left">
-                            <li>
-                                <a href="~/Building/Index">
-                                    <i class="fa fa-bookmark-o"></i> Buildings
-                                </a>
-                            </li>
-                            <li>
-                                <a href="~/Apartment/Index">
-                                    <i class="fa fa-user"></i> Appartments
-                                </a>
-                            </li>
+                        <li class="classic-menu-dropdown">
+                            <a data-toggle="dropdown" href="javascript:;">
+                                Property <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a href="~/Building/Index">
+                                        <i class="fa fa-bookmark-o"></i> Buildings
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="~/Apartment/Index">
+                                        <i class="fa fa-user"></i> Appartments
+                                    </a>
+                                </li>
                            
-                        </ul>
-                    </li>
-                    <li class="classic-menu-dropdown">
-                        <a data-toggle="dropdown" href="javascript:;">
-                            Partner <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu pull-left">
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-bookmark-o"></i> Service Company
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-user"></i> Tenants
-                                </a>
-                            </li>
+                            </ul>
+                        </li>
+                        <li class="classic-menu-dropdown">
+                            <a data-toggle="dropdown" href="javascript:;">
+                                Partner <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-bookmark-o"></i> Service Company
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user"></i> Tenants
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </li>
-                    <li class="classic-menu-dropdown">
-                        <a data-toggle="dropdown" href="javascript:;">
-                            Payments <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu pull-left">
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-bookmark-o"></i> Rentals
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-user"></i> New Release
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-user"></i> Reneaw Release
-                                </a>
-                            </li>
+                            </ul>
+                        </li>
+                        <li class="classic-menu-dropdown">
+                            <a data-toggle="dropdown" href="javascript:;">
+                                Payments <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-bookmark-o"></i> Rentals
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user"></i> New Release
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user"></i> Reneaw Release
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </li>
-                    <li class="classic-menu-dropdown">
-                        <a data-toggle="dropdown" href="javascript:;">
-                            Blob <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu pull-left">
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-bookmark-o"></i> Notes
-                                </a>
-                            </li>
+                            </ul>
+                        </li>
+                        <li class="classic-menu-dropdown">
+                            <a data-toggle="dropdown" href="javascript:;">
+                                Blob <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-bookmark-o"></i> Notes
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
                     
-                </ul>
+                    </ul>
+                }
             </div>
             <!-- END HORIZANTAL MENU -->
             <!-- BEGIN HEADER SEARCH BOX -->
@@ -160,7 +163,6 @@
                         @if (@User.Identity.GetUserName() != null && @User.Identity.GetUserName() != "") { 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <span class="username username-hide-on-mobile">
-                                    @*Hello @User.Identity.GetUserName()!*@
                                     Hello @Session["FullName"]
                                 </span>
                                 <i class="fa fa-angle-down"></i>
@@ -168,7 +170,7 @@
                         }
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">
+                                <a href="~/Account/Profile">
                                     <i class="icon-user"></i> Profile
                                 </a>
                             </li>

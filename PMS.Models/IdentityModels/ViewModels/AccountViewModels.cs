@@ -112,4 +112,26 @@ namespace PMS.Models.IdentityModels.ViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class ProfileViewModel
+    {
+        [Required]
+        [Display(Name = "First Name")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
+        public string FirstName { get; set; }
+        [Required]
+        [Display(Name = "Last name")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
+        public string LastName { get; set; }
+        
+        [Display(Name = "Email")]
+        
+        public string Email { get; set; }
+        [Display(Name = "Phone Number")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Entered phone format is not valid.")]
+        public int? PhoneNumber { get; set; }
+        [Display(Name = "Address")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
+        public string Address { get; set; }
+    }
 }
