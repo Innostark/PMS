@@ -128,8 +128,8 @@ namespace PMS.Models.IdentityModels.ViewModels
         
         public string Email { get; set; }
         [Display(Name = "Phone Number")]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Entered phone format is not valid.")]
-        public int? PhoneNumber { get; set; }
+        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Entered phone format is not valid.")]
+        public string PhoneNumber { get; set; }
         [Display(Name = "Address")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
         public string Address { get; set; }

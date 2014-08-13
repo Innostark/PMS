@@ -478,11 +478,11 @@ namespace IdentitySample.Controllers
                 ApplicationUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
                 var ProfileViewModel = new ProfileViewModel
                                        {
-                                           Address = result.Address,
+                                           Address = (result.Address!= null && result.Address != string.Empty)?result.Address: string.Empty,
                                            Email = result.Email,
                                            FirstName = result.FirstName,
                                            LastName = result.LastName,
-                                           PhoneNumber = result.PhoneNumber != null ?Int32.Parse(result.PhoneNumber): (int?)null
+                                           PhoneNumber = (result.PhoneNumber != null && result.PhoneNumber != null)?result.PhoneNumber: string.Empty
                                        };
              return View(ProfileViewModel); 
         }
@@ -495,7 +495,7 @@ namespace IdentitySample.Controllers
             //Updating Data
             result.FirstName = profileViewModel.FirstName;
             result.LastName = profileViewModel.LastName;
-            result.PhoneNumber = profileViewModel.PhoneNumber.ToString();
+            result.PhoneNumber = profileViewModel.PhoneNumber;
             result.Address = profileViewModel.Address;
 
             var updationResult = UserManager.UpdateAsync(result);
