@@ -115,8 +115,8 @@ namespace IdentitySample.Controllers
             {
                 case SignInStatus.Success:
                 {
-
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Dashboard");
+                    //return RedirectToLocal(returnUrl);
                 }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -194,7 +194,7 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                var user = new ApplicationUser {FirstName = model.FirstName,LastName = model.LastName,UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -436,12 +436,12 @@ namespace IdentitySample.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

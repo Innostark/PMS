@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -7,6 +8,8 @@ namespace PMS.Models.DomainModels
     public class Building
     {
         public int BuildingId { get; set; }
+        
+        
         public string Name { get; set; }
         public int PhoneNumber { get; set; }
         public string Email { get; set; }

@@ -2,9 +2,11 @@
 @{
     ViewBag.Title = "Add/Edit";
 }
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
     <div class="page-container">
         <div class="page-content-wrapper">
             <div class="page-content-row">
@@ -14,8 +16,8 @@
                         <h2><span class="caption-subject font-green-haze bold uppercase">Building Add/Edit</span></h2>
                     </div>
                     <div class="col-md-offset-10 col-md-2">
-                        <button type="submit" onclick="return (ValidateFields())" class=" btn green">Submit</button>
-                        <button type="button" class="btn default">Cancel</button>
+                        <button type="submit"  class=" btn green">Submit</button>@*onclick="return (ValidateFields())"*@
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
                     </div>
                     <h3 class="form-section">Basic Info</h3>
                     @Html.HiddenFor(model => model.Building.BuildingId)
@@ -24,6 +26,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Building.Name, new { @class = "col-md-3 control-label-row" })
                                 @Html.TextBoxFor(model => model.Building.Name, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Name", @id = "Name" })
+                                @Html.ValidationMessageFor(model => model.Building.Name)
                                 <span class="help-block">
                                 </span>
                             </div>
@@ -32,6 +35,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Building.PhoneNumber, "Phone Number", new { @class = "col-md-3 control-label-row" })
                                 @Html.TextBoxFor(model => model.Building.PhoneNumber, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Phone Number", @id = "Phone Number" })
+                                @Html.ValidationMessageFor(model => model.Building.PhoneNumber)
                             </div>
                         </div>
                         
@@ -41,12 +45,14 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Building.Email, "Email", new { @class = "col-md-3 control-label-row" })
                                 @Html.TextBoxFor(model => model.Building.Email, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Email", @id = "Email" })
+                                @Html.ValidationMessageFor(model => model.Building.Email)
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Building.BuiltDate, "Built Date", new { @class = "col-md-3 control-label-row" })
                                 @Html.TextBoxFor(model => model.Building.BuiltDate, new { @class = "col-md-9 form-control datepicker mandatory", @placeholder = "mm/dd/yyyy", @id = "Built Date" })
+                                @Html.ValidationMessageFor(model => model.Building.BuiltDate)
                             </div>
                         </div>
                     </div>
@@ -55,12 +61,14 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Building.NoOfFloors, "No of Floors", new { @class = "col-md-3 control-label-row" })
                                     @Html.TextBoxFor(model => model.Building.NoOfFloors, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Number Of Floors", @id = "No of Floors" })
+                                    @Html.ValidationMessageFor(model => model.Building.NoOfFloors)
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Building.NoOfElevators, "No of Elevators", new { @class = "col-md-3 control-label-row" })
                                     @Html.TextBoxFor(model => model.Building.NoOfElevators, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Number Of Elevators", @id = "No of Elevators" })
+                                    @Html.ValidationMessageFor(model => model.Building.NoOfElevators)
                                     <span class="help-block">
                                     
                                     </span>
@@ -72,6 +80,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Building.Comment, "Comments", new { @class = " col-md-3 control-label-row" })
                                     @Html.TextAreaFor(model => model.Building.Comment, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Comments", @id = "Comments" })
+                                    @Html.ValidationMessageFor(model => model.Building.Comment)
                                 </div>
                             </div>
                         </div>                   
@@ -80,7 +89,9 @@
         </div> 
     </div>
 }
-<script type="text/javascript" src="~/Scripts/App/ValidateFields.js"></script> 
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@*<script type="text/javascript" src="~/Scripts/App/ValidateFields.js"></script>*@ 
 <script type="text/javascript" >
     $(document).ready(function() {
         $('.datepicker').datepicker({

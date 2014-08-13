@@ -223,6 +223,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApartmentController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LandLordController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -840,6 +841,7 @@
     <Content Include="Views\Apartment\AddEdit.cshtml" />
     <Content Include="Views\LandLord\AddEdit.cshtml" />
     <Content Include="Views\Building\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
