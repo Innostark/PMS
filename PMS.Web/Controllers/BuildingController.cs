@@ -78,7 +78,7 @@ namespace PMS.Web.Controllers
         {
             var buildingToBeDeleted = buildingService.FindBuilding(buildingId);
             buildingService.DeleteBuilding(buildingToBeDeleted);
-            return RedirectToAction("Index");
+            return Json(true);
         }
 
     }

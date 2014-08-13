@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMS.Web.Models
 {
@@ -9,6 +10,7 @@ namespace PMS.Web.Models
         public int PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
+        [DisplayFormat( DataFormatString = "{0:MMM-dd-yyyy}")]
         public DateTime? BuiltDate { get; set; }
         public int NoOfFloors { get; set; }
         public int? NoOfElevators { get; set; }

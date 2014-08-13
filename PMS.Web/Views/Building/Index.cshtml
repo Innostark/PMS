@@ -10,6 +10,7 @@
         <table id="buildingTable" class="display" cellspacing="0" width="100%">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Name</th>
                     <th>Phone Number</th>
                     <th>Email</th>
@@ -22,19 +23,20 @@
                 </tr>
             </thead>
             @*<tfoot>
-                <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                </tr>
-            </tfoot>*@
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </tfoot>*@
             <tbody>
                 @foreach (var item in Model.BuildingsList)
                 {
                     <tr>
+                        <td>@Html.DisplayFor(modelItem => item.BuildingId)</td>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
                         <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                         <td>@Html.DisplayFor(modelItem => item.Email)</td>
@@ -43,8 +45,12 @@
                         <td>@Html.DisplayFor(modelItem => item.NoOfFloors)</td>
                         <td>@Html.DisplayFor(modelItem => item.NoOfElevators)</td>
                         @*<td>@Html.DisplayFor(modelItem => item.BuildingId)</td>*@
-                        <td>@Html.ActionLink("Edit", "AddEdit", new { id = item.BuildingId }) |</td>
-                        <td>@Html.ActionLink("Delete", "Delete", new { buildingId = item.BuildingId })</td>
+                        <td>@Html.ActionLink("Edit", "AddEdit", new { id = item.BuildingId }) </td>
+                        @*<td>@Html.ActionLink("Delete", "Delete", new { buildingId = item.BuildingId })</td>*@
+                        <td>
+                            <a class="delete" href="javascript:;"></a>
+                        </td>
+                        
                     </tr>
                 }
             </tbody>
@@ -53,6 +59,62 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#buildingTable').dataTable();
+        var oTable = $('#buildingTable').dataTable({
+            "iDisplayLength": 10,
+            "aoColumnDefs": [
+              { 'bSortable': false, 'aTargets': [8, 9] }
+              ,
+              {
+                  "targets": [0],
+                  "visible": false,
+                  "searchable": false
+              }
+            ],
+          
+        });
+
+        $('#buildingTable').on('click', '.delete', function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this row ?") == false) {
+                return;
+            }
+            
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            var serviceURL = '/Building/Delete';
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: "{buildingId:"+aData[0]+"}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+
+            function successFunc(data, status) {
+                
+                var totalRcd = oTable.fnSettings().fnRecordsTotal()-1,//as success deleted one row
+
+                    displayLength = oTable.fnSettings()._iDisplayLength,
+                    displayStart = oTable.fnSettings()._iDisplayStart;
+                
+                oTable.fnDeleteRow(nRow,null,false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if(totalRcd> page*displayLength)
+                    oTable.fnPageChange(page);
+                else
+                    oTable.fnPageChange(page-1);
+            }
+
+            function errorFunc(e,status) {
+                
+                alert('error');
+            }
+            
+            
+        });
     });
 </script>
