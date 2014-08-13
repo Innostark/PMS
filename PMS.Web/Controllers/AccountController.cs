@@ -194,10 +194,22 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
+                #region Creating Roles
+                var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
+                if (!roleManager.RoleExists("Admin"))
+                    roleManager.Create(new IdentityRole("Admin"));
+                if (!roleManager.RoleExists("Landlord"))
+                    roleManager.Create(new IdentityRole("Landlord"));
+                #endregion End Creating Role
+
                 var user = new ApplicationUser {FirstName = model.FirstName,LastName = model.LastName,UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var currentUser = UserManager.FindByName(user.UserName);
+                    //Assigning Role "landlord" to user by default
+                    var roleresult = UserManager.AddToRole(currentUser.Id, "Landlord");
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = code},
                         protocol: Request.Url.Scheme);

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PMS.Models.DomainModels
 {

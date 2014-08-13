@@ -7,7 +7,7 @@ namespace PMS.Web.Models
     {
         public int BuildingId { get; set; }
         [Required(ErrorMessage = "Name is required")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
         public string Name { get; set; }
         [Required(ErrorMessage="Telephone Number Required")]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Entered phone format is not valid.")]
