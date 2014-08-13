@@ -23,7 +23,7 @@ namespace PMS.Web.Controllers
         protected override async void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            if (Session["FullName"] == null)
+            if (Session["FullName"] == null || Session["FullName"]== string.Empty)
                 Session["FullName"] = SetUserName();
         }
         private string SetUserName()
