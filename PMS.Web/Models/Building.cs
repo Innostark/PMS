@@ -10,7 +10,7 @@ namespace PMS.Web.Models
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
         public string Name { get; set; }
         [Required(ErrorMessage="Telephone Number Required")]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Entered phone format is not valid.")]
+        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Entered phone format is not valid.")]
         public int PhoneNumber { get; set; }
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]

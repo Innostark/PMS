@@ -1,6 +1,7 @@
 ﻿using PMS.Interfaces.IServices;
 using PMS.Interfaces.Repository;
 using PMS.Models.DomainModels;
+using PMS.Models.RequestModels;
 using PMS.Models.ResponseModels;
 
 namespace PMS.Implementation.Services
@@ -52,6 +53,11 @@ namespace PMS.Implementation.Services
         {
             if (buildingId != null) return buildingRepository.FindBuildingById((int) buildingId);
             return null;
+        }
+
+        public BuildingResponse GetAllBuildings(BuildingSearchRequest buildingSearchRequest)
+        {
+            return buildingRepository.GetAllBuildings(buildingSearchRequest);
         }
     }
 }

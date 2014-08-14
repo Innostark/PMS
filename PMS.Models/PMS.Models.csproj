@@ -96,6 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\BuildingByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
     <Compile Include="Common\ProductByColumn.cs" />
     <Compile Include="DomainModels\Building.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="MenuModels\Menu.cs" />
     <Compile Include="MenuModels\MenuRight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestModels\BuildingSearchRequest.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
     <Compile Include="ResponseModels\BuildingResponse.cs" />

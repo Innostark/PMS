@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using PMS.Interfaces.IServices;
+using PMS.Models.DomainModels;
+using PMS.Models.RequestModels;
 using PMS.Web.ModelMappers;
+using PMS.Web.ViewModels;
 using PMS.Web.ViewModels.Buildings;
 using PMS.Web.ViewModels.Common;
+using Building = PMS.Web.Models.Building;
+using Product = PMS.Web.Models.Product;
 
 namespace PMS.Web.Controllers
 {
@@ -71,14 +77,27 @@ namespace PMS.Web.Controllers
                         messageViewModel.IsSaved = true;
                     }
                 }
-            return RedirectToAction("Index");
+                return RedirectToAction("BuildingList");
         }
         [Authorize]
         public ActionResult Delete(int? buildingId)
         {
             var buildingToBeDeleted = buildingService.FindBuilding(buildingId);
             buildingService.DeleteBuilding(buildingToBeDeleted);
-            return Json(true);
+            return RedirectToAction("BuildingList");
+        }
+
+        public ActionResult BuildingList(BuildingSearchRequest request)
+        {
+            var buildings = buildingService.GetAllBuildings(request);
+            IEnumerable<Building> buildingList = buildings.Buildings.Select(x => x.CreateFrom()).ToList();
+            BuildingListViewModel buildingListViewModel = new BuildingListViewModel
+                                                          {
+                                                              BuildingList = new StaticPagedList<Building>(buildingList, request.PageNo, request.PageSize, buildings.TotalCount),
+                                                              BuildingSearchRequest = request,
+                                                              TotalNoOfRec = buildingList.Count()
+                                                          };
+            return View(buildingListViewModel);
         }
 
     }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using PagedList;
+﻿using System.Collections.Generic;
 using PMS.Web.Models;
 
 namespace PMS.Web.ViewModels.Buildings

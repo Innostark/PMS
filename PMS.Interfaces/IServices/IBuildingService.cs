@@ -1,4 +1,5 @@
 ﻿using PMS.Models.DomainModels;
+using PMS.Models.RequestModels;
 using PMS.Models.ResponseModels;
 
 namespace PMS.Interfaces.IServices
@@ -10,6 +11,7 @@ namespace PMS.Interfaces.IServices
         bool AddBuilding(Building building);
         bool Update(Building building);
         Building FindBuilding(int? buildingId);
+        BuildingResponse GetAllBuildings(BuildingSearchRequest buildingSearchRequest);
 
     }
 }

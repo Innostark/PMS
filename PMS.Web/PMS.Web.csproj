@@ -274,6 +274,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="ViewModels\BuildingListViewModel.cs" />
     <Compile Include="ViewModels\Buildings\BuildingViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
@@ -853,6 +854,8 @@
     <Content Include="Views\Building\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Building\BuildingList.cshtml" />
+    <Content Include="Views\Shared\_BuildingList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />

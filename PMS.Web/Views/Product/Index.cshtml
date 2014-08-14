@@ -23,7 +23,7 @@
         <div >
            
             <p>
-                @PMS.Web.Resources.Products.Product.ProductName @Html.TextBox("SearchString", "", new { @id = "searchInput" })
+                @Html.TextBox("SearchString", "asad", new { @id = "searchInput" })
                 @Html.DropDownList("CategoryId", new SelectList(@Model.Categories, "Id", "Name"), @PMS.Web.Resources.Products.Product.SelectCategory, new { id = "ddlCategries", @class = "dropdown" })
                 @Html.DropDownList("ProductId", new SelectList(@Model.Products, "Id", "Name"), "-Select-", new { id = "ddlProducts", @class = "dropdown" })
                 <input type="submit" value=@PMS.Web.Resources.Shared.Common.Search />   <input type="button" id="reset" value=@PMS.Web.Resources.Shared.Common.Reset />
