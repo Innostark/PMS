@@ -100,7 +100,7 @@
             <tr>
                 <td style="width: 15%">@PMS.Web.Resources.Shared.Common.TotalRecords @Model.TotalNoOfRec</td>
                 <td style="width: 67%">
-                    @Html.PagedListPager(Model.BuildingList, PageNo => Url.Action("Index", new { PageNo, @Model.BuildingSearchRequest.SortBy, @Model.BuildingSearchRequest.IsAsc, @Model.BuildingSearchRequest.PageSize, @Model.BuildingSearchRequest.SearchString }),
+                    @Html.PagedListPager(Model.BuildingList, PageNo => Url.Action("BuildingList", new { PageNo, @Model.BuildingSearchRequest.SortBy, @Model.BuildingSearchRequest.IsAsc, @Model.BuildingSearchRequest.PageSize, @Model.BuildingSearchRequest.SearchString }),
                         PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "gridContent" })
                         )
                     @*@Html.PagedListPager(Model.ProductList, PageNo => Url.Action("Index",
