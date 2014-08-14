@@ -95,7 +95,7 @@ namespace PMS.Web.Controllers
                                                           {
                                                               BuildingList = new StaticPagedList<Building>(buildingList, request.PageNo, request.PageSize, buildings.TotalCount),
                                                               BuildingSearchRequest = request,
-                                                              TotalNoOfRec = buildingList.Count()
+                                                              TotalNoOfRec = buildingService.GetAllBuildings().TotalCount
                                                           };
             return View(buildingListViewModel);
         }
