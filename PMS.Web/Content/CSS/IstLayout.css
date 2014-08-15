@@ -15,6 +15,9 @@
  .searchInputs {
      min-height: 29px;
  }
+ .dashboard-height {
+     min-height: 505px;
+ }
  .caption-subject {
    
  }
