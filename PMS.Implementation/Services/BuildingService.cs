@@ -24,13 +24,12 @@ namespace PMS.Implementation.Services
         }
         public bool AddBuilding(Building building)
         {
-            if (ValidateBuilding(building))
-            {
+            //if (ValidateBuilding(building))
+            //{
                 buildingRepository.Add(building);
                 buildingRepository.SaveChanges();
                 return true;
-            }
-            return false;
+            //}
         }
         public bool Update(Building product)
         {

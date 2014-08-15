@@ -12,6 +12,9 @@
  .control-label-row {
      text-align: left;
  }
+ .searchInputs {
+     min-height: 29px;
+ }
  .caption-subject {
    
  }
