@@ -9,20 +9,23 @@ using System.Web.Mvc;
 using PMS.Implementation.Identity;
 using PMS.Models.IdentityModels;
 using PMS.Models.IdentityModels.ViewModels;
+using PMS.Interfaces.IServices;
 
 namespace IdentitySample.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
-        public ManageController()
+        private IMenuRightsService menuRightService;
+        public ManageController(IMenuRightsService menuRightService)
         {
+            this.menuRightService = menuRightService;
         }
 
-        public ManageController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
-        }
+        //public ManageController(ApplicationUserManager userManager)
+        //{
+        //    UserManager = userManager;
+        //}
 
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
@@ -229,9 +232,9 @@ namespace IdentitySample.Controllers
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
-            return View();
+            return View("~/Account/Manage");
         }
-
+       
         //
         // POST: /Account/Manage
         [HttpPost]
