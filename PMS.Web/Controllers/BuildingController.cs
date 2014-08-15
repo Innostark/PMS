@@ -9,12 +9,15 @@ using PMS.Web.ModelMappers;
 using PMS.Web.ViewModels;
 using PMS.Web.ViewModels.Buildings;
 using PMS.Web.ViewModels.Common;
+using PMS.WebBase.Mvc;
 using Building = PMS.Web.Models.Building;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     public class BuildingController : BaseController
     {
+
         private readonly IBuildingService buildingService;
 
         public BuildingController(IBuildingService buildingService)
@@ -22,7 +25,7 @@ namespace PMS.Web.Controllers
             this.buildingService = buildingService;
         }
         // GET: Building
-        [Authorize]
+        [SiteAuthorize(PermissionKey = "Buildings")]
         public ActionResult Index()
         {
             var buildingViewModel = GetAll();
@@ -88,7 +91,7 @@ namespace PMS.Web.Controllers
             buildingService.DeleteBuilding(buildingToBeDeleted);
             return RedirectToAction("BuildingList");
         }
-        [Authorize]
+        [SiteAuthorize(PermissionKey = "BuildingList")]
         public ActionResult BuildingList(BuildingSearchRequest request)
         {
             request.UserId = Guid.Parse(Session["LoginID"] as string);

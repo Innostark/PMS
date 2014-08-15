@@ -65,7 +65,7 @@ namespace PMS.Web.Controllers
                     IList<IdentityUserRole> roles = userResult.Roles.ToList();   
                     if (roles.Count > 0)
                     {
-                        IQueryable<MenuRight> menuItems = menuRightService.FindMenuItemsByRoleId(roles[0].RoleId);
+                        IEnumerable<MenuRight> menuItems = menuRightService.FindMenuItemsByRoleId(roles[0].RoleId);
 
                         //save menu items in session
                         //Session["UserPermissionSet"] = menuItems;
