@@ -24,17 +24,21 @@ namespace PMS.Web.Controllers
         {
             base.Initialize(requestContext);
             if (Session["FullName"] == null || Session["FullName"]== string.Empty)
-                Session["FullName"] = SetUserName();
+                SetUserDetail();
         }
-        private string SetUserName()
+        private void SetUserDetail()
         {
+            Session["FullName"] = Session["LoginID"] = string.Empty;
             if (User.Identity.IsAuthenticated)
             {
                 ApplicationUser result= HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
-                return result.FirstName + " " + result.LastName;
+                Session["FullName"] = result.FirstName + " " + result.LastName;
+                Session["LoginID"] = result.Id;
+                return;
+                //return result.FirstName + " " + result.LastName;
             }
             
-             return string.Empty;
+             
 
         }
     }

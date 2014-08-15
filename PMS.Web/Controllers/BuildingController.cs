@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using PagedList;
@@ -60,7 +61,10 @@ namespace PMS.Web.Controllers
                 //Add New Building
                 if (buildingViewModel.Building.BuildingId == 0)
                 {
-                    if (buildingService.AddBuilding(buildingViewModel.Building.CreateFrom()))
+                    var modelToSave=buildingViewModel.Building.CreateFrom();
+                    modelToSave.UserId = (Guid)Session["LoginID"];
+
+                    if (buildingService.AddBuilding(modelToSave))
                     {
                         messageViewModel.IsUpdated = true;
                     }                   
@@ -68,7 +72,9 @@ namespace PMS.Web.Controllers
                 //Edit Building
                 else
                 {
-                    if (buildingService.Update(buildingViewModel.Building.CreateFrom()))
+                    var modelToSave = buildingViewModel.Building.CreateFrom();
+                    modelToSave.UserId = (Guid)Session["LoginID"];
+                    if (buildingService.Update(modelToSave))
                     {
                         messageViewModel.IsSaved = true;
                     }
