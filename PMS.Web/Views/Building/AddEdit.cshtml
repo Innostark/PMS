@@ -7,16 +7,14 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    <div class="page-container">
-        <div class="page-content-wrapper">
-            <div class="page-content-row">
+    <div class="page-container page-height">
                 <div class="form form-horizontal">
                     <div class="portlet-title caption">
                         <i class="font-green-haze"></i>
                         <h2><span class="caption-subject font-green-haze bold uppercase">Building Add/Edit</span></h2>
                     </div>
                     <div class="col-md-offset-10 col-md-2">
-                        <button type="submit"  class=" btn green">Submit</button>@*onclick="return (ValidateFields())"*@
+                        <button type="submit" class=" btn green">Submit</button>@*onclick="return (ValidateFields())"*@
                         @Html.ActionLink("Cancel", "BuildingList", null, new { @class = "btn btn-default" })
                     </div>
                     <h3 class="form-section">Basic Info</h3>
@@ -90,11 +88,10 @@
                                 @Html.ValidationMessageFor(model => model.Building.Comment)
                             </div>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
             </div>
-        </div> 
-    </div>
+
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
