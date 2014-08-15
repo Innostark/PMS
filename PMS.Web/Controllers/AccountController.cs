@@ -298,10 +298,12 @@ namespace IdentitySample.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
+
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
+                    ModelState.AddModelError("", "Please try Again.");
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View(model);
                 }
 
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
