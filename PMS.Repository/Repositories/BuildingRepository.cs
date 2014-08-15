@@ -76,7 +76,8 @@ namespace PMS.Repository.Repositories
             int fromRow = (buildingSearchRequest.PageNo - 1) * buildingSearchRequest.PageSize;
             int toRow = buildingSearchRequest.PageSize;
             Expression<Func<Building, bool>> query =
-                s =>(string.IsNullOrEmpty(buildingSearchRequest.PhoneNumber) || s.PhoneNumber.Contains(buildingSearchRequest.PhoneNumber))&& 
+                s => ( s.UserId.Equals(buildingSearchRequest.UserId)) &&
+                    (string.IsNullOrEmpty(buildingSearchRequest.PhoneNumber) || s.PhoneNumber.Contains(buildingSearchRequest.PhoneNumber))&& 
                     (string.IsNullOrEmpty(buildingSearchRequest.SearchString) || s.Name.Contains(buildingSearchRequest.SearchString));
             IEnumerable<Building> buildings = buildingSearchRequest.IsAsc ? DbSet.Where(query).OrderBy(buildingClause[buildingSearchRequest.BuildingOrderBy]).Skip(fromRow).Take(toRow).ToList()
                                            : DbSet.Where(query).OrderByDescending(buildingClause[buildingSearchRequest.BuildingOrderBy]).Skip(fromRow).Take(toRow).ToList();

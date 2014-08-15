@@ -62,7 +62,7 @@ namespace PMS.Web.Controllers
                 if (buildingViewModel.Building.BuildingId == 0)
                 {
                     var modelToSave=buildingViewModel.Building.CreateFrom();
-                    modelToSave.UserId = (Guid)Session["LoginID"];
+                    modelToSave.UserId = Guid.Parse(Session["LoginID"] as string);
 
                     if (buildingService.AddBuilding(modelToSave))
                     {
@@ -73,7 +73,7 @@ namespace PMS.Web.Controllers
                 else
                 {
                     var modelToSave = buildingViewModel.Building.CreateFrom();
-                    modelToSave.UserId = (Guid)Session["LoginID"];
+                    modelToSave.UserId = Guid.Parse(Session["LoginID"] as string);
                     if (buildingService.Update(modelToSave))
                     {
                         messageViewModel.IsSaved = true;
@@ -91,6 +91,7 @@ namespace PMS.Web.Controllers
         [Authorize]
         public ActionResult BuildingList(BuildingSearchRequest request)
         {
+            request.UserId = Guid.Parse(Session["LoginID"] as string);
             var buildings = buildingService.GetAllBuildings(request);
             IEnumerable<Building> buildingList = buildings.Buildings.Select(x => x.CreateFrom()).ToList();
             BuildingListViewModel buildingListViewModel = new BuildingListViewModel
