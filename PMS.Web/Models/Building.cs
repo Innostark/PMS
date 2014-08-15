@@ -11,15 +11,15 @@ namespace PMS.Web.Models
         public string Name { get; set; }
         [Required(ErrorMessage="Telephone Number Required")]
         //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Entered phone format is not valid.")]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Address is required")]
-        [StringLength(250, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(250, ErrorMessage = "The {0} must be at least {2} characters long.")]
         public string Address { get; set; }
-        
+        [Required(ErrorMessage = "Built Date is Required")]
         public String BuiltDate { get; set; }
         [Required(ErrorMessage = "No of Floors is required")]
         public int NoOfFloors { get; set; }

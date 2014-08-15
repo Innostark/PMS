@@ -20,36 +20,31 @@
             <i class="font-green-haze"></i>
             <h2><span class="caption-subject font-green-haze bold uppercase">Buildings</span></h2>
         </div>
-        <div > @*id="search-area"*@
+        <div>
             <p>
-                @*@Html.TextBoxFor(model => model.BuildingSearchRequest.SearchString, new { @id = "searchInput", @placeholder = "Search Name" })*@
                 @Html.TextBox("SearchString", "", new { @id = "SearchInput", @placeholder = "Search Name" })
+                @Html.TextBox("PhoneNumber", "", new { @id = "PhoneNumber", @placeholder = "Phone Number" })
                 <input type="submit" value="Search" />
                 <a href="AddEdit"><input type="button" class="col-lg-offset-11 btn btn-success" value="Create New" /></a>
-                @*  <input type="button" id="reset" value="Reset" />*@
             </p>
-
         </div>
         <br />
         <div id="">
             @Html.Partial("_BuildingList", Model)
         </div>
     </div>
-    
 }
-
 @if (ViewBag.MessageVM != null)
 {
-                    <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
-                    <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
-                    <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
-                    <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+        <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
+        <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
+        <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
+        <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
 }
 
 @section scripts
 {
-                    <script src="~/Scripts/Common/confirmationDialog.js"></script>
-                    <script src="~/Scripts/App/product.js"></script>
+        <script src="~/Scripts/Common/confirmationDialog.js"></script>
 }
 
 

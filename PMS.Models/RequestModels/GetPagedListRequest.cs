@@ -17,6 +17,7 @@
         public int PageSize { get; set; }
 
         public string SearchString { get; set; }
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// PageNo

@@ -33,14 +33,22 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                @Html.LabelFor(model => model.Building.Address, new { @class = "col-md-3 control-label-row" })
+                                @Html.TextBoxFor(model => model.Building.Address, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Address", @id = "Address" })
+                                @Html.ValidationMessageFor(model => model.Building.Address)
+                                <span class="help-block">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 @Html.LabelFor(model => model.Building.PhoneNumber, "Phone Number", new { @class = "col-md-3 control-label-row" })
                                 @Html.TextBoxFor(model => model.Building.PhoneNumber, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Phone Number", @id = "Phone Number" })
                                 @Html.ValidationMessageFor(model => model.Building.PhoneNumber)
                             </div>
                         </div>
-                        
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Building.Email, "Email", new { @class = "col-md-3 control-label-row" })
@@ -48,6 +56,8 @@
                                 @Html.ValidationMessageFor(model => model.Building.Email)
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Building.BuiltDate, "Built Date", new { @class = "col-md-3 control-label-row" })
@@ -55,35 +65,32 @@
                                 @Html.ValidationMessageFor(model => model.Building.BuiltDate)
                             </div>
                         </div>
-                    </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Building.NoOfFloors, "No of Floors", new { @class = "col-md-3 control-label-row" })
-                                    @Html.TextBoxFor(model => model.Building.NoOfFloors, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Number Of Floors", @id = "No of Floors" })
-                                    @Html.ValidationMessageFor(model => model.Building.NoOfFloors)
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Building.NoOfElevators, "No of Elevators", new { @class = "col-md-3 control-label-row" })
-                                    @Html.TextBoxFor(model => model.Building.NoOfElevators, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Number Of Elevators", @id = "No of Elevators" })
-                                    @Html.ValidationMessageFor(model => model.Building.NoOfElevators)
-                                    <span class="help-block">
-                                    
-                                    </span>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Building.NoOfFloors, "No of Floors", new { @class = "col-md-3 control-label-row" })
+                                @Html.TextBoxFor(model => model.Building.NoOfFloors, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Number Of Floors", @id = "No of Floors" })
+                                @Html.ValidationMessageFor(model => model.Building.NoOfFloors)
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Building.Comment, "Comments", new { @class = " col-md-3 control-label-row" })
-                                    @Html.TextAreaFor(model => model.Building.Comment, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Comments", @id = "Comments" })
-                                    @Html.ValidationMessageFor(model => model.Building.Comment)
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Building.NoOfElevators, "No of Elevators", new { @class = "col-md-3 control-label-row" })
+                                @Html.TextBoxFor(model => model.Building.NoOfElevators, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Number Of Elevators", @id = "No of Elevators" })
+                                @Html.ValidationMessageFor(model => model.Building.NoOfElevators)
+                                <span class="help-block">
+                                </span>
                             </div>
-                        </div>                   
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Building.Comment, "Comments", new { @class = " col-md-3 control-label-row" })
+                                @Html.TextAreaFor(model => model.Building.Comment, new { @class = "col-md-9 form-control mandatory", @placeholder = "Enter Comments", @id = "Comments" })
+                                @Html.ValidationMessageFor(model => model.Building.Comment)
+                            </div>
+                        </div>
+                    </div>                   
                 </div>
             </div>
         </div> 

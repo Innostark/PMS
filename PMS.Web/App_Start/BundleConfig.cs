@@ -38,7 +38,7 @@ namespace IdentitySample
                  "~/Scripts/bootstrap.js").Include(
                  "~/Scripts/bootstrap-datepicker.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/cssbundle").Include(
                       "~/Content/bootstrap.css").Include(
                       "~/Content/datepicker.css"));
 

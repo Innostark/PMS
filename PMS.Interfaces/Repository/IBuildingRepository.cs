@@ -7,7 +7,7 @@ namespace PMS.Interfaces.Repository
     public interface IBuildingRepository : IBaseRepository<Building, int>
     {
         BuildingResponse GetAllBuildings();
-        Building GetBuildingByName(string name, int id);
+        Building GetBuildingByName(int id);
         Building FindBuildingById(int buildingId);
         BuildingResponse GetAllBuildings(BuildingSearchRequest buildingSearchRequest);
     }

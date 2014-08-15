@@ -11,8 +11,8 @@ namespace PMS.Implementation.Services
         private readonly IBuildingRepository buildingRepository;
         private bool ValidateBuilding(Building building)
         {
-            Building buildingDbVersion = buildingRepository.GetBuildingByName(building.Name, building.BuildingId);
-            return buildingDbVersion == null;
+            Building buildingDbVersion = buildingRepository.GetBuildingByName( building.BuildingId);
+            return buildingDbVersion != null;
         }
         public BuildingService(IBuildingRepository buildingRepository)
         {
