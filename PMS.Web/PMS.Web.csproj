@@ -302,6 +302,7 @@
     <Content Include="Content\Images\logo-big.png" />
     <Content Include="Content\Images\logo-invert.png" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\logo1.jpg" />
     <Content Include="Content\Images\photo1.jpg" />
     <Content Include="Content\Images\sort_asc.png" />
     <Content Include="Content\Images\sort_asc_disabled.png" />
