@@ -100,6 +100,11 @@ namespace PMS.Web.Controllers
                                                               BuildingSearchRequest = request,
                                                               TotalNoOfRec = buildings.TotalCount
                                                           };
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_BuildingList", buildingListViewModel);
+            }
+
             return View(buildingListViewModel);
         }
 

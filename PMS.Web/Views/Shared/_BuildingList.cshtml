@@ -5,7 +5,7 @@
 @helper SortLink(string name, int id)
 {
     @Ajax.ActionLink(name, "BuildingList",
-        new { Sortby = id, isasc = (id != @Model.BuildingSearchRequest.SortBy || (!@Model.BuildingSearchRequest.IsAsc)), @Model.BuildingSearchRequest.PageSize, @Model.BuildingSearchRequest.SearchString },
+                new { Sortby = id, isasc = (id != @Model.BuildingSearchRequest.SortBy || (!@Model.BuildingSearchRequest.IsAsc)), @Model.BuildingSearchRequest.PageSize, @Model.BuildingSearchRequest.SearchString, @Model.BuildingSearchRequest.PhoneNumber },
         new AjaxOptions
         {
             UpdateTargetId = "gridContent", // <-- DOM element ID to update
@@ -25,8 +25,8 @@
     <input type="hidden" id="PageCount" value="@Model.BuildingList.PageCount" />
     <input type="hidden" id="DeleteItemId" value="" />
     <input type="hidden" id="CurrentPageNumber" value=@Model.BuildingSearchRequest.PageNo />
-    <input type="hidden" id="SearchText" value=@Model.BuildingSearchRequest.SearchString />
-    <input type="hidden" id="phoneNumber" value=@Model.BuildingSearchRequest.PhoneNumber />
+    <input type="hidden" id="SearchString" name="SearchString" value=@Model.BuildingSearchRequest.SearchString />
+    <input type="hidden" id="PhoneNumber" value=@Model.BuildingSearchRequest.PhoneNumber />
     <table id="buildingTable table" class="display dataTable" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -38,7 +38,7 @@
                 <th> @SortLink("No of Floors", 6)</th>
                 <th> @SortLink("No of Elevators", 7)</th>
 
-                <th class="editdelete"> Edit </th>
+                <th class="editdelete"> Actions </th>
                 <th></th>
             </tr>
         </thead>
