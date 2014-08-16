@@ -44,7 +44,9 @@ namespace IdentitySample.Controllers
             ApplicationUser userResult = UserManager.FindByEmail(userEmail);
             IList<IdentityUserRole> aspUserroles = userResult.Roles.ToList();
             IEnumerable<MenuRight> permissionSet = menuRightService.FindMenuItemsByRoleId(aspUserroles[0].RoleId);
-            Session["UserPermissionSet"] = permissionSet;
+
+            Session["UserMenu"] = permissionSet;
+            Session["UserPermissionSet"] = permissionSet.Select(menuRight => menuRight.Menu.PermissionKey).ToList();
         }
 
         private void CreateRoles()
@@ -152,16 +154,13 @@ namespace IdentitySample.Controllers
                 await
                     SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                         shouldLockout: false);
-
-
-            SetUserPermissions(model.Email);
-
-
             switch (result)
             {
                 case SignInStatus.Success:
                 {
-                    return RedirectToAction("Index", "Dashboard");
+                    SetUserPermissions(model.Email);
+                    return RedirectToAction("Index", "Dashboard");                    
+                    //TODO: Redirect to return Url 
                     //return RedirectToLocal(returnUrl);
                 }
                 case SignInStatus.LockedOut:
