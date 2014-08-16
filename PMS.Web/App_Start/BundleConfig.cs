@@ -54,7 +54,7 @@ namespace IdentitySample
                       "~/Content/CSS/architecture.css",
                       "~/Content/CSS/layout.css",
                       "~/Content/CSS/default.css",
-                      "~/Content/CSS/components.css",
+                      //"~/Content/CSS/components.css",
                       "~/Content/CSS/IstLayout.css",
                       "~/Content/jquery.dataTables.css"));
 

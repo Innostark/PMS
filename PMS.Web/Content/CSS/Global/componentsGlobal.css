@@ -1313,7 +1313,7 @@ Customized Bootstrap Close Icon
   background-repeat: no-repeat !important;
   text-indent: -10000px;
   outline: none;
-  background-image: url("../img/remove-icon-small.png") !important;
+  background-image: url("../image/remove-icon-small.png") !important;
 }
 
 /***
@@ -2153,7 +2153,7 @@ input[type="url"].spinner,
 input[type="search"].spinner,
 input[type="tel"].spinner,
 input[type="color"].spinner {
-  background-image: url("../img/input-spinner.gif") !important;
+  background-image: url("../image/input-spinner.gif") !important;
   background-repeat: no-repeat;
   background-position: right 8px;
 }
@@ -2624,7 +2624,7 @@ Metro icons
   margin-top: 3px;
   line-height: 14px;
   vertical-align: top;
-  background-image: url(../images/syncfusion-icons.png);
+  background-image: url(../image/syncfusion-icons.png);
   background-position: 0 0;
   background-repeat: no-repeat;
 }
@@ -2635,7 +2635,7 @@ Metro icons
   height: 30px;
   margin: 6px;
   vertical-align: middle;
-  background-image: url(../images/syncfusion-icons.png);
+  background-image: url(../image/syncfusion-icons.png);
   background-position: 0 0px;
   background-repeat: no-repeat;
 }
@@ -2672,7 +2672,7 @@ Metro icons
 
 /* white icon */
 .m-icon-white {
-  background-image: url(../images/syncfusion-icons-white.png);
+  background-image: url(../../images/syncfusion-icons-white.png);
 }
 
 /*  Misc */
@@ -2922,7 +2922,7 @@ Customized Bootstrap Panels
   padding: 10px 15px;
 }
 .accordion .panel .panel-title .accordion-toggle.accordion-toggle-styled {
-  background: url("../img/accordion-plusminus.png") no-repeat;
+  background: url("../image/accordion-plusminus.png") no-repeat;
   background-position: right -19px;
   margin-right: 15px;
 }
@@ -3192,7 +3192,7 @@ Portlets
   margin-left: 5px;
 }
 .portlet > .portlet-title > .tools > a.remove {
-  background-image: url(../img/portlet-remove-icon.png);
+  background-image: url(../image/portlet-remove-icon.png);
   background-repeat: no-repeat;
   width: 11px;
 }

@@ -287,9 +287,32 @@
     <Content Include="Content\CSS\bootstrap-rtl.css" />
     <Content Include="Content\CSS\components.css" />
     <Content Include="Content\CSS\default.css" />
+    <Content Include="Content\CSS\Global\componentsGlobal.css" />
+    <Content Include="Content\CSS\Global\plugins.css" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\temp\fontawesome-webfont.svg" />
     <Content Include="Content\CSS\IstLayout.css" />
     <Content Include="Content\CSS\layout.css" />
     <Content Include="Content\CSS\PagedList.css" />
+    <Content Include="Content\CSS\Pages\about-us.css" />
+    <Content Include="Content\CSS\Pages\blog.css" />
+    <Content Include="Content\CSS\Pages\coming-soon.css" />
+    <Content Include="Content\CSS\Pages\error.css" />
+    <Content Include="Content\CSS\Pages\image-crop.css" />
+    <Content Include="Content\CSS\Pages\inbox.css" />
+    <Content Include="Content\CSS\Pages\invoice.css" />
+    <Content Include="Content\CSS\Pages\lock.css" />
+    <Content Include="Content\CSS\Pages\login-soft.css" />
+    <Content Include="Content\CSS\Pages\login.css" />
+    <Content Include="Content\CSS\Pages\news.css" />
+    <Content Include="Content\CSS\Pages\portfolio.css" />
+    <Content Include="Content\CSS\Pages\pricing-table.css" />
+    <Content Include="Content\CSS\Pages\profile.css" />
+    <Content Include="Content\CSS\Pages\search.css" />
+    <Content Include="Content\CSS\Pages\tasks.css" />
+    <Content Include="Content\CSS\Pages\timeline.css" />
     <Content Include="Content\CSS\spinner.gif" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -310,6 +333,8 @@
     <Content Include="Content\Images\sort_desc.png" />
     <Content Include="Content\Images\sort_desc_disabled.png" />
     <Content Include="Content\Images\spinner.gif" />
+    <Content Include="Content\Images\syncfusion-icons-white.png" />
+    <Content Include="Content\Images\syncfusion-icons.png" />
     <Content Include="Content\jquery-ui-1.11.0.min.css" />
     <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\PagedList.css" />
@@ -730,6 +755,8 @@
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Common\Views\Shared\_Pager.cshtml" />
     <Content Include="Scripts\App\architecture.js" />
+    <Content Include="Scripts\App\Pages\login-soft.js" />
+    <Content Include="Scripts\App\Pages\login.js" />
     <Content Include="Scripts\App\requireConfig.js" />
     <Content Include="Scripts\App\ValidateFields.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -752,6 +779,14 @@
     <Content Include="RichTextEditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="RichTextEditor\samples\sample_posteddata.php" />
     <Content Include="RichTextEditor\skins\moono\readme.md" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\temp\fontawesome-webfont.eot" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\temp\fontawesome-webfont.ttf" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\temp\fontawesome-webfont.woff" />
+    <Content Include="Content\CSS\Global\Plugin\font-awesome\fonts\temp\FontAwesome.otf" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\button.js" />
     <Content Include="Scripts\carousel-rtl.js" />
@@ -857,6 +892,7 @@
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Building\BuildingList.cshtml" />
     <Content Include="Views\Shared\_BuildingList.cshtml" />
+    <Content Include="Views\Shared\_BlankLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
