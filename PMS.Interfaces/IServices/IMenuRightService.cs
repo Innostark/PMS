@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using PMS.Models.MenuModels;
 
 namespace PMS.Interfaces.IServices
@@ -11,6 +12,6 @@ namespace PMS.Interfaces.IServices
         /// <summary>
         /// Find Menu item by Role
         /// </summary>        
-        IQueryable<MenuRight> FindMenuItemsByRoleId(string roleId); 
+        IEnumerable<MenuRight> FindMenuItemsByRoleId(string roleId); 
     }
 }

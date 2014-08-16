@@ -16,6 +16,7 @@ using PMS.Implementation.Identity;
 using PMS.Interfaces.IServices;
 using PMS.Models.IdentityModels;
 using PMS.Models.IdentityModels.ViewModels;
+using PMS.Models.MenuModels;
 using PMS.Web.Controllers;
 
 namespace IdentitySample.Controllers
@@ -35,16 +36,17 @@ namespace IdentitySample.Controllers
         /// </summary>
         private void SetUserPermissions(string userEmail)
         {
-            ClaimsIdentity userIdentity = (ClaimsIdentity) User.Identity;
-            IEnumerable<Claim> claims = userIdentity.Claims;
-            string roleClaimType = userIdentity.RoleClaimType;
+            //ClaimsIdentity userIdentity = (ClaimsIdentity) User.Identity;
+            //IEnumerable<Claim> claims = userIdentity.Claims;
+            //string roleClaimType = userIdentity.RoleClaimType;
+            //IEnumerable<Claim> roles = claims.Where(c => c.Type == roleClaimType).ToList();
 
-            IEnumerable<Claim> roles = claims.Where(c => c.Type == roleClaimType).ToList();
+            ApplicationUser userResult = UserManager.FindByEmail(userEmail);
+            IList<IdentityUserRole> aspUserroles = userResult.Roles.ToList();
+            IEnumerable<MenuRight> permissionSet = menuRightService.FindMenuItemsByRoleId(aspUserroles[0].RoleId);
 
-            //ApplicationUser userResult = UserManager.FindByEmail(userEmail);
-            //IList<IdentityUserRole> roles = userResult.Roles.ToList();
-            //menuRightService.FindMenuItemsByRoleId(roles[0].RoleId);
-
+            Session["UserMenu"] = permissionSet;
+            Session["UserPermissionSet"] = permissionSet.Select(menuRight => menuRight.Menu.PermissionKey).ToList();
         }
 
         private void CreateRoles()
@@ -152,16 +154,13 @@ namespace IdentitySample.Controllers
                 await
                     SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                         shouldLockout: false);
-
-
-            SetUserPermissions(model.Email);
-
-
             switch (result)
             {
                 case SignInStatus.Success:
                 {
-                    return RedirectToAction("Index", "Dashboard");
+                    SetUserPermissions(model.Email);
+                    return RedirectToAction("Index", "Dashboard");                    
+                    //TODO: Redirect to return Url 
                     //return RedirectToLocal(returnUrl);
                 }
                 case SignInStatus.LockedOut:
