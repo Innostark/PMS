@@ -3192,25 +3192,25 @@ Portlets
   margin-left: 5px;
 }
 .portlet > .portlet-title > .tools > a.remove {
-  background-image: url(../img/portlet-remove-icon.png);
+  background-image: url(../image/portlet-remove-icon.png);
   background-repeat: no-repeat;
   width: 11px;
 }
 .portlet > .portlet-title > .tools > a.config {
-  background-image: url(../img/portlet-config-icon.png);
+  background-image: url(../image/portlet-config-icon.png);
   background-repeat: no-repeat;
   width: 12px;
 }
 .portlet > .portlet-title > .tools > a.reload {
-  background-image: url(../img/portlet-reload-icon.png);
+  background-image: url(../image/portlet-reload-icon.png);
   width: 13px;
 }
 .portlet > .portlet-title > .tools > a.expand {
-  background-image: url(../img/portlet-expand-icon.png);
+  background-image: url(../image/portlet-expand-icon.png);
   width: 14px;
 }
 .portlet > .portlet-title > .tools > a.collapse {
-  background-image: url(../img/portlet-collapse-icon.png);
+  background-image: url(../image/portlet-collapse-icon.png);
   width: 14px;
 }
 .portlet > .portlet-title > .tools > a:hover {
@@ -3287,19 +3287,19 @@ Portlets
   padding: 11px 0 9px 0;
 }
 .portlet.box > .portlet-title > .tools > a.remove {
-  background-image: url(../img/portlet-remove-icon-white.png);
+  background-image: url(../images/portlet-remove-icon-white.png);
 }
 .portlet.box > .portlet-title > .tools > a.config {
-  background-image: url(../img/portlet-config-icon-white.png);
+  background-image: url(../images/portlet-config-icon-white.png);
 }
 .portlet.box > .portlet-title > .tools > a.reload {
-  background-image: url(../img/portlet-reload-icon-white.png);
+  background-image: url(../images/portlet-reload-icon-white.png);
 }
 .portlet.box > .portlet-title > .tools > a.expand {
-  background-image: url(../img/portlet-expand-icon-white.png);
+  background-image: url(../images/portlet-expand-icon-white.png);
 }
 .portlet.box > .portlet-title > .tools > a.collapse {
-  background-image: url(../img/portlet-collapse-icon-white.png);
+  background-image: url(../images/portlet-collapse-icon-white.png);
 }
 .portlet.box > .portlet-title > .actions {
   padding: 6px 0;

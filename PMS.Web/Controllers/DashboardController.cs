@@ -7,6 +7,7 @@ namespace PMS.Web.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
+            
             return View();
         }
     }

@@ -41,6 +41,8 @@
         /// Menu Root Item Check
         /// </summary>
         public bool IsRootItem { get; set; }
+        //The Icon to display
+        public string Icon { get; set; }
         /// <summary>
         /// Menu Parent Item
         /// </summary>
