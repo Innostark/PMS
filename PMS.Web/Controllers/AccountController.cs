@@ -71,7 +71,7 @@ namespace IdentitySample.Controllers
                                         {
                                             DomainKey = model.DomainKey,
                                             ExpiryDate = (DateTime)model.ExpiryDate,
-                                            UserId = Guid.Parse(Session["LoginID"] as string)
+                                            UserId = Session["LoginID"] as string
                                         };
                 domainKeyService.AddDomainKey(domainKeys);
             }
