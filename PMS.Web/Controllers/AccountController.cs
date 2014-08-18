@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Web.Security;
 using IdentitySample.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -14,6 +15,7 @@ using System.Web.Mvc;
 using System.Collections.Generic;
 using PMS.Implementation.Identity;
 using PMS.Interfaces.IServices;
+using PMS.Models.DomainModels;
 using PMS.Models.IdentityModels;
 using PMS.Models.IdentityModels.ViewModels;
 using PMS.Models.MenuModels;
@@ -29,6 +31,7 @@ namespace IdentitySample.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IMenuRightsService menuRightService;
+        private IDomainKeyService domainKeyService;
 
 
         /// <summary>
@@ -58,13 +61,35 @@ namespace IdentitySample.Controllers
                 roleManager.Create(new IdentityRole("Landlord"));
         }
 
+        private void SetUserRoles(ApplicationUser applicationUser, RegisterViewModel model)
+        {
+            //check if User is "SuperAdmin", create New user with Role "Admin"
+            if (Session["RoleName"].ToString().Equals("SuperAdmin"))
+            {
+                UserManager.AddToRole(applicationUser.Id, "Admin");
+                DomainKeys domainKeys = new DomainKeys
+                                        {
+                                            DomainKey = model.DomainKey,
+                                            ExpiryDate = (DateTime)model.ExpiryDate,
+                                            UserId = Session["LoginID"] as string
+                                        };
+                domainKeyService.AddDomainKey(domainKeys);
+            }
+            //else is Manadatory that Current user is "Admin", and Always Creates new user with Role As "Admin"
+            else
+            {
+                UserManager.AddToRole(applicationUser.Id, "Landlord");
+            }
+        }
+
         #endregion
 
         #region Constructor
 
-        public AccountController(IMenuRightsService menuRightService)
+        public AccountController(IMenuRightsService menuRightService, IDomainKeyService domainKeyService)
         {
             this.menuRightService = menuRightService;
+            this.domainKeyService = domainKeyService;
         }
 
         #endregion
@@ -246,9 +271,7 @@ namespace IdentitySample.Controllers
                 if (result.Succeeded)
                 {
                     var currentUser = UserManager.FindByName(user.UserName);
-                    //Assigning Role "landlord" to user by default
-                    var roleresult = UserManager.AddToRole(currentUser.Id, "Landlord");
-
+                    SetUserRoles(currentUser, model);
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = code},
                         protocol: Request.Url.Scheme);

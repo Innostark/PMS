@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using PMS.Implementation.Identity;
 using PMS.Models.IdentityModels;
@@ -32,10 +34,11 @@ namespace PMS.Web.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 ApplicationUser result= HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+                string role=HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.Roles.ToList()[0].RoleId).Name;
                 Session["FullName"] = result.FirstName + " " + result.LastName;
                 Session["LoginID"] = result.Id;
+                Session["RoleName"] = role;
                 return;
-                //return result.FirstName + " " + result.LastName;
             }
             
              

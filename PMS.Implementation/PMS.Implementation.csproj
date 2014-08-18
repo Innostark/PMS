@@ -123,6 +123,7 @@
     <Compile Include="Identity\IdentityOperation.cs" />
     <Compile Include="Services\BuildingService.cs" />
     <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\DomainKeyService.cs" />
     <Compile Include="Services\LoggerService.cs" />
     <Compile Include="Services\MenuRightsService.cs" />
     <Compile Include="Services\DepartmentService.cs" />

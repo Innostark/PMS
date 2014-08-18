@@ -32,14 +32,15 @@ namespace PMS.Repository.BaseRepository
         public BaseDbContext()
         {            
         }
-        #endregion
-        #region Public
 
-        public BaseDbContext(string connectionString,IUnityContainer container)
+        public BaseDbContext(string connectionString, IUnityContainer container)
             : base(connectionString)
         {
             this.container = container;
         }
+        #endregion
+        #region Public
+
         #region Logger
 
         /// <summary>
@@ -70,6 +71,7 @@ namespace PMS.Repository.BaseRepository
         public DbSet<Category> Categories { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Building> Buildings { get; set; }
+        public DbSet<DomainKeys> DomainKeys { get; set; }
 
         #endregion
     }
