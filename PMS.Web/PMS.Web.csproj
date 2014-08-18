@@ -274,6 +274,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="ViewModels\BuildingAjaxViewModel.cs" />
     <Compile Include="ViewModels\BuildingListViewModel.cs" />
     <Compile Include="ViewModels\Buildings\BuildingViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
@@ -962,6 +963,7 @@
     <Content Include="Views\Building\BuildingList.cshtml" />
     <Content Include="Views\Shared\_BuildingList.cshtml" />
     <Content Include="Views\Shared\_BlankLayout.cshtml" />
+    <Content Include="Views\Building\Building.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />

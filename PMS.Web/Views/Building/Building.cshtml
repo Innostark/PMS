@@ -1,0 +1,165 @@
+﻿@model PMS.Web.ViewModels.Buildings.BuildingViewModel
+@{
+    ViewBag.Title = "Building";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="page-container">
+        <div>
+            <a class="btn btn-success col-md-offset-10 col-md-2" href="AddEdit">Create New</a>
+        </div>
+        <div>
+            <fieldset>
+                <table>
+                    <tr>
+                        <td>
+                            <input data-filter="1" placeholder="name" type="text" id="Name" />
+                        </td>
+                        <td>
+                            <input data-filter="2" placeholder="Phone" type="text" id="Phone" />
+                        </td>
+                        <td>
+                            <input type="button" id="btnFltr" value="Filter" />
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        <table id="buildingTable" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Built Date</th>
+                    <th>No Of Floors</th>
+                    <th>No Of Elevators</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $('#buildingTable').dataTable({
+            "iDisplayLength": 10,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [[1, 'asc']],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [8, 9] },
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            "columns": [
+                { "data": "BuildingId" },
+                { "data": "Name" },
+                { "data": "PhoneNumber" },
+                { "data": "Email" },
+                { "data": "Address" },
+                { "data": "BuiltDate" },
+                { "data": "NoOfFloors" },
+                { "data": "NoOfElevators" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='edit' href='javascript:;'></a>"
+                },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='delete' href='javascript:;'></a>"
+                }
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "/Building/Building",
+                type: "POST",
+                dataType: "json",
+                data: function(params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    if (params.SortBy === 0) {
+                        params.SortBy = 1;
+                    }
+                    params.IsAsc = params.order[0].dir === "asc";
+                    params.SearchString = $('#Name').val();
+                    params.PhoneNumber = $('#Phone').val();
+                }
+            }
+        });
+        
+        $('#btnFltr').on('click', function(e) {
+            oTable.fnDraw();
+
+        });
+        
+        
+        $('#buildingTable').on('click', '.delete', function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this row ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            var serviceURL = '/Building/Delete';
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: "{buildingId:" + aData[0] + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+
+            function successFunc(data, status) {
+
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
+
+                    displayLength = oTable.fnSettings()._iDisplayLength,
+                    displayStart = oTable.fnSettings()._iDisplayStart;
+
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength) + 1;
+
+                if (totalRcd > page * displayLength)
+                    oTable.fnPageChange(page);
+                else
+                    oTable.fnPageChange(page - 1);
+            }
+
+            function errorFunc(e, status) {
+
+                alert('error');
+            }
+
+
+        });
+        
+        // Edit
+        $('#buildingTable').on('click', '.edit', function (e) {
+            e.preventDefault();
+
+
+        });
+        
+    });
+</script>

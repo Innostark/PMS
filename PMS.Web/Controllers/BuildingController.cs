@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using PagedList;
 using PMS.Interfaces.IServices;
 using PMS.Models.RequestModels;
@@ -25,7 +26,7 @@ namespace PMS.Web.Controllers
             this.buildingService = buildingService;
         }
         // GET: Building
-        [SiteAuthorize(PermissionKey = "Buildings")]
+        //[SiteAuthorize(PermissionKey = "Buildings")]
         public ActionResult Index()
         {
             var buildingViewModel = GetAll();
@@ -91,7 +92,7 @@ namespace PMS.Web.Controllers
             buildingService.DeleteBuilding(buildingToBeDeleted);
             return RedirectToAction("BuildingList");
         }
-        [SiteAuthorize(PermissionKey = "BuildingList")]
+        //[SiteAuthorize(PermissionKey = "BuildingList")]
         public ActionResult BuildingList(BuildingSearchRequest request)
         {
             request.UserId = Guid.Parse(Session["LoginID"] as string);
@@ -109,6 +110,37 @@ namespace PMS.Web.Controllers
             }
 
             return View(buildingListViewModel);
+        }
+
+        // GET: Building
+        //[SiteAuthorize(PermissionKey = "Buildings")]
+        public ActionResult Building()
+        {
+            //var buildingViewModel = GetAll();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Building(BuildingSearchRequest request)
+        {
+            request.UserId = Guid.Parse(Session["LoginID"] as string);
+            var buildings = buildingService.GetAllBuildings(request);
+            IEnumerable<Building> buildingList = buildings.Buildings.Select(x => x.CreateFrom()).ToList();
+            BuildingAjaxViewModel buildingListViewModel = new BuildingAjaxViewModel
+            {
+                data = buildingList,
+                recordsTotal = buildings.TotalCount,
+                recordsFiltered = buildings.TotalCount
+            };
+
+            //if (Request.IsAjaxRequest())
+            //{
+            //    return PartialView("_BuildingList", buildingListViewModel);
+            //}
+
+            //JsonConvert.SerializeObject(buildingListViewModel);
+
+            return Json(buildingListViewModel, JsonRequestBehavior.AllowGet);
         }
 
     }
