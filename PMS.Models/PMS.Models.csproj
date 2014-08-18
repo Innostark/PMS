@@ -102,6 +102,7 @@
     <Compile Include="DomainModels\Building.cs" />
     <Compile Include="DomainModels\Category.cs" />
     <Compile Include="DomainModels\Department.cs" />
+    <Compile Include="DomainModels\DomainKeys.cs" />
     <Compile Include="DomainModels\Product.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs" />
     <Compile Include="IdentityModels\ApplicationUser.cs" />

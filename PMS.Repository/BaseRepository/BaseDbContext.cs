@@ -70,6 +70,7 @@ namespace PMS.Repository.BaseRepository
         public DbSet<Category> Categories { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Building> Buildings { get; set; }
+        public DbSet<DomainKeys> DomainKeys { get; set; }
 
         #endregion
     }

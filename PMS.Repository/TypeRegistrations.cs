@@ -15,6 +15,7 @@ namespace PMS.Repository
             unityContainer.RegisterType<ICategoryRepository, CategoryRepository>();
             unityContainer.RegisterType<IDepartmentRepository, DepartmentRepository>();
             unityContainer.RegisterType<IBuildingRepository, BuildingRepository>();
+            unityContainer.RegisterType<IDomainKeyRepository, DomainKeyRepository>();
             unityContainer.RegisterType<DbContext, BaseDbContext>(new HierarchicalLifetimeManager());
 
             //unityContainer.RegisterType<IUser, ApplicationUser>();

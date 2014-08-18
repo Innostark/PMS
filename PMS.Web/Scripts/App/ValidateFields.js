@@ -6,6 +6,10 @@
     for (var i = 0; i < fields.length; i++) {
         var value = $(fields[i]).val();
         if (value.toString().length == 0) {
+            //checking session
+            if ((!document.getElementById("RoleName").value == "SuperAdmin") &&  ($(fields[i])[0].id == "DomainKey" || $(fields[i])[0].id == "ExpiryDate")){
+                continue;
+            }
             missingCounter++;
             $(fields[i]).css('border-color', 'red');
             inCompleteFields += ($(fields[i]).attr('id')+ (i+1 == fields.length ?"": ", "));
