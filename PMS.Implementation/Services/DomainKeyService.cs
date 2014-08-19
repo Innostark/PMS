@@ -31,5 +31,11 @@ namespace PMS.Implementation.Services
             var users = domainKeyRepository.GetAllUsersByUserId(userSearchRequest);
             return users;
         }
+
+
+        public DomainKeys GetDomainKeyByUserId(string userId)
+        {
+            return domainKeyRepository.GetDomainKeyByUserId(userId);
+        }
     }
 }

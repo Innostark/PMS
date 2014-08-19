@@ -182,6 +182,29 @@ namespace IdentitySample.Controllers
 
             // This doen't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
+            
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    ModelState.AddModelError("", "Please confirm your email");
+                    return View();
+                }
+                ApplicationUser resultUser = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(model.Email);
+                string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(resultUser.Roles.ToList()[0].RoleId).Name;
+                if (!role.ToLower().Contains("superadmin"))
+                {
+                    DomainKeys resultDomainKey = domainKeyService.GetDomainKeyByUserId(user.Id);
+                    if (resultDomainKey == null || resultDomainKey.ExpiryDate < DateTime.Now)
+                    {
+                        ModelState.AddModelError("", "Please renew your license");
+                        return View();
+                    }
+                }
+
+
+            }
             var result =
                 await
                     SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
@@ -283,9 +306,9 @@ namespace IdentitySample.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = code},
                         protocol: Request.Url.Scheme);
                     await
-                        UserManager.SendEmailAsync(user.Id, "Confirm your account",
+                        UserManager.SendEmailAsync(model.Email, "Confirm your account",
                             "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
-                            "\">link</a>");
+                            "\">link</a><br>Your Password is:"+model.Password);
                     ViewBag.Link = callbackUrl;
                     return View("DisplayEmail");
                 }
@@ -301,6 +324,7 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
+           
             if (userId == null || code == null)
             {
                 return View("Error");

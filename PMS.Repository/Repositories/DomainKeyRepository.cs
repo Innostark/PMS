@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Practices.Unity;
 using PMS.Interfaces.Repository;
 using PMS.Models.Common;
@@ -57,5 +58,11 @@ namespace PMS.Repository.Repositories
             return new DomainKeyResponse { Users = users, TotalCount = DbSet.Count(query) };
         } 
         #endregion
+
+
+        public DomainKeys GetDomainKeyByUserId(string userId)
+        {
+            return DbSet.SingleOrDefault(x=>x.UserId==userId);
+        }
     }
 }
