@@ -50,7 +50,7 @@ namespace IdentitySample.Controllers
 
             ApplicationUser userResult = UserManager.FindByEmail(userEmail);
             IList<IdentityUserRole> aspUserroles = userResult.Roles.ToList();
-            IEnumerable<MenuRight> permissionSet = menuRightService.FindMenuItemsByRoleId(aspUserroles[0].RoleId);
+            IEnumerable<MenuRight> permissionSet = menuRightService.FindMenuItemsByRoleId(aspUserroles[0].RoleId).ToList();
 
             Session["UserMenu"] = permissionSet;
             Session["UserPermissionSet"] = permissionSet.Select(menuRight => menuRight.Menu.PermissionKey).ToList();
@@ -88,6 +88,20 @@ namespace IdentitySample.Controllers
             else
             {
                 UserManager.AddToRole(applicationUser.Id, "Landlord");
+                DomainKeys adminDomainKeys = domainKeyService.GetDomainKeyByUserId(Session["LoginID"] as string);
+                DomainKeys domainKeys = new DomainKeys
+                {
+                    DomainKey = adminDomainKeys.DomainKey,
+                    //ExpiryDate = (DateTime)model.ExpiryDate,
+                    ExpiryDate = Convert.ToDateTime(adminDomainKeys.ExpiryDate),
+                    UserId = UserId,
+                    CreatedDate = (DateTime.Now),
+                    UpdatedDate = DateTime.Now,
+                    UpdatedBy = Session["LoginID"] as string,
+                    CreatedBy = Session["LoginID"] as string
+                };
+                domainKeyService.AddDomainKey(domainKeys);
+
             }
         }
 
@@ -573,6 +587,7 @@ namespace IdentitySample.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session.Abandon();
             AuthenticationManager.SignOut();
             return RedirectToAction("Login", "Account");
         }

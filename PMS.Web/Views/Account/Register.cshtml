@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                             }
-                            @if (Session["RoleName"].ToString().Equals("SuperAdmin") || Session["RoleName"].ToString().Equals("Admin"))
+                            @if (Session["RoleName"].ToString().Equals("SuperAdmin") ) 
                             {
                                 if (Model.UserId == null || Model.UserId == "")
                                  {
@@ -118,8 +118,13 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-offset-3 col-md-9">
-                                    <button type="submit" class=" btn btn-circle blue" onclick="return (ValidateFields())">Save</button>
-                                    <button type="button" class="btn btn-circle default">Cancel</button>
+                                    @if (Session["RoleName"].ToString().Equals("SuperAdmin"))
+                                    {
+                                        <button type="submit" class=" btn btn-circle blue" onclick=" return (ValidateFields()) ">Save</button>
+                                    }
+                                    <a href="Users">
+                                        <button type="button" class="btn btn-circle default">Cancel</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

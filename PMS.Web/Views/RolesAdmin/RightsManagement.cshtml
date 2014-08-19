@@ -38,10 +38,10 @@
                             </td>
                         </tr>
                         <tr class="col-sm-12">
-                            <td class="col-sm-3"></td>
+                            <td class="col-sm-2"></td>
                             @foreach (var childItems in @Model.Rights.Where(childItem => childItem.ParentId == item.MenuId))
                             {
-                                <td class="col-sm-3">
+                                <td class="col-sm-2">
                                     @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId })
                                     @*<input type="checkbox" name="ContentTypeFilter" value="@childItems.MenuTitle" checked='@(childItems.IsSelected)' />*@
                                     <label style="padding-right: 10px;">@childItems.MenuTitle</label>
