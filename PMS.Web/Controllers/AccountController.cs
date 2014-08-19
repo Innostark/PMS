@@ -50,7 +50,7 @@ namespace IdentitySample.Controllers
 
             ApplicationUser userResult = UserManager.FindByEmail(userEmail);
             IList<IdentityUserRole> aspUserroles = userResult.Roles.ToList();
-            IEnumerable<MenuRight> permissionSet = menuRightService.FindMenuItemsByRoleId(aspUserroles[0].RoleId);
+            IEnumerable<MenuRight> permissionSet = menuRightService.FindMenuItemsByRoleId(aspUserroles[0].RoleId).ToList();
 
             Session["UserMenu"] = permissionSet;
             Session["UserPermissionSet"] = permissionSet.Select(menuRight => menuRight.Menu.PermissionKey).ToList();
@@ -585,6 +585,7 @@ namespace IdentitySample.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session.Abandon();
             AuthenticationManager.SignOut();
             return RedirectToAction("Login", "Account");
         }
