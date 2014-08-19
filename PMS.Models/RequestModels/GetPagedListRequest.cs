@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace PMS.Models.RequestModels
 {
     public class GetPagedListRequest
@@ -15,12 +14,16 @@ namespace PMS.Models.RequestModels
             PageSize = 5;
         }
 
-        //user select page size or number of records to be displayed
-        public int PageSize { get; set; }
+        /// <summary>
+        /// Search String
+        /// </summary>
         public string SearchString { get; set; }
-        public string PhoneNumber { get; set; }
-        public Guid UserId { get; set; }
-
+        
+        /// <summary>
+        /// user select page size or number of records to be displayed
+        /// </summary>
+        public int PageSize { get; set; }
+        
         /// <summary>
         /// PageNo
         /// </summary>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -32,10 +29,11 @@ namespace PMS.Web.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 ApplicationUser result= HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+                string role=HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.Roles.ToList()[0].RoleId).Name;
                 Session["FullName"] = result.FirstName + " " + result.LastName;
                 Session["LoginID"] = result.Id;
+                Session["RoleName"] = role;
                 return;
-                //return result.FirstName + " " + result.LastName;
             }
             
              

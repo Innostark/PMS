@@ -1,112 +1,141 @@
-﻿@*@model IdentitySample.Models.RegisterViewModel*@
+﻿
 @model  PMS.Models.IdentityModels.ViewModels.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
-    
-    
+    ViewBag.Title = "Register"; 
 }
-
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
       <h3 class="page-title">
-        Register New User
+        Add/Edit User
     </h3>
-     <div class="tab-content">
-							<div class="tab-pane active" id="tab_0">
-								<div class="portlet box green">
-									<div class="portlet-title">
-										<div class="caption">
-											<i class="fa fa-user"></i>Manage your users
-										</div>
-										<div class="tools">
-											<a href="javascript:;" class="collapse">
-											</a>
-											@*<a href="#portlet-config" data-toggle="modal" class="config">
-											</a>
-											<a href="javascript:;" class="reload">
-											</a>*@
-											<a href="javascript:;" class="remove">
-											</a>
-										</div>
-									</div>
-									<div class="portlet-body form">
-										<!-- BEGIN FORM-->
-										<form action="#" class="form-horizontal">
-											<div class="form-body">
-											    <div class="form-group">
-											        <label class="col-md-3 control-label">First Name</label>
-											        <div class="col-md-4">
-											            @*<input type="text" class="form-control input-circle" placeholder="Enter text">*@
-											            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control input-circle", placeholder = "Enter First Name" })
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_0">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Manage your users
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form action="#" class="form-horizontal">
+                        <div class="form-body">
+                            <input type="hidden" id="RoleName" value="@Session["RoleName"]"/>
+                            <input type="hidden" id="UserId" value=@Model.UserId/>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">First Name</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class =  "form-control input-circle mandatory", placeholder = "Enter First Name" })
 														
-											        </div>
-											    </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label">Last Name</label>
-                                                    <div class="col-md-4">
-                                                        @*<input type="text" class="form-control input-circle" placeholder="Enter text">*@
-                                                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-circle", placeholder = "Enter Last Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Last Name</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-circle mandatory", placeholder = "Enter Last Name" })
 
-                                                    </div>
-                                                </div>
-											    <div class="form-group">
-											        <label class="col-md-3 control-label">Email Address</label>
-											        <div class="col-md-4">
-											            <div class="input-icon">
-											                @*<span class="input-group-addon input-circle-left">*@
-											                <i class="fa fa-envelope"></i>
-											                @*</span>*@
-											                @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-circle", placeholder = "Email Address" })
-
-
-
-											            </div>
-											        </div>
-											    </div>
-											    <div class="form-group">
-											        <label class="col-md-3 control-label">Password</label>
-											        <div class="col-md-4">
-											            <div class="input-icon">
-											                @*<span class="input-group-addon input-circle-left">*@
-											                <i class="fa fa-user"></i>
-											                @*</span>*@
-											                @Html.PasswordFor(m => m.Password, new { @class = "form-control input-circle" , placeholder = "Password"})
-											            </div>
-											        </div>
-											    </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label">Confirm Password</label>
-                                                    <div class="col-md-4">
-                                                        <div class="input-icon">
-                                                            @*<span class="input-group-addon input-circle-left">*@
-                                                            <i class="fa fa-user"></i>
-                                                            @*</span>*@
-                                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control input-circle", placeholder = "Confirm Password" })
-                                                        </div>
-                                                    </div>
-                                                </div>
-											
-											</div>
-											<div class="form-actions">
-												<div class="row">
-													<div class="col-md-offset-3 col-md-9">
-														<button type="submit" class="btn btn-circle blue">Register</button>
-														<button type="button" class="btn btn-circle default">Cancel</button>
-													</div>
-												</div>
-											</div>
-										</form>
-										<!-- END FORM-->
-									</div>
-								</div>
-								
-							</div>
-						</div>
+                                </div>
+                            </div>
+                            @if (Model.UserId == null || Model.UserId == "")
+                            {
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Email Address</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-envelope"></i>
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-circle mandatory", placeholder = "Email Address" })
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Password</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-user"></i>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control input-circle mandatory", placeholder = "Password" })
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Confirm Password</label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon">
+                                            <i class="fa fa-user"></i>
+                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control input-circle", placeholder = "Confirm Password" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Session["RoleName"].ToString().Equals("SuperAdmin") || Session["RoleName"].ToString().Equals("Admin"))
+                            { 
+                                if (Model.UserId == null || Model.UserId == "")
+                                 {
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Domain Key</label>
+                                         <div class="col-md-4">
+                                             <div class="input-icon">
+                                                 <i class="fa fa-key"></i>
+                                                 @Html.TextBoxFor(m => m.DomainKey, new {@class = "form-control input-circle mandatory", placeholder = "Domain Key", @id = "DomainKey"})
+                                             </div>
+                                         </div>
+                                     </div>
+                                 }
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Expiry Date</label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon">
+                                            <i class="fa fa-calendar"></i>
+                                            @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "form-control input-circle datepicker mandatory", @placeholder = "mm/dd/yyyy", @id = "ExpiryDate" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.UserId != null && Model.UserId != "")
+                            {
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Email</label>
+                                    <div class="col-md-4">
+                                        <label >@Model.Email</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Domain Key</label>
+                                    <div class="col-md-4">
+                                        <label>@Model.DomainKey</label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class=" btn btn-circle blue" onclick="return (ValidateFields())">Save</button>
+                                    <button type="button" class="btn btn-circle default">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
     
 }
-
-                    @*@section Scripts {
-                        @Scripts.Render("~/bundles/jqueryval")
-                    }*@
+<script type="text/javascript" src="~/Scripts/App/ValidateFields.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            autoclose: true,
+            //startDate: '-3d'
+        });
+    });
+</script> 

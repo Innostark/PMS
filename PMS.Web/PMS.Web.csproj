@@ -244,9 +244,11 @@
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\ProductResponseMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
+    <Compile Include="ModelMappers\UsersMappers.cs" />
     <Compile Include="Models\Building.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Users.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -272,10 +274,12 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="ViewModels\BuildingAjaxViewModel.cs" />
     <Compile Include="ViewModels\BuildingListViewModel.cs" />
     <Compile Include="ViewModels\Buildings\BuildingViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
+    <Compile Include="ViewModels\Domain\UserAjaxViewModel.cs" />
     <Compile Include="ViewModels\Products\ProductViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
   </ItemGroup>
@@ -962,6 +966,8 @@
     <Content Include="Views\Shared\_BuildingList.cshtml" />
     <Content Include="Views\Shared\_BlankLayout.cshtml" />
     <Content Include="Views\RolesAdmin\RightsManagement.cshtml" />
+    <Content Include="Views\Building\Building.cshtml" />
+    <Content Include="Views\Account\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />

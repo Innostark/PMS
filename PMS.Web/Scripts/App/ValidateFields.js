@@ -1,22 +1,26 @@
 ﻿function ValidateFields() {
-
-    var missingCounter = 0;
-    var fields = $('.mandatory'); //Array for all textboxes
-    var inCompleteFields ="";
-    for (var i = 0; i < fields.length; i++) {
-        var value = $(fields[i]).val();
-        if (value.toString().length == 0) {
-            missingCounter++;
-            $(fields[i]).css('border-color', 'red');
-            inCompleteFields += ($(fields[i]).attr('id')+ (i+1 == fields.length ?"": ", "));
+        var missingCounter = 0;
+        var fields = $('.mandatory'); //Array for all textboxes
+        var inCompleteFields ="";
+        for (var i = 0; i < fields.length; i++) {
+            var value = $(fields[i]).val();
+            if (value.toString().length == 0) {
+                //checking session
+                if ((!document.getElementById("RoleName").value == "SuperAdmin") &&  ($(fields[i])[0].id == "DomainKey" || $(fields[i])[0].id == "ExpiryDate")){
+                    continue;
+                }
+                missingCounter++;
+                $(fields[i]).css('border-color', 'red');
+                inCompleteFields += ($(fields[i]).attr('id')+ (i+1 == fields.length ?"": ", "));
+            }
+            else
+                $(fields[i]).css('border-color', 'gainsboro');
         }
-        else
-            $(fields[i]).css('border-color', 'gainsboro');
-    }
-    if (missingCounter > 0) {
-        toastr.error("Please Enter Fields: " + inCompleteFields);
-        return false;
-    }
+        if (missingCounter > 0) {
+            toastr.error("Please Enter Fields: " + inCompleteFields);
+            return false;
+        }
+    
     return true;
 }
 

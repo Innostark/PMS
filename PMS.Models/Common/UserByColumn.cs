@@ -1,39 +1,35 @@
 ﻿namespace PMS.Models.Common
 {
-    public enum BuildingByColumn
+    public enum UserByColumn
     {
         /// <summary>
         /// Name
         /// </summary>
-        Name = 1,
-
-        /// <summary>
-        /// PhoneNumber
-        /// </summary>
-        PhoneNumber = 2,
-
+        Name =1,
         /// <summary>
         /// Email
         /// </summary>
-        Email = 3,
+        Email = 2,
         /// <summary>
-        /// Address
+        /// Created Date
         /// </summary>
-        Address = 4,
+        CreatedDate = 3,
         /// <summary>
-        /// BuiltDate
+        /// Updated By
         /// </summary>
-        BuiltDate = 5,
+        UpdatedBy = 4,
+        /// <summary>
+        /// Updated Date
+        /// </summary>
+        UpdatedDate = 5,
+        /// <summary>
+        /// RoleName
+        /// </summary>
+        RoleName = 6,
+        /// <summary>
+        /// ExpiryDate
+        /// </summary>
+        ExpiryDate = 7,
 
-        /// <summary>
-        /// NoOfFloors
-        /// </summary>
-        NoOfFloors = 6,
-
-        /// <summary>
-        /// NoOfElevators
-        /// </summary>
-        NoOfElevators = 7,
-       
     }
 }

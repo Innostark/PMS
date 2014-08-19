@@ -1,35 +1,94 @@
-﻿@using Microsoft.AspNet.Identity;
-@{
-    ViewBag.Title = "Manage Account";
+﻿@{
+    ViewBag.Title = "Change Password";
 }
-<div class="page-height">
-    @*<div class="portlet-title caption">
-        <i class="font-green-haze"></i>
-        <h2><span class="caption-subject font-green-haze bold uppercase">Change Password</span></h2>
-    </div>*@
+
+
+@using Microsoft.AspNet.Identity
+@model  PMS.Models.IdentityModels.ViewModels.ChangePasswordViewModel
+@{
+    ViewBag.Title = "Change Password";
+
+
+}
+
+@using (Html.BeginForm("Manage", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
     <h3 class="page-title">
-        Change Password<small> manage your account password</small>
+        Change Password
     </h3>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_0">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>
+                        You're logged in as <strong>@User.Identity.GetUserName()</strong>.
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                        @*<a href="#portlet-config" data-toggle="modal" class="config">
+                            </a>
+                            <a href="javascript:;" class="reload">
+                            </a>*@
+                        <a href="javascript:;" class="remove">
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form action="#" class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Old Password</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-key fa-fw"></i>
+                                        @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control input-circle", placeholder = "Enter Old Password Here" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">New Password</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-lock"></i>
+                                        @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control input-circle", placeholder = "Enter New Password Here" })
+                                        @Html.ValidationMessageFor(m=> m.NewPassword)
 
-    <p class="text-success">@ViewBag.StatusMessage</p>
-    <div class="row">
-        <div class="col-md-12">
-            @*@if (ViewBag.HasLocalPassword)*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Confirm New Password</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-lock"></i>
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control input-circle", placeholder = "Confirm New Password" })
+                                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                                    </div>
+                                </div>
+                            </div>
+                           
 
-            @Html.Partial("_ChangePasswordPartial")
-            @*}
-                else
-                {
-                    @Html.Partial("_SetPasswordPartial")
-                }
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class="btn btn-circle blue">Save</button>
+                                    <a href="~/Dashboard/Index">
+                                        <button type="button" class="btn btn-circle default">Cancel</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
 
-                <section id="externalLogins">
-                    @Html.Action("RemoveAccountList")
-                    @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
-                </section>*@
         </div>
     </div>
-</div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+
+}
