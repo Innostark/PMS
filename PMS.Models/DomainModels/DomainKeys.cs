@@ -12,9 +12,17 @@ namespace PMS.Models.DomainModels
         public int KeyId { get; set; }
         public string DomainKey { get; set; }
         public DateTime ExpiryDate { get; set; }
-        
+        //User Being Created
         public string UserId { get; set; }
+        //User Creation Date
+        public DateTime CreatedDate { get; set; }
+        //record Created By
+        public string CreatedBy { get; set; }
+        //Record Updated Date
+        public DateTime? UpdatedDate { get; set; }
+        //Record Updated by
+        public string UpdatedBy { get; set; }
         [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

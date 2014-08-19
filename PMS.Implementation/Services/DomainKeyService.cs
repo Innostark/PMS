@@ -1,7 +1,12 @@
 ﻿using System;
+using System.CodeDom.Compiler;
+using System.Collections;
+using System.Collections.Generic;
 using PMS.Interfaces.IServices;
 using PMS.Interfaces.Repository;
 using PMS.Models.DomainModels;
+using PMS.Models.RequestModels;
+using PMS.Models.ResponseModels;
 
 namespace PMS.Implementation.Services
 {
@@ -19,6 +24,12 @@ namespace PMS.Implementation.Services
             domainKeyRepository.Add(domainKey);
             domainKeyRepository.SaveChanges();
             return true;
+        }
+
+        public DomainKeyResponse GetAllUsersByUserId(UserSearchRequest userSearchRequest)
+        {
+            var users = domainKeyRepository.GetAllUsersByUserId(userSearchRequest);
+            return users;
         }
     }
 }

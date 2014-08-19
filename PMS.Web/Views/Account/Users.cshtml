@@ -1,0 +1,155 @@
+﻿@model PMS.Web.ViewModels.Domain.UserAjaxViewModel
+@{
+    ViewBag.Title = "Users";
+}
+@using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h3 class="page-title">
+        Users
+    </h3>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_0">
+            <div class="portlet box blue-hoki">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Filters
+                    </div>
+                    <div class="tools">
+                        <button type="submit" class="btn yellow">Submit</button>
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="portlet-body form">
+                    <div class="form-actions">
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label class="col-md-3 control-label"> Search Name: </label>
+                                    </td>
+                                    <td>
+                                        <input data-filter="1" placeholder="Search Name" type="text" id="Name" class="form-control" />
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input data-filter="2" placeholder="Search Email" type="text" id="Email" class="form-control " />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+     <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Users
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+
+                @*<div class="page-container">*@
+                <div class="portlet-body form">
+                    <div>
+                        <a class="btn btn-success col-md-offset-10 col-md-2" href="AddEdit">Create New</a>
+                    </div>
+                    
+                    <table id="userTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Created Date</th>
+                                <th>Updated By</th>
+                                <th>Updated Date</th>
+                                <th>Role</th>
+                                <th>Expiry Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $('#userTable').dataTable({
+            "iDisplayLength": 9,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [[1, 'asc']],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [7, 8] },
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            "columns": [
+                { "data": "KeyId" },
+                { "data": "Name" },
+                { "data": "Email" },
+                { "data": "CreatedDate" },
+                { "data": "UpdatedBy" },
+                { "data": "UpdatedDate" },
+                { "data": "RoleName" },
+                { "data": "ExpiryDate" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='edit' href='javascript:;'></a>"
+                }
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "/Account/Users",
+                type: "POST",
+                dataType: "json",
+                data: function (params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    if (params.SortBy === 0) {
+                        params.SortBy = 1;
+                    }
+                    params.IsAsc = params.order[0].dir === "asc";
+                    params.SearchString = $('#Name').val();
+                    params.Email = $('#Email').val();
+                }
+            }
+        });
+
+        $('#btnFltr').on('click', function (e) {
+            oTable.fnDraw();
+
+        });
+
+        // Edit
+        $('#userTable').on('click', '.edit', function (e) {
+            e.preventDefault();
+        });
+
+    });
+</script>

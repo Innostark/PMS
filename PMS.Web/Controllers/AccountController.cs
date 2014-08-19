@@ -19,7 +19,10 @@ using PMS.Models.DomainModels;
 using PMS.Models.IdentityModels;
 using PMS.Models.IdentityModels.ViewModels;
 using PMS.Models.MenuModels;
+using PMS.Models.RequestModels;
 using PMS.Web.Controllers;
+using PMS.Web.ModelMappers;
+using PMS.Web.ViewModels.Domain;
 
 namespace IdentitySample.Controllers
 {
@@ -61,7 +64,7 @@ namespace IdentitySample.Controllers
                 roleManager.Create(new IdentityRole("Landlord"));
         }
 
-        private void SetUserRoles(ApplicationUser applicationUser, RegisterViewModel model)
+        private void SetUserRoles(ApplicationUser applicationUser, String UserId, RegisterViewModel model)
         {
             //check if User is "SuperAdmin", create New user with Role "Admin"
             if (Session["RoleName"].ToString().Equals("SuperAdmin"))
@@ -71,7 +74,11 @@ namespace IdentitySample.Controllers
                                         {
                                             DomainKey = model.DomainKey,
                                             ExpiryDate = (DateTime)model.ExpiryDate,
-                                            UserId = Session["LoginID"] as string
+                                            UserId = UserId,
+                                            CreatedDate = (DateTime.Now),
+                                            UpdatedDate = DateTime.Now,
+                                            UpdatedBy = Session["LoginID"] as string,
+                                            CreatedBy = Session["LoginID"] as string
                                         };
                 domainKeyService.AddDomainKey(domainKeys);
             }
@@ -271,7 +278,7 @@ namespace IdentitySample.Controllers
                 if (result.Succeeded)
                 {
                     var currentUser = UserManager.FindByName(user.UserName);
-                    SetUserRoles(currentUser, model);
+                    SetUserRoles(user, user.Id, model);
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = code},
                         protocol: Request.Url.Scheme);
@@ -557,6 +564,29 @@ namespace IdentitySample.Controllers
             var updationResult = UserManager.UpdateAsync(result);
 
             return RedirectToAction("Index", "Dashboard");
+        }
+
+        [Authorize]
+        public ActionResult Users()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Users(UserSearchRequest userSearchRequest)
+        {
+            //var users = domainKeyService.GetAllUsersByUserId(Session["LoginId"].ToString());
+            userSearchRequest.UserId = Guid.Parse(Session["LoginID"] as string);
+            var users = domainKeyService.GetAllUsersByUserId(userSearchRequest);
+            IEnumerable<PMS.Web.Models.Users> usersList = users.Users.Select(x => x.CreateFrom(Session["RoleName"].ToString())).ToList();
+            UserAjaxViewModel userAjaxViewModel = new UserAjaxViewModel
+                                                  {
+                                                      data = usersList,
+                                                      recordsTotal = users.TotalCount,
+                                                      recordsFiltered = users.TotalCount
+                                                  };
+            return Json(userAjaxViewModel, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

@@ -99,6 +99,7 @@
     <Compile Include="Common\BuildingByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
     <Compile Include="Common\ProductByColumn.cs" />
+    <Compile Include="Common\UserByColumn.cs" />
     <Compile Include="DomainModels\Building.cs" />
     <Compile Include="DomainModels\Category.cs" />
     <Compile Include="DomainModels\Department.cs" />
@@ -118,7 +119,9 @@
     <Compile Include="RequestModels\BuildingSearchRequest.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
+    <Compile Include="RequestModels\UserSearchRequest.cs" />
     <Compile Include="ResponseModels\BuildingResponse.cs" />
+    <Compile Include="ResponseModels\DomainKeyResponse.cs" />
     <Compile Include="ResponseModels\ProductResponse.cs" />
   </ItemGroup>
   <ItemGroup>
