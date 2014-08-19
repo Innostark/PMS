@@ -162,6 +162,7 @@ namespace IdentitySample.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ReturnUrl = returnUrl;
+                ViewBag.MessageVM = TempData["message"] as MessageViewModel;
                 return View();
             }
             return RedirectToAction("Index", "Dashboard");
@@ -378,7 +379,7 @@ namespace IdentitySample.Controllers
 
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    ModelState.AddModelError("", "Please try Again.");
+                    ModelState.AddModelError("", "Email not found.");
                     // Don't reveal that the user does not exist or is not confirmed
                     return View(model);
                 }
@@ -387,10 +388,11 @@ namespace IdentitySample.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new {userId = user.Id, code = code},
                     protocol: Request.Url.Scheme);
                 await
-                    UserManager.SendEmailAsync(user.Id, "Reset Password",
+                    UserManager.SendEmailAsync(user.Email, "Reset Password",
                         "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
                 ViewBag.Link = callbackUrl;
-                return View("ForgotPasswordConfirmation");
+                TempData["message"] = new MessageViewModel { Message = "An email with Password link has been sent.", IsUpdated = true };
+                return RedirectToAction("Login");
             }
 
             // If we got this far, something failed, redisplay form
@@ -428,12 +430,12 @@ namespace IdentitySample.Controllers
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("Login", "Account");
             }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("Login", "Account");
             }
             AddErrors(result);
             return View();
