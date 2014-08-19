@@ -286,7 +286,7 @@ namespace IdentitySample.Controllers
             if (email != null && email != string.Empty)
             {
                 var userToEdit = UserManager.FindByName(email);
-                var userDomainKey = domainKeyService.GetUserByUserId(userToEdit.Id.ToString());
+                var userDomainKey = domainKeyService.GetDomainKeyByUserId(userToEdit.Id.ToString());
                 return View(userToEdit.CreateFrom(userDomainKey));
             }
             return View();
