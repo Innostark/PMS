@@ -23,6 +23,7 @@ using PMS.Models.RequestModels;
 using PMS.Web.Controllers;
 using PMS.Web.ModelMappers;
 using PMS.Web.ViewModels.Domain;
+using PMS.Web.ViewModels.Common;
 
 namespace IdentitySample.Controllers
 {
@@ -326,7 +327,8 @@ namespace IdentitySample.Controllers
                             "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
                             "\">link</a><br>Your Password is:"+model.Password);
                     ViewBag.Link = callbackUrl;
-                    return View("DisplayEmail");
+                    TempData["message"] = new MessageViewModel{Message="Registeration Confirmation email send to the user.",IsSaved = true};
+                    return RedirectToAction("Users");
                 }
                 AddErrors(result);
             }
@@ -609,6 +611,7 @@ namespace IdentitySample.Controllers
         [Authorize]
         public ActionResult Users()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View();
         }
 
@@ -616,6 +619,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         public ActionResult Users(UserSearchRequest userSearchRequest)
         {
+           
             //var users = domainKeyService.GetAllUsersByUserId(Session["LoginId"].ToString());
             userSearchRequest.UserId = Guid.Parse(Session["LoginID"] as string);
             var users = domainKeyService.GetAllUsersByUserId(userSearchRequest);

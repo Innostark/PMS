@@ -54,51 +54,59 @@
     </div>
     <br/>
      <div class="tab-content">
-        <div class="tab-pane active" id="tab_1">
-            <div class="portlet box grey-salt">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-user"></i>Users List
-                    </div>
-                    <div class="tools" style=" min-height: 50px;">
-                        <a href="Register">
-                            <input type="button" class="btn green titleButton" value="Create New">
-                        </a>
-                        <a href="javascript:;" class="collapse">
-                        </a>
-                    </div>
-                </div>
+         <div class="tab-pane active" id="tab_1">
+             <div class="portlet box grey-salt">
+                 <div class="portlet-title">
+                     <div class="caption">
+                         <i class="fa fa-user"></i>Users List
+                     </div>
+                     <div class="tools" style=" min-height: 50px;">
+                         <a href="Register">
+                             <input type="button" class="btn green titleButton" value="Create New">
+                         </a>
+                         <a href="javascript:;" class="collapse">
+                         </a>
+                     </div>
+                 </div>
 
 
-                <div class="portlet-body form">
+                 <div class="portlet-body form">
 
 
-                    <table id="userTable" class="display" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Created Date</th>
-                                @*<th>Updated By</th>*@
-                                <th>Last Updated Date</th>
-                                <th>Role</th>
-                                <th>Expiry Date</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                     <table id="userTable" class="display" cellspacing="0" width="100%">
+                         <thead>
+                             <tr>
+                                 <th></th>
+                                 <th>Name</th>
+                                 <th>Email</th>
+                                 <th>Created Date</th>
+                                 @*<th>Updated By</th>*@
+                                 <th>Last Updated Date</th>
+                                 <th>Role</th>
+                                 <th>Expiry Date</th>
+                                 <th></th>
+                             </tr>
+                         </thead>
+                         <tbody></tbody>
+                     </table>
+                 </div>
+             </div>
+         </div>
+         @if (ViewBag.MessageVM != null)
+         {
+             <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
+             <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
+             <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
+             <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+         }
+
     </div>
 
 }
 <script type="text/javascript">
     $(document).ready(function () {
         var oTable = $('#userTable').dataTable({
-            "iDisplayLength": 8,
+            "iDisplayLength": 6,
             "bFilter": false,
             "bLengthChange": false,
             "aaSorting": [[1, 'asc']],
@@ -162,4 +170,6 @@
             window.location.href = "/Account/Register?email=" + aData.Email;
         });
     });
+   
+
 </script>
