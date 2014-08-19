@@ -289,7 +289,7 @@ namespace IdentitySample.Controllers
                 var userDomainKey = domainKeyService.GetDomainKeyByUserId(userToEdit.Id.ToString());
                 return View(userToEdit.CreateFrom(userDomainKey));
             }
-            return View();
+            return View(new RegisterViewModel());
         }
 
         //
@@ -299,7 +299,15 @@ namespace IdentitySample.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(model.UserId))
+            {
+                //means update case
+                DomainKeys domainKey=domainKeyService.GetDomainKeyByUserId(model.UserId);
+                //domainKey.ExpiryDate = model.ExpiryDate.;
+                
+
+            }
+            else if (ModelState.IsValid)
             {
 
                 CreateRoles();

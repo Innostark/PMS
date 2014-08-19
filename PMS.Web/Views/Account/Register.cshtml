@@ -26,43 +26,45 @@
                     <!-- BEGIN FORM-->
                     <form action="#" class="form-horizontal">
                         <div class="form-body">
-                            <input type="hidden" id="RoleName" value="@Session["RoleName"]"/>
-                            <input type="hidden" id="UserId" value=@Model.UserId/>
+                            <input type="hidden" id="RoleName" value="@Session["RoleName"]" />
+                            <input type="hidden" id="UserId" value=@Model.UserId />
                             <div class="form-group">
                                 <label class="col-md-3 control-label">First Name</label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.FirstName, new { @class =  "form-control input-circle mandatory", placeholder = "Enter First Name" })
-														
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control input-circle mandatory", placeholder = "Enter First Name", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Last Name</label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-circle mandatory", placeholder = "Enter Last Name" })
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-circle mandatory", placeholder = "Enter Last Name", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
 
                                 </div>
                             </div>
-                            @if (Model.UserId == null || Model.UserId == "")
-                            {
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Email Address</label>
                                 <div class="col-md-4">
                                     <div class="input-icon">
                                         <i class="fa fa-envelope"></i>
-                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-circle mandatory", placeholder = "Email Address" })
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-circle mandatory", placeholder = "Email Address", 
+                                       @readonly=(@Model==null || string.IsNullOrEmpty( @Model.UserId))?false:true})
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Password</label>
-                                <div class="col-md-4">
-                                    <div class="input-icon">
-                                        <i class="fa fa-user"></i>
-                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control input-circle mandatory", placeholder = "Password" })
+                            @if (Model.UserId == null || Model.UserId == "")
+                            {
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Password</label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon">
+                                            <i class="fa fa-user"></i>
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control input-circle mandatory", placeholder = "Password" })
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Confirm Password</label>
                                     <div class="col-md-4">
@@ -74,18 +76,18 @@
                                 </div>
                             }
                             @if (Session["RoleName"].ToString().Equals("SuperAdmin") || Session["RoleName"].ToString().Equals("Admin"))
-                            { 
+                            {
                                 if (Model.UserId == null || Model.UserId == "")
                                  {
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Domain Key</label>
-                                         <div class="col-md-4">
-                                             <div class="input-icon">
-                                                 <i class="fa fa-key"></i>
-                                                 @Html.TextBoxFor(m => m.DomainKey, new {@class = "form-control input-circle mandatory", placeholder = "Domain Key", @id = "DomainKey"})
-                                             </div>
-                                         </div>
-                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Domain Key</label>
+                                        <div class="col-md-4">
+                                            <div class="input-icon">
+                                                <i class="fa fa-key"></i>
+                                                @Html.TextBoxFor(m => m.DomainKey, new {@class = "form-control input-circle mandatory", placeholder = "Domain Key", @id = "DomainKey"})
+                                            </div>
+                                        </div>
+                                    </div>
                                  }
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Expiry Date</label>
@@ -99,12 +101,12 @@
                             }
                             @if (Model.UserId != null && Model.UserId != "")
                             {
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <label class="col-md-3 control-label">Email</label>
                                     <div class="col-md-4">
-                                        <label >@Model.Email</label>
+                                        <label>@Model.Email</label>
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Domain Key</label>
                                     <div class="col-md-4">
@@ -138,4 +140,5 @@
             //startDate: '-3d'
         });
     });
+    $(function () { $("[readonly='false']").removeAttr("readonly"); });
 </script> 
