@@ -34,5 +34,11 @@ namespace PMS.Implementation.Services
             return domainKeyRepository.GetDomainKeyByUserId(userId);
         }
 
+        public void UpdateDomainKey(DomainKeys domainKeys)
+        {
+            domainKeyRepository.Update(domainKeys);
+            domainKeyRepository.SaveChanges();
+        }
+
     }
 }

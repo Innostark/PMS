@@ -9,5 +9,6 @@ namespace PMS.Interfaces.IServices
         bool AddDomainKey(DomainKeys domainKey);
         DomainKeyResponse GetAllUsersByUserId(UserSearchRequest userSearchRequest);
         DomainKeys GetDomainKeyByUserId(string userId);
+        void UpdateDomainKey(DomainKeys domainKeys);
     }
 }
