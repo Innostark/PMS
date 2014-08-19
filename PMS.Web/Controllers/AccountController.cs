@@ -88,6 +88,20 @@ namespace IdentitySample.Controllers
             else
             {
                 UserManager.AddToRole(applicationUser.Id, "Landlord");
+                DomainKeys adminDomainKeys = domainKeyService.GetDomainKeyByUserId(Session["LoginID"] as string);
+                DomainKeys domainKeys = new DomainKeys
+                {
+                    DomainKey = adminDomainKeys.DomainKey,
+                    //ExpiryDate = (DateTime)model.ExpiryDate,
+                    ExpiryDate = Convert.ToDateTime(adminDomainKeys.ExpiryDate),
+                    UserId = UserId,
+                    CreatedDate = (DateTime.Now),
+                    UpdatedDate = DateTime.Now,
+                    UpdatedBy = Session["LoginID"] as string,
+                    CreatedBy = Session["LoginID"] as string
+                };
+                domainKeyService.AddDomainKey(domainKeys);
+
             }
         }
 
