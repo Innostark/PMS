@@ -277,6 +277,7 @@
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
     <Compile Include="ViewModels\Products\ProductViewModel.cs" />
+    <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -960,6 +961,7 @@
     <Content Include="Views\Building\BuildingList.cshtml" />
     <Content Include="Views\Shared\_BuildingList.cshtml" />
     <Content Include="Views\Shared\_BlankLayout.cshtml" />
+    <Content Include="Views\RolesAdmin\RightsManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
