@@ -303,9 +303,10 @@ namespace IdentitySample.Controllers
             {
                 //means update case
                 DomainKeys domainKey=domainKeyService.GetDomainKeyByUserId(model.UserId);
-                //domainKey.ExpiryDate = model.ExpiryDate.;
-                
-
+                domainKey.ExpiryDate = Convert.ToDateTime(model.ExpiryDate);
+                domainKey.UpdatedDate = DateTime.Now;
+                domainKeyService.UpdateDomainKey(domainKey);
+                return RedirectToAction("Users");
             }
             else if (ModelState.IsValid)
             {
