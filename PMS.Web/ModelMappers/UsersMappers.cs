@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Web;
-using PMS.Implementation.Identity;
-using PMS.Models.DomainModels;
+﻿using PMS.Models.DomainModels;
+using PMS.Models.IdentityModels;
+using PMS.Models.IdentityModels.ViewModels;
 
 namespace PMS.Web.ModelMappers
 {
@@ -15,14 +14,27 @@ namespace PMS.Web.ModelMappers
                        Email = domainKeys.User.Email,
                        KeyId = domainKeys.KeyId,
                        CreatedBy = domainKeys.CreatedBy,
-                       CreatedDate =  domainKeys.CreatedDate.ToString("d") ,
+                       CreatedDate = domainKeys.CreatedDate.ToString("MMMM dd yyyy"),
                        DomainKey = domainKeys.DomainKey,
-                       ExpiryDate = domainKeys.ExpiryDate.ToString("d"),
+                       ExpiryDate = domainKeys.ExpiryDate.ToString("MMMM dd yyyy"),
                        UpdatedBy = domainKeys.UpdatedBy,
-                       UpdatedDate = domainKeys.UpdatedDate!= null ? domainKeys.UpdatedDate.Value.ToString("d") : string.Empty,
+                       UpdatedDate = domainKeys.UpdatedDate != null ? domainKeys.UpdatedDate.Value.ToString("MMMM dd yyyy") : string.Empty,
                        UserId = domainKeys.UserId,
                        //RoleName = (domainKeys.User.Roles.ToList().FirstOrDefault(x => x.UserId == domainKeys.UserId).).Name
                        RoleName = roleName == "SuperAdmin"? "Admin": "LandLord"
+                   };
+        }
+
+        public static RegisterViewModel CreateFrom(this ApplicationUser user, DomainKeys domainKeys)
+        {
+            return new RegisterViewModel
+                   {
+                       UserId = user.Id,
+                       DomainKey = domainKeys.DomainKey,
+                       Email = user.Email,
+                       ExpiryDate = domainKeys.ExpiryDate.ToString("d"),
+                       FirstName = user.FirstName,
+                       LastName = user.LastName
                    };
         }
 

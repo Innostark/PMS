@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Practices.Unity;
 using PMS.Interfaces.Repository;
 using PMS.Models.Common;
@@ -55,7 +56,13 @@ namespace PMS.Repository.Repositories
             var users = userSearchRequest.IsAsc ? DbSet.Where(query).OrderBy(userClause[userSearchRequest.BuildingOrderBy]).Skip(fromRow).Take(toRow).ToList()
                                            : DbSet.Where(query).OrderByDescending(userClause[userSearchRequest.BuildingOrderBy]).Skip(fromRow).Take(toRow).ToList();
             return new DomainKeyResponse { Users = users, TotalCount = DbSet.Count(query) };
-        } 
+        }
+
+        public DomainKeys GetUserByUserId(string userId)
+        {
+            DomainKeys user = DbSet.FirstOrDefault(x => x.UserId.Equals(userId));
+            return user;
+        }
         #endregion
     }
 }

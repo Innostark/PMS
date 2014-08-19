@@ -8,5 +8,6 @@ namespace PMS.Interfaces.Repository
     public interface IDomainKeyRepository : IBaseRepository<DomainKeys, int>
     {
         DomainKeyResponse GetAllUsersByUserId(UserSearchRequest userSearchRequest);
+        DomainKeys GetUserByUserId(string userId);
     }
 }
