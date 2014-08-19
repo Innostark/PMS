@@ -1,8 +1,4 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections;
-using System.Collections.Generic;
-using PMS.Interfaces.IServices;
+﻿using PMS.Interfaces.IServices;
 using PMS.Interfaces.Repository;
 using PMS.Models.DomainModels;
 using PMS.Models.RequestModels;
@@ -37,5 +33,6 @@ namespace PMS.Implementation.Services
         {
             return domainKeyRepository.GetDomainKeyByUserId(userId);
         }
+
     }
 }

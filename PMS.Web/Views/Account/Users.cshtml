@@ -10,13 +10,16 @@
     </h3>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_0">
-            <div class="portlet box blue-hoki">
+            <div class="portlet box yellow-casablanca">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-user"></i>Filters
                     </div>
                     <div class="tools">
-                        <button type="submit" class="btn yellow">Submit</button>
+                        <input type="button" class="btn green " id="btnFltr" value="Filter" />
+                        <a href="Users">
+                            <input type="button" class="btn green titleButton" value="Reset">
+                        </a>
                         <a href="javascript:;" class="collapse">
                         </a>
                     </div>
@@ -28,12 +31,14 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <label class="col-md-3 control-label"> Search Name: </label>
+                                        <label class="control-label"> Search Name: </label>
                                     </td>
                                     <td>
                                         <input data-filter="1" placeholder="Search Name" type="text" id="Name" class="form-control" />
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <label class="control-label filterColumn"> Search Email: </label>
+                                    </td>
                                     <td>
                                         <input data-filter="2" placeholder="Search Email" type="text" id="Email" class="form-control " />
                                     </td>
@@ -49,22 +54,23 @@
         </div>
      <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
-            <div class="portlet box green">
+            <div class="portlet box yellow-crusta">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-user"></i>Users
                     </div>
-                    <div class="tools">
+                    <div class="tools" style=" min-height: 50px;">
+                        <a href="Register">
+                            <input type="button" class="btn green titleButton" value="Create New">
+                        </a>
                         <a href="javascript:;" class="collapse">
                         </a>
                     </div>
                 </div>
 
-                @*<div class="page-container">*@
+              
                 <div class="portlet-body form">
-                    <div>
-                        <a class="btn btn-success col-md-offset-10 col-md-2" href="AddEdit">Create New</a>
-                    </div>
+                    
                     
                     <table id="userTable" class="display" cellspacing="0" width="100%">
                         <thead>
@@ -73,8 +79,8 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Created Date</th>
-                                <th>Updated By</th>
-                                <th>Updated Date</th>
+                                @*<th>Updated By</th>*@
+                                <th>Last Updated Date</th>
                                 <th>Role</th>
                                 <th>Expiry Date</th>
                                 <th></th>
@@ -91,12 +97,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var oTable = $('#userTable').dataTable({
-            "iDisplayLength": 9,
+            "iDisplayLength": 8,
             "bFilter": false,
             "bLengthChange": false,
             "aaSorting": [[1, 'asc']],
             "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [7, 8] },
+                { 'bSortable': false, 'aTargets': [6, 7] },
                 {
                     "targets": [0],
                     "visible": false,
@@ -108,7 +114,7 @@
                 { "data": "Name" },
                 { "data": "Email" },
                 { "data": "CreatedDate" },
-                { "data": "UpdatedBy" },
+                //{ "data": "UpdatedBy" },
                 { "data": "UpdatedDate" },
                 { "data": "RoleName" },
                 { "data": "ExpiryDate" },
@@ -149,7 +155,10 @@
         // Edit
         $('#userTable').on('click', '.edit', function (e) {
             e.preventDefault();
-        });
 
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            window.location.href = "/Account/Register?email=" + aData.Email;
+        });
     });
 </script>

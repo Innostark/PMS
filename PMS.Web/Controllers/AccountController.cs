@@ -73,7 +73,8 @@ namespace IdentitySample.Controllers
                 DomainKeys domainKeys = new DomainKeys
                                         {
                                             DomainKey = model.DomainKey,
-                                            ExpiryDate = (DateTime)model.ExpiryDate,
+                                            //ExpiryDate = (DateTime)model.ExpiryDate,
+                                            ExpiryDate = Convert.ToDateTime(model.ExpiryDate),
                                             UserId = UserId,
                                             CreatedDate = (DateTime.Now),
                                             UpdatedDate = DateTime.Now,
@@ -280,8 +281,14 @@ namespace IdentitySample.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string email)
         {
+            if (email != null && email != string.Empty)
+            {
+                var userToEdit = UserManager.FindByName(email);
+                var userDomainKey = domainKeyService.GetUserByUserId(userToEdit.Id.ToString());
+                return View(userToEdit.CreateFrom(userDomainKey));
+            }
             return View();
         }
 
@@ -294,6 +301,7 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 CreateRoles();
 
                 var user = new ApplicationUser {FirstName = model.FirstName,LastName = model.LastName,UserName = model.Email, Email = model.Email};
