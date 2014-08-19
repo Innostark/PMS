@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PMS.Interfaces.Repository
 {
@@ -48,5 +50,10 @@ namespace PMS.Interfaces.Repository
         /// Save changes
         /// </summary>
         void SaveChanges();
+
+        /// <summary>
+        /// Returns the Identoty roles 
+        /// </summary>
+        IEnumerable<IdentityRole> Roles();
     }
 }

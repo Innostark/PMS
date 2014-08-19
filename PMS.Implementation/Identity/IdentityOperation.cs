@@ -74,7 +74,7 @@ namespace PMS.Implementation.Identity
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
-            BaseDbContext db = new BaseDbContext(connectionString,UnityConfig.UnityContainer);
+            BaseDbContext db = db = (BaseDbContext)UnityConfig.UnityContainer.Resolve(typeof(BaseDbContext), new ResolverOverride[] { new ParameterOverride("connectionString", connectionString) });
 
 
 
@@ -136,7 +136,7 @@ namespace PMS.Implementation.Identity
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             //BaseDbContext db = UnityConfig.UnityContainer.Resolve<BaseDbContext>();
 
-            BaseDbContext db = new BaseDbContext(connectionString,UnityConfig.UnityContainer);
+            BaseDbContext db = (BaseDbContext)UnityConfig.UnityContainer.Resolve(typeof(BaseDbContext), new ResolverOverride[] { new ParameterOverride("connectionString", connectionString) });
 
             return new ApplicationRoleManager(new RoleStore<IdentityRole>(db));
             

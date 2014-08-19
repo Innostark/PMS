@@ -1,4 +1,6 @@
-﻿using IdentitySample.Models;
+﻿using Antlr.Runtime.Misc;
+using IdentitySample.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -9,23 +11,25 @@ using System.Web;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using PMS.Implementation.Identity;
+using PMS.Interfaces.IServices;
 using PMS.Models.IdentityModels;
 using PMS.Models.IdentityModels.ViewModels;
+using PMS.Models.MenuModels;
+using PMS.Web.ViewModels.RightsManagement;
 
 namespace IdentitySample.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "SuperAdmin")]
     public class RolesAdminController : Controller
     {
+        private IMenuRightsService menuRightsService;
         public RolesAdminController()
         {
         }
 
-        public RolesAdminController(ApplicationUserManager userManager,
-            ApplicationRoleManager roleManager)
+        public RolesAdminController(IMenuRightsService menuRightsService)
         {
-            UserManager = userManager;
-            RoleManager = roleManager;
+            this.menuRightsService = menuRightsService;
         }
 
         private ApplicationUserManager _userManager;
@@ -197,6 +201,74 @@ namespace IdentitySample.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+
+        public ActionResult RightsManagement()
+        {
+            
+            UserMenuResponse userMenuRights = menuRightsService.GetRoleMenuRights(string.Empty);
+            RightsManagementViewModel viewModel = new RightsManagementViewModel();
+
+            viewModel.Roles = userMenuRights.Roles.ToList();
+            viewModel.Rights =
+                userMenuRights.Menus.Select(
+                    m =>
+                        new Rights
+                        {
+                            MenuId = m.MenuId,
+                            MenuTitle = m.MenuTitle,
+                            IsParent = m.IsRootItem,
+                            IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
+                            ParentId = m.ParentItem != null? m.ParentItem.MenuId : (int?) null
+                        }).ToList();
+            return View(viewModel);
+        }
+        
+        public ActionResult PostRightsManagement(string roleValue, string selectedList)
+        {
+            
+            UserMenuResponse userMenuRights = menuRightsService.SaveRoleMenuRight(roleValue, selectedList, RoleManager.FindById(roleValue));
+            RightsManagementViewModel viewModel = new RightsManagementViewModel();
+
+            viewModel.Roles = userMenuRights.Roles.ToList();
+            viewModel.Rights =
+                userMenuRights.Menus.Select(
+                    m =>
+                        new Rights
+                        {
+                            MenuId = m.MenuId,
+                            MenuTitle = m.MenuTitle,
+                            IsParent = m.IsRootItem,
+                            IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
+                            ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
+                        }).ToList();
+            viewModel.SelectedRoleId = roleValue;
+            return View("RightsManagement", viewModel);
+            
+        }
+        [HttpPost]
+        public ActionResult RightsManagement(FormCollection collection)
+        {
+            string RoleId = collection.Get("SelectedRoleId");
+            UserMenuResponse userMenuRights = menuRightsService.GetRoleMenuRights(RoleId);
+            RightsManagementViewModel viewModel = new RightsManagementViewModel();
+
+            viewModel.Roles = userMenuRights.Roles.ToList();
+            viewModel.Rights =
+                userMenuRights.Menus.Select(
+                    m =>
+                        new Rights
+                        {
+                            MenuId = m.MenuId,
+                            MenuTitle = m.MenuTitle,
+                            IsParent = m.IsRootItem,
+                            IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
+                            ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null,
+                            
+                        }).ToList();
+            viewModel.SelectedRoleId = RoleId;
+            return View(viewModel);
         }
     }
 }

@@ -33,7 +33,8 @@ namespace PMS.Repository.BaseRepository
         {            
         }
 
-        public BaseDbContext(string connectionString, IUnityContainer container)
+
+        public BaseDbContext(IUnityContainer container, string connectionString)
             : base(connectionString)
         {
             this.container = container;
