@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using PagedList;
@@ -85,13 +86,32 @@ namespace PMS.Web.Controllers
                 }
                 return RedirectToAction("BuildingList");
         }
+
+        //[Authorize]
+        //public ActionResult Delete(int? buildingId)
+        //{
+        //    var buildingToBeDeleted = buildingService.FindBuilding(buildingId);
+        //    buildingService.DeleteBuilding(buildingToBeDeleted);
+        //    return RedirectToAction("BuildingList");
+        //}
+
         [Authorize]
-        public ActionResult Delete(int? buildingId)
+        [HttpPost]
+        public ActionResult Delete(int buildingId)
         {
             var buildingToBeDeleted = buildingService.FindBuilding(buildingId);
-            buildingService.DeleteBuilding(buildingToBeDeleted);
-            return RedirectToAction("BuildingList");
+            try
+            {
+                buildingService.DeleteBuilding(buildingToBeDeleted);
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to delete. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { response = "Successfully deleted!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
+
         //[SiteAuthorize(PermissionKey = "BuildingList")]
         public ActionResult BuildingList(BuildingSearchRequest request)
         {

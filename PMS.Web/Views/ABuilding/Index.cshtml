@@ -1,4 +1,4 @@
-﻿@model PMS.Web.ViewModels.Buildings.BuildingViewModel
+﻿@model PMS.Web.ViewModels.Buildings.ABuildingViewModel
 @{
     ViewBag.Title = "Building";
 }
@@ -14,14 +14,23 @@
                 <table>
                     <tr>
                         <td>
-                            <input data-filter="1" placeholder="name" type="text" id="Name" />
+                            @*<input data-filter="1" placeholder="name" type="text" id="Name" />*@
+                            @Html.TextBox("SearchString", Model.SearchRequest.SearchString, new { @id = "SearchString", placeholder = "Name" })
                         </td>
                         <td>
-                            <input data-filter="2" placeholder="Phone" type="text" id="Phone" />
+                            @Html.TextBox("PhoneNumber", Model.SearchRequest.PhoneNumber, new { @id = "PhoneNumber", placeholder = "Phone" })
+                            @*<input data-filter="2" placeholder="Phone" type="text" id="Phone" />*@
                         </td>
                         <td>
                             <input type="button" id="btnFltr" value="Filter" />
                         </td>
+                        @if (Model.IsRedirect)
+                        {
+                            @Html.Hidden("PageNo", Model.SearchRequest.PageNo, new { @id = "PageNo" })
+                            @Html.Hidden("PageSize", Model.SearchRequest.PageSize, new { @id = "PageSize" })
+                            @Html.Hidden("SortBy", Model.SearchRequest.SortBy, new { @id = "SortBy" })
+                            @Html.Hidden("IsAsc", Model.SearchRequest.IsAsc, new { @id = "IsAsc" })
+                        }
                     </tr>
                 </table>
             </fieldset>
@@ -45,13 +54,17 @@
         </table>
     </div>
 }
+
 <script type="text/javascript">
     $(document).ready(function () {
+        var start = '@Model.IsRedirect' == 'True' ? (parseInt($("#PageNo").val()) - 1) * parseInt($("#PageSize").val()) : 0;
+        var sortBy = '@Model.IsRedirect' == 'True' ? [$("#SortBy").val(), $("#IsAsc").val() ? 'asc' : 'desc'] : [1, 'asc'];
         var oTable = $('#buildingTable').dataTable({
             "iDisplayLength": 10,
+            "displayStart": start || 0,
             "bFilter": false,
             "bLengthChange": false,
-            "aaSorting": [[1, 'asc']],
+            "aaSorting": [sortBy],
             "aoColumnDefs": [
                 { 'bSortable': false, 'aTargets': [8, 9] },
                 {
@@ -83,7 +96,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                url: "/Building/Building",
+                url: "/ABuilding/Index",
                 type: "POST",
                 dataType: "json",
                 data: function (params) {
@@ -118,17 +131,17 @@
 
             var nRow = $(this).parents('tr')[0];
             var aData = oTable.fnGetData(nRow);
-            var serviceUrl = '/Building/Delete';
+            var serviceUrl = '/ABuilding/Delete';
             $.ajax({
                 type: "POST",
                 url: serviceUrl,
                 data: "{ buildingId:" + aData.BuildingId + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                complete: function(data) {
+                complete: function (data) {
                     if (data.responseJSON.status === 200) {
                         successFunc(data);
-                    } 
+                    }
                     else {
                         errorFunc(data);
                     }
@@ -150,7 +163,7 @@
                 else {
                     oTable.fnPageChange(page);
                 }
-                
+
                 toastr.success(data.responseJSON.response);
             }
 
@@ -165,8 +178,11 @@
         $('#buildingTable').on('click', '.edit', function (e) {
             e.preventDefault();
 
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
 
+            window.location.href = "/ABuilding/AddEdit/?BuildingId=" + aData.BuildingId;
         });
-
+        
     });
 </script>
