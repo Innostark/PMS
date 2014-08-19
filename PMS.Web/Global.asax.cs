@@ -9,10 +9,8 @@ using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
 using System.Web.Http;
-using PMS.WebBase;
-using PMS.WebBase.UnityConfiguration;
-using PMS.WebBase;
-using UnityDependencyResolver = PMS.WebBase.UnityConfiguration.UnityDependencyResolver;
+
+
 
 namespace IdentitySample
 {
@@ -37,7 +35,7 @@ namespace IdentitySample
         /// </summary>
         private static IUnityContainer CreateUnityContainer()
         {
-            container = UnityWebActivator.Container;
+            container = PMS.WebBase.UnityConfiguration.UnityWebActivator.Container;
             RegisterTypes();
 
             return container;
@@ -47,7 +45,7 @@ namespace IdentitySample
         /// </summary>
         private static void RegisterTypes()
         {
-            TypeRegistrations.RegisterTypes(container);
+            PMS.WebBase.TypeRegistrations.RegisterTypes(container);
             PMS.Implementation.TypeRegistrations.RegisterType(container);
 
         }
@@ -74,10 +72,10 @@ namespace IdentitySample
 
             // Set MVC resolver
             //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            DependencyResolver.SetResolver(new PMS.WebBase.UnityConfiguration.UnityDependencyResolver(container));
             // Set Web Api resolver
             //GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = new PMS.WebBase.UnityConfiguration.UnityDependencyResolver(container);
         }
     }
 }

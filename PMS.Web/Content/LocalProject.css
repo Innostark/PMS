@@ -1,3 +1,6 @@
 ﻿.validation-summary-errors ul {
    list-style: none
 }
+.login .content .forget-form {
+    display: block !important;
+}

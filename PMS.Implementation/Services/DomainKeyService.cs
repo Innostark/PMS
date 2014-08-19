@@ -1,7 +1,8 @@
-﻿using System;
-using PMS.Interfaces.IServices;
+﻿using PMS.Interfaces.IServices;
 using PMS.Interfaces.Repository;
 using PMS.Models.DomainModels;
+using PMS.Models.RequestModels;
+using PMS.Models.ResponseModels;
 
 namespace PMS.Implementation.Services
 {
@@ -20,5 +21,24 @@ namespace PMS.Implementation.Services
             domainKeyRepository.SaveChanges();
             return true;
         }
+
+        public DomainKeyResponse GetAllUsersByUserId(UserSearchRequest userSearchRequest)
+        {
+            var users = domainKeyRepository.GetAllUsersByUserId(userSearchRequest);
+            return users;
+        }
+
+
+        public DomainKeys GetDomainKeyByUserId(string userId)
+        {
+            return domainKeyRepository.GetDomainKeyByUserId(userId);
+        }
+
+        public void UpdateDomainKey(DomainKeys domainKeys)
+        {
+            domainKeyRepository.Update(domainKeys);
+            domainKeyRepository.SaveChanges();
+        }
+
     }
 }

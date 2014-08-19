@@ -85,7 +85,8 @@ namespace PMS.Models.IdentityModels.ViewModels
         public string ConfirmPassword { get; set; }
 
         public string DomainKey { get; set; }
-        public DateTime? ExpiryDate { get; set; }
+        public string ExpiryDate { get; set; }
+        public string UserId { get; set; }
     }
 
     public class ResetPasswordViewModel

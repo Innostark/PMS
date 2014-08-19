@@ -5,7 +5,6 @@ using Microsoft.Practices.Unity.Mvc;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using PMS.WebBase.UnityConfiguration;
 
-
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(UnityWebActivator), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(UnityWebActivator), "Shutdown")]
 

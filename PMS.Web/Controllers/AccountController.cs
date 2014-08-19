@@ -19,7 +19,11 @@ using PMS.Models.DomainModels;
 using PMS.Models.IdentityModels;
 using PMS.Models.IdentityModels.ViewModels;
 using PMS.Models.MenuModels;
+using PMS.Models.RequestModels;
 using PMS.Web.Controllers;
+using PMS.Web.ModelMappers;
+using PMS.Web.ViewModels.Domain;
+using PMS.Web.ViewModels.Common;
 
 namespace IdentitySample.Controllers
 {
@@ -46,7 +50,7 @@ namespace IdentitySample.Controllers
 
             ApplicationUser userResult = UserManager.FindByEmail(userEmail);
             IList<IdentityUserRole> aspUserroles = userResult.Roles.ToList();
-            IEnumerable<MenuRight> permissionSet = menuRightService.FindMenuItemsByRoleId(aspUserroles[0].RoleId);
+            IEnumerable<MenuRight> permissionSet = menuRightService.FindMenuItemsByRoleId(aspUserroles[0].RoleId).ToList();
 
             Session["UserMenu"] = permissionSet;
             Session["UserPermissionSet"] = permissionSet.Select(menuRight => menuRight.Menu.PermissionKey).ToList();
@@ -61,7 +65,7 @@ namespace IdentitySample.Controllers
                 roleManager.Create(new IdentityRole("Landlord"));
         }
 
-        private void SetUserRoles(ApplicationUser applicationUser, RegisterViewModel model)
+        private void SetUserRoles(ApplicationUser applicationUser, String UserId, RegisterViewModel model)
         {
             //check if User is "SuperAdmin", create New user with Role "Admin"
             if (Session["RoleName"].ToString().Equals("SuperAdmin"))
@@ -70,8 +74,13 @@ namespace IdentitySample.Controllers
                 DomainKeys domainKeys = new DomainKeys
                                         {
                                             DomainKey = model.DomainKey,
-                                            ExpiryDate = (DateTime)model.ExpiryDate,
-                                            UserId = Session["LoginID"] as string
+                                            //ExpiryDate = (DateTime)model.ExpiryDate,
+                                            ExpiryDate = Convert.ToDateTime(model.ExpiryDate),
+                                            UserId = UserId,
+                                            CreatedDate = (DateTime.Now),
+                                            UpdatedDate = DateTime.Now,
+                                            UpdatedBy = Session["LoginID"] as string,
+                                            CreatedBy = Session["LoginID"] as string
                                         };
                 domainKeyService.AddDomainKey(domainKeys);
             }
@@ -79,6 +88,20 @@ namespace IdentitySample.Controllers
             else
             {
                 UserManager.AddToRole(applicationUser.Id, "Landlord");
+                DomainKeys adminDomainKeys = domainKeyService.GetDomainKeyByUserId(Session["LoginID"] as string);
+                DomainKeys domainKeys = new DomainKeys
+                {
+                    DomainKey = adminDomainKeys.DomainKey,
+                    //ExpiryDate = (DateTime)model.ExpiryDate,
+                    ExpiryDate = Convert.ToDateTime(adminDomainKeys.ExpiryDate),
+                    UserId = UserId,
+                    CreatedDate = (DateTime.Now),
+                    UpdatedDate = DateTime.Now,
+                    UpdatedBy = Session["LoginID"] as string,
+                    CreatedBy = Session["LoginID"] as string
+                };
+                domainKeyService.AddDomainKey(domainKeys);
+
             }
         }
 
@@ -118,7 +141,10 @@ namespace IdentitySample.Controllers
                     await SignInAsync(user, isPersistent: false);
                 }
                 //return RedirectToAction("Index", new { Message = IdentitySample.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess });
-                return RedirectToAction("Index", "Dashboard");
+                //return RedirectToAction("Index", "Dashboard");
+                ViewBag.MessageVM = new MessageViewModel { Message = "Password has been updated.", IsUpdated = true };
+         
+                return View();
             }
             AddErrors(result);
             return View(model);
@@ -150,6 +176,7 @@ namespace IdentitySample.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ReturnUrl = returnUrl;
+                ViewBag.MessageVM = TempData["message"] as MessageViewModel;
                 return View();
             }
             return RedirectToAction("Index", "Dashboard");
@@ -175,6 +202,29 @@ namespace IdentitySample.Controllers
 
             // This doen't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
+            
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    ModelState.AddModelError("", "Please confirm your email");
+                    return View();
+                }
+                ApplicationUser resultUser = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(model.Email);
+                string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(resultUser.Roles.ToList()[0].RoleId).Name;
+                if (!role.ToLower().Contains("superadmin"))
+                {
+                    DomainKeys resultDomainKey = domainKeyService.GetDomainKeyByUserId(user.Id);
+                    if (resultDomainKey == null || resultDomainKey.ExpiryDate < DateTime.Now)
+                    {
+                        ModelState.AddModelError("", "Please renew your license");
+                        return View();
+                    }
+                }
+
+
+            }
             var result =
                 await
                     SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
@@ -250,9 +300,15 @@ namespace IdentitySample.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string email)
         {
-            return View();
+            if (email != null && email != string.Empty)
+            {
+                var userToEdit = UserManager.FindByName(email);
+                var userDomainKey = domainKeyService.GetDomainKeyByUserId(userToEdit.Id.ToString());
+                return View(userToEdit.CreateFrom(userDomainKey));
+            }
+            return View(new RegisterViewModel());
         }
 
         //
@@ -262,8 +318,20 @@ namespace IdentitySample.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(model.UserId))
             {
+                //means update case
+                DomainKeys domainKey=domainKeyService.GetDomainKeyByUserId(model.UserId);
+                domainKey.ExpiryDate = Convert.ToDateTime(model.ExpiryDate);
+                domainKey.UpdatedDate = DateTime.Now;
+                domainKeyService.UpdateDomainKey(domainKey);
+                TempData["message"] = new MessageViewModel { Message = "User has been updated.", IsUpdated = true };
+         
+                return RedirectToAction("Users");
+            }
+            else if (ModelState.IsValid)
+            {
+
                 CreateRoles();
 
                 var user = new ApplicationUser {FirstName = model.FirstName,LastName = model.LastName,UserName = model.Email, Email = model.Email};
@@ -271,16 +339,17 @@ namespace IdentitySample.Controllers
                 if (result.Succeeded)
                 {
                     var currentUser = UserManager.FindByName(user.UserName);
-                    SetUserRoles(currentUser, model);
+                    SetUserRoles(user, user.Id, model);
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = code},
                         protocol: Request.Url.Scheme);
                     await
-                        UserManager.SendEmailAsync(user.Id, "Confirm your account",
+                        UserManager.SendEmailAsync(model.Email, "Confirm your account",
                             "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
-                            "\">link</a>");
+                            "\">link</a><br>Your Password is:"+model.Password);
                     ViewBag.Link = callbackUrl;
-                    return View("DisplayEmail");
+                    TempData["message"] = new MessageViewModel{Message="Registeration Confirmation email send to the user.",IsSaved = true};
+                    return RedirectToAction("Users");
                 }
                 AddErrors(result);
             }
@@ -294,6 +363,7 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
+           
             if (userId == null || code == null)
             {
                 return View("Error");
@@ -323,7 +393,7 @@ namespace IdentitySample.Controllers
 
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    ModelState.AddModelError("", "Please try Again.");
+                    ModelState.AddModelError("", "Email not found.");
                     // Don't reveal that the user does not exist or is not confirmed
                     return View(model);
                 }
@@ -332,10 +402,11 @@ namespace IdentitySample.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new {userId = user.Id, code = code},
                     protocol: Request.Url.Scheme);
                 await
-                    UserManager.SendEmailAsync(user.Id, "Reset Password",
+                    UserManager.SendEmailAsync(user.Email, "Reset Password",
                         "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
                 ViewBag.Link = callbackUrl;
-                return View("ForgotPasswordConfirmation");
+                TempData["message"] = new MessageViewModel { Message = "An email with Password link has been sent.", IsUpdated = true };
+                return RedirectToAction("Login");
             }
 
             // If we got this far, something failed, redisplay form
@@ -373,12 +444,12 @@ namespace IdentitySample.Controllers
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("Login", "Account");
             }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("Login", "Account");
             }
             AddErrors(result);
             return View();
@@ -516,6 +587,7 @@ namespace IdentitySample.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session.Abandon();
             AuthenticationManager.SignOut();
             return RedirectToAction("Login", "Account");
         }
@@ -557,6 +629,31 @@ namespace IdentitySample.Controllers
             var updationResult = UserManager.UpdateAsync(result);
 
             return RedirectToAction("Index", "Dashboard");
+        }
+
+        [Authorize]
+        public ActionResult Users()
+        {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Users(UserSearchRequest userSearchRequest)
+        {
+           
+            //var users = domainKeyService.GetAllUsersByUserId(Session["LoginId"].ToString());
+            userSearchRequest.UserId = Guid.Parse(Session["LoginID"] as string);
+            var users = domainKeyService.GetAllUsersByUserId(userSearchRequest);
+            IEnumerable<PMS.Web.Models.Users> usersList = users.Users.Select(x => x.CreateFrom(Session["RoleName"].ToString())).ToList();
+            UserAjaxViewModel userAjaxViewModel = new UserAjaxViewModel
+                                                  {
+                                                      data = usersList,
+                                                      recordsTotal = users.TotalCount,
+                                                      recordsFiltered = users.TotalCount
+                                                  };
+            return Json(userAjaxViewModel, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

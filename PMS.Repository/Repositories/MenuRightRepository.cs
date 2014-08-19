@@ -38,8 +38,7 @@ namespace PMS.Repository.Repositories
             return
                 DbSet.Where(menu => menu.Role.Id == roleId)
                     .Include(menu => menu.Menu)
-                    .Include(menu => menu.Menu.ParentItem)
-                    
+                    .Include(menu => menu.Menu.ParentItem)                    
                     .Include(menu => menu.Role);
         }
     }

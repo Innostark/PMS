@@ -18,6 +18,12 @@
   .page-height {
      min-height: 495px;
  }
+.filterColumn {
+    margin-left: 20px;
+}
+.titleButton {
+    margin-right: 20px;
+}
  .caption-subject {
    
  }

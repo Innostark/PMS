@@ -125,7 +125,7 @@
         <div class="page-sidebar-wrapper">
             <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
             <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-            <div class="page-sidebar navbar-collapse collapse">
+            <div class="page-sidebar navbar-collapse collapse" style="min-height: 735px;">
                 <!-- BEGIN SIDEBAR MENU -->
                 <ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
                     <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
@@ -226,8 +226,7 @@
         Metronic.init(); // init metronic core componets
         Layout.init(); // init layout
 
-        QuickSidebar.init(); // init quick sidebar
-        debugger
+        QuickSidebar.init(); // init quick sidebar        
         //$('.innerSelected').closest('span.toSelect').addClass("selected");
         $('.innerSelected').closest('ul').closest('li').addClass('active')
     });

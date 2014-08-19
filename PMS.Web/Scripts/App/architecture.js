@@ -49,4 +49,28 @@ function hideProgress() {
         spinner.fadeOut("fast");
     }
 };
+//show toast on new item created or updated based on url parameter
+$(function () {
+    debugger 
+    var messageVm = $("#Message").val();
+    if ($("#IsSaved").val()) {
+        if (messageVm !== '' && messageVm !== "" && messageVm !== null && messageVm !== undefined) {
+            toastr.success(messageVm);
+        }
+    }
+    else if ($("#IsUpdated").val()) {
+        if (messageVm !== '' && messageVm !== "" && messageVm !== null && messageVm !== undefined) {
+            toastr.success(messageVm);
+        }
+    }
+    else if ($("#IsError").val()) {
+        if (messageVm !== '' && messageVm !== "" && messageVm !== null && messageVm !== undefined) {
+            toastr.error(messageVm);
+        }
+    }
+    else {
 
+    }
+
+    $("#Message").val('');
+});

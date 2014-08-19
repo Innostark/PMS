@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Configuration;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -25,6 +27,41 @@ namespace PMS.Implementation.Identity
         {
             
         }
+             public override Task SendEmailAsync(string toEmail, string subject, string body)
+             {
+                 //try
+                 //{
+                 string FromAddress = ConfigurationManager.AppSettings["FromAddress"];
+                 string FromPwd = ConfigurationManager.AppSettings["FromPassword"];
+                 string FromDisplayName = ConfigurationManager.AppSettings["FromDisplayNameA"];
+                 string CC = ConfigurationManager.AppSettings["CC"];
+                 string BCC = ConfigurationManager.AppSettings["BCC"];
+
+                 //Getting the file from config, to send
+                 MailMessage oEmail = new MailMessage
+                 {
+                     From = new MailAddress(FromAddress, FromDisplayName),
+                     Subject = subject,
+                     IsBodyHtml = true,
+                     Body = body,
+                     Priority = MailPriority.High
+                 };
+                 oEmail.To.Add(toEmail);
+                 string SMTPServer = ConfigurationManager.AppSettings["SMTPServer"];
+                 string SMTPPort = ConfigurationManager.AppSettings["SMTPPort"];
+                 string EnableSSL = ConfigurationManager.AppSettings["EnableSSL"];
+                 SmtpClient client = new SmtpClient(SMTPServer, Convert.ToInt32(SMTPPort))
+                 {
+                     EnableSsl = EnableSSL == "1",
+                     Credentials = new NetworkCredential(FromAddress, FromPwd)
+                 };
+
+                 return client.SendMailAsync(oEmail);
+
+                 //}
+
+
+             }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
             IOwinContext context)
@@ -37,7 +74,7 @@ namespace PMS.Implementation.Identity
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
-            BaseDbContext db = new BaseDbContext(connectionString,UnityConfig.UnityContainer);
+            BaseDbContext db = db = (BaseDbContext)UnityConfig.UnityContainer.Resolve(typeof(BaseDbContext), new ResolverOverride[] { new ParameterOverride("connectionString", connectionString) });
 
 
 
@@ -99,7 +136,7 @@ namespace PMS.Implementation.Identity
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             //BaseDbContext db = UnityConfig.UnityContainer.Resolve<BaseDbContext>();
 
-            BaseDbContext db = new BaseDbContext(connectionString,UnityConfig.UnityContainer);
+            BaseDbContext db = (BaseDbContext)UnityConfig.UnityContainer.Resolve(typeof(BaseDbContext), new ResolverOverride[] { new ParameterOverride("connectionString", connectionString) });
 
             return new ApplicationRoleManager(new RoleStore<IdentityRole>(db));
             

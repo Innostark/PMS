@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;
 using PMS.Interfaces.Repository;
 
@@ -87,9 +90,9 @@ namespace PMS.Repository.BaseRepository
         /// Get All Entites 
         /// </summary>
         /// <returns></returns>
-        public IQueryable<TDomainClass> GetAll()
+        public virtual IQueryable<TDomainClass> GetAll()
         {
-            throw new NotImplementedException();
+            return DbSet;
         }
         /// <summary>
         /// Save Changes in the entities
@@ -110,7 +113,7 @@ namespace PMS.Repository.BaseRepository
         /// Add an entry
         /// </summary>
         public virtual void Add(TDomainClass instance)
-        {
+        {            
             DbSet.Add(instance);
         }
         /// <summary>
@@ -119,6 +122,11 @@ namespace PMS.Repository.BaseRepository
         public virtual void Update(TDomainClass instance)
         {
             DbSet.AddOrUpdate(instance);
+        }
+
+        public IEnumerable<IdentityRole> Roles()
+        {
+            return db.Roles;
         }
         #endregion
     }
