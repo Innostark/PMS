@@ -127,7 +127,10 @@ namespace IdentitySample.Controllers
                     await SignInAsync(user, isPersistent: false);
                 }
                 //return RedirectToAction("Index", new { Message = IdentitySample.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess });
-                return RedirectToAction("Index", "Dashboard");
+                //return RedirectToAction("Index", "Dashboard");
+                ViewBag.MessageVM = new MessageViewModel { Message = "Password has been updated.", IsUpdated = true };
+         
+                return View();
             }
             AddErrors(result);
             return View(model);
@@ -307,6 +310,8 @@ namespace IdentitySample.Controllers
                 domainKey.ExpiryDate = Convert.ToDateTime(model.ExpiryDate);
                 domainKey.UpdatedDate = DateTime.Now;
                 domainKeyService.UpdateDomainKey(domainKey);
+                TempData["message"] = new MessageViewModel { Message = "User has been updated.", IsUpdated = true };
+         
                 return RedirectToAction("Users");
             }
             else if (ModelState.IsValid)
