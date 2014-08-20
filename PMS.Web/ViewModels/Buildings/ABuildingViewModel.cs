@@ -1,5 +1,4 @@
 ﻿using PMS.Models.RequestModels;
-using PMS.Web.ViewModels.Common;
 
 namespace PMS.Web.ViewModels.Buildings
 {
@@ -11,17 +10,7 @@ namespace PMS.Web.ViewModels.Buildings
         /// Search Request
         /// </summary>
         public BuildingSearchRequest SearchRequest { get; set; }
-
-        /// <summary>
-        /// Message - After Add/Update
-        /// </summary>
-        public MessageViewModel Message { get; set; }
-
-        /// <summary>
-        /// If coming from Add/Edit
-        /// </summary>
-        public bool IsRedirect { get; set; }
-
+        
         #endregion
 
         #region Constructor
@@ -31,7 +20,6 @@ namespace PMS.Web.ViewModels.Buildings
         /// </summary>
         public ABuildingViewModel()
         {
-            Message = new MessageViewModel();
             SearchRequest = new BuildingSearchRequest();
         }
 

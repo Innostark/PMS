@@ -34,13 +34,13 @@
                                         <label class="control-label"> Search Name: </label>
                                     </td>
                                     <td>
-                                        <input data-filter="1" placeholder="Search Name" type="text" id="Name" class="form-control" />
+                                        @Html.TextBox("SearchString", Model.SearchRequest.SearchString, new { @id = "SearchString", placeholder = "Search Name" })
                                     </td>
                                     <td>
                                         <label class="control-label filterColumn"> Search Phone: </label>
                                     </td>
                                     <td>
-                                        <input data-filter="2" placeholder="Search Phone" type="text" id="Phone" class="form-control " />
+                                        @Html.TextBox("PhoneNumber", Model.SearchRequest.PhoneNumber, new { @id = "PhoneNumber", placeholder = "Search Phone" })
                                     </td>
                                     <td></td>
                                 </tr>
@@ -93,23 +93,19 @@
                 </div>
             </div>
         </div>
-        @if (ViewBag.MessageVM != null)
-        {
-            <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
-            <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
-            <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
-            <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
-        }
-
     </div>
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         var oTable = $('#buildingTable').dataTable({
             "iDisplayLength": 10,
+            "displayStart": start || 0,
             "bFilter": false,
             "bLengthChange": false,
-            "aaSorting": [[1, 'asc']],
+            "aaSorting": [sortBy],
             "aoColumnDefs": [
                 { 'bSortable': false, 'aTargets': [8, 9] },
                 {
@@ -155,8 +151,8 @@
                         params.SortBy = 1;
                     }
                     params.IsAsc = params.order[0].dir === "asc";
-                    params.SearchString = $('#Name').val();
-                    params.PhoneNumber = $('#Phone').val();
+                    params.SearchString = $('#SearchString').val();
+                    params.PhoneNumber = $('#PhoneNumber').val();
                 }
             }
         });
@@ -186,7 +182,7 @@
                 complete: function(data) {
                     if (data.responseJSON.status === 200) {
                         successFunc(data);
-                    } 
+                    }
                     else {
                         errorFunc(data);
                     }
@@ -208,7 +204,7 @@
                 else {
                     oTable.fnPageChange(page);
                 }
-                
+
                 toastr.success(data.responseJSON.response);
             }
 

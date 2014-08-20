@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PMS.Models.RequestModels;
 using PMS.Web.Models;
 
 namespace PMS.Web.ViewModels.Buildings
@@ -10,5 +11,10 @@ namespace PMS.Web.ViewModels.Buildings
 
         //Take Data For Edit
         public Building Building { get; set; }
+
+        /// <summary>
+        /// Search Request
+        /// </summary>
+        public BuildingSearchRequest SearchRequest { get; set; }
     }
 }

@@ -14,23 +14,14 @@
                 <table>
                     <tr>
                         <td>
-                            @*<input data-filter="1" placeholder="name" type="text" id="Name" />*@
                             @Html.TextBox("SearchString", Model.SearchRequest.SearchString, new { @id = "SearchString", placeholder = "Name" })
                         </td>
                         <td>
                             @Html.TextBox("PhoneNumber", Model.SearchRequest.PhoneNumber, new { @id = "PhoneNumber", placeholder = "Phone" })
-                            @*<input data-filter="2" placeholder="Phone" type="text" id="Phone" />*@
                         </td>
                         <td>
                             <input type="button" id="btnFltr" value="Filter" />
                         </td>
-                        @if (Model.IsRedirect)
-                        {
-                            @Html.Hidden("PageNo", Model.SearchRequest.PageNo, new { @id = "PageNo" })
-                            @Html.Hidden("PageSize", Model.SearchRequest.PageSize, new { @id = "PageSize" })
-                            @Html.Hidden("SortBy", Model.SearchRequest.SortBy, new { @id = "SortBy" })
-                            @Html.Hidden("IsAsc", Model.SearchRequest.IsAsc, new { @id = "IsAsc" })
-                        }
                     </tr>
                 </table>
             </fieldset>
@@ -52,13 +43,15 @@
             </thead>
             <tbody></tbody>
         </table>
+        
     </div>
 }
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var start = '@Model.IsRedirect' == 'True' ? (parseInt($("#PageNo").val()) - 1) * parseInt($("#PageSize").val()) : 0;
-        var sortBy = '@Model.IsRedirect' == 'True' ? [$("#SortBy").val(), $("#IsAsc").val() ? 'asc' : 'desc'] : [1, 'asc'];
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         var oTable = $('#buildingTable').dataTable({
             "iDisplayLength": 10,
             "displayStart": start || 0,
@@ -110,8 +103,8 @@
                         params.SortBy = 1;
                     }
                     params.IsAsc = params.order[0].dir === "asc";
-                    params.SearchString = $('#Name').val();
-                    params.PhoneNumber = $('#Phone').val();
+                    params.SearchString = $('#SearchString').val();
+                    params.PhoneNumber = $('#PhoneNumber').val();
                 }
             }
         });
@@ -183,6 +176,6 @@
 
             window.location.href = "/ABuilding/AddEdit/?BuildingId=" + aData.BuildingId;
         });
-        
+
     });
 </script>

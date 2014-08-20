@@ -34,10 +34,11 @@ namespace PMS.Web.Controllers
             
             Session["PageMetaData"] = null;
 
+            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
+
             return View(new ABuildingViewModel
             {
-                IsRedirect = buildingViewModel != null, SearchRequest = buildingViewModel ?? new BuildingSearchRequest(), 
-                Message = ViewData["MessageVm"] as MessageViewModel
+                SearchRequest = buildingViewModel ?? new BuildingSearchRequest()
             });
         }
 
@@ -92,7 +93,7 @@ namespace PMS.Web.Controllers
             messageViewModel.Message = "Saved Successfully";
 
             // Update Session
-            ViewData["MessageVm"] = messageViewModel;
+            TempData["MessageVm"] = messageViewModel;
             
             return RedirectToAction("Index");
         }

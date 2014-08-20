@@ -11,7 +11,7 @@ namespace PMS.Models.RequestModels
             IsAsc = true;
             SortBy = 1;
             PageNo = 1;
-            PageSize = 5;
+            PageSize = 10;
         }
 
         /// <summary>
