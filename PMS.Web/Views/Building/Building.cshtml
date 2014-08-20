@@ -5,44 +5,102 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="page-container">
-        <div>
-            <a class="btn btn-success col-md-offset-10 col-md-2" href="AddEdit">Create New</a>
+    <h3 class="page-title">
+        Buildings
+    </h3>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_0">
+            <div class="portlet box grey-salt">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Filters
+                    </div>
+                    <div class="tools">
+                        <input type="button" class="btn green " id="btnFltr" value="Filter" />
+                        <a href="~/Building/Building">
+                            <input type="button" class="btn green titleButton" value="Reset">
+                        </a>
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="portlet-body form">
+                    <div class="form-actions">
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label class="control-label"> Search Name: </label>
+                                    </td>
+                                    <td>
+                                        <input data-filter="1" placeholder="Search Name" type="text" id="Name" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <label class="control-label filterColumn"> Search Phone: </label>
+                                    </td>
+                                    <td>
+                                        <input data-filter="2" placeholder="Search Phone" type="text" id="Phone" class="form-control " />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <div>
-            <fieldset>
-                <table>
-                    <tr>
-                        <td>
-                            <input data-filter="1" placeholder="name" type="text" id="Name" />
-                        </td>
-                        <td>
-                            <input data-filter="2" placeholder="Phone" type="text" id="Phone" />
-                        </td>
-                        <td>
-                            <input type="button" id="btnFltr" value="Filter" />
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+            <div class="portlet box grey-salt">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Buildings List
+                    </div>
+                    <div class="tools" style=" min-height: 50px;">
+                        <a href="AddEdit">
+                            <input type="button" class="btn green titleButton" value="Create New">
+                        </a>
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="portlet-body form">
+
+
+                    <table id="buildingTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Built Date</th>
+                                <th>No Of Floors</th>
+                                <th>No Of Elevators</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <table id="buildingTable" class="display" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Built Date</th>
-                    <th>No Of Floors</th>
-                    <th>No Of Elevators</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        @if (ViewBag.MessageVM != null)
+        {
+            <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
+            <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
+            <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
+            <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+        }
+
     </div>
 }
 <script type="text/javascript">
@@ -164,7 +222,9 @@
         // Edit
         $('#buildingTable').on('click', '.edit', function (e) {
             e.preventDefault();
-
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            window.location.href = "/Building/AddEdit?id=" + aData.BuildingId;
 
         });
 

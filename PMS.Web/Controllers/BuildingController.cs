@@ -84,7 +84,7 @@ namespace PMS.Web.Controllers
                         messageViewModel.IsSaved = true;
                     }
                 }
-                return RedirectToAction("BuildingList");
+                return RedirectToAction("Building");
         }
 
         //[Authorize]
