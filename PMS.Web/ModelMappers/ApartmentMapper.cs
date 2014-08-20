@@ -10,7 +10,7 @@ namespace PMS.Web.ModelMappers
                    {
                        ApartmentId = modelApartment.ApartmentId,
                        ApartmentNo = modelApartment.ApartmentNo,
-                       BuildingNo = modelApartment.BuildingNo,
+                       BuildingId = modelApartment.BuildingId,
                        Comment = modelApartment.Comment,
                        FloorNumber = modelApartment.FloorNumber,
                        KitchenSize = modelApartment.KitchenSize,
@@ -34,7 +34,7 @@ namespace PMS.Web.ModelMappers
                    {
                        ApartmentId = modelApartment.ApartmentId,
                        ApartmentNo = modelApartment.ApartmentNo,
-                       BuildingNo = modelApartment.BuildingNo,
+                       BuildingId = modelApartment.BuildingId,
                        Comment = modelApartment.Comment,
                        FloorNumber = modelApartment.FloorNumber,
                        KitchenSize = modelApartment.KitchenSize,

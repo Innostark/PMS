@@ -10,7 +10,7 @@ namespace PMS.Web.Models
         public string ApartmentNo { get; set; }
         [Required(ErrorMessage = "Building Number is required")]
         //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string BuildingNo { get; set; }
+        public int BuildingId { get; set; }
         [Required(ErrorMessage = "No Of Rooms is required")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public string NoOfRooms { get; set; }

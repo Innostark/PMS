@@ -1,10 +1,17 @@
-﻿namespace PMS.Models.DomainModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PMS.Models.DomainModels
 {
     public class Apartment
     {
+
+        #region Persisted Properties
+
         public int ApartmentId { get; set; }
         public string ApartmentNo { get; set; }
-        public string BuildingNo { get; set; }
+        
+        [ForeignKey("Building")]
+        public int BuildingId { get; set; }
         public string NoOfRooms { get; set; }
         public string NoOfRestRoooms { get; set; }
         public string NoOfAlmarah { get; set; }
@@ -19,6 +26,11 @@
         public int NoOfElectricalsInstalled { get; set; }
         public int NoOfDoorLocks { get; set; }
         public bool SecurityCamerasInstalled { get; set; }
+
+        #endregion
+
+        #region Reference Properties
         public virtual Building Building { get; set; }
+        #endregion
     }
 }

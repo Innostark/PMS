@@ -42,7 +42,7 @@ namespace PMS.Repository.Repositories
               new Dictionary<ApartmentsByColumn, Func<Apartment, object>>
                     {
                         { ApartmentsByColumn.AppartmentNo, c => c.ApartmentNo},
-                        { ApartmentsByColumn.BuildingNo, c => c.BuildingNo},
+                        { ApartmentsByColumn.BuildingNo, c => c.BuildingId },
                         { ApartmentsByColumn.NoOfRooms, c => c.NoOfRooms },
                         { ApartmentsByColumn.NoOfRestRoooms, c => c.NoOfRestRoooms},
                         { ApartmentsByColumn.NoOfAlmarah, c => c.NoOfAlmarah},
