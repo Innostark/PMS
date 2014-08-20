@@ -63,28 +63,34 @@ namespace PMS.Web.Controllers
         public ActionResult AddEdit(BuildingViewModel buildingViewModel)
         {
             MessageViewModel messageViewModel = new MessageViewModel();
-                //Add New Building
-                if (buildingViewModel.Building.BuildingId == 0)
-                {
-                    var modelToSave=buildingViewModel.Building.CreateFrom();
-                    modelToSave.UserId = Guid.Parse(Session["LoginID"] as string);
+            //Add New Building
+            if (buildingViewModel.Building.BuildingId == 0)
+            {
+                var modelToSave = buildingViewModel.Building.CreateFrom();
+                modelToSave.UserId = Guid.Parse(Session["LoginID"] as string);
 
-                    if (buildingService.AddBuilding(modelToSave))
-                    {
-                        messageViewModel.IsUpdated = true;
-                    }                   
-                }
-                //Edit Building
-                else
+                if (buildingService.AddBuilding(modelToSave))
                 {
-                    var modelToSave = buildingViewModel.Building.CreateFrom();
-                    modelToSave.UserId = Guid.Parse(Session["LoginID"] as string);
-                    if (buildingService.Update(modelToSave))
-                    {
-                        messageViewModel.IsSaved = true;
-                    }
+                    messageViewModel.IsUpdated = true;
                 }
-                return RedirectToAction("Building");
+            }
+            //Edit Building
+            else
+            {
+                var modelToSave = buildingViewModel.Building.CreateFrom();
+                modelToSave.UserId = Guid.Parse(Session["LoginID"] as string);
+                if (buildingService.Update(modelToSave))
+                {
+                    messageViewModel.IsSaved = true;
+                }
+            }
+
+            messageViewModel.Message = "Saved Successfully";
+
+            // Update Session
+            TempData["MessageVm"] = messageViewModel;
+
+            return RedirectToAction("Building");
         }
 
         //[Authorize]
@@ -136,8 +142,16 @@ namespace PMS.Web.Controllers
         //[SiteAuthorize(PermissionKey = "Buildings")]
         public ActionResult Building()
         {
-            //var buildingViewModel = GetAll();
-            return View();
+            BuildingSearchRequest buildingViewModel = Session["PageMetaData"] as BuildingSearchRequest;
+
+            Session["PageMetaData"] = null;
+
+            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
+
+            return View(new BuildingViewModel
+            {
+                SearchRequest = buildingViewModel ?? new BuildingSearchRequest()
+            });
         }
 
         [HttpPost]
@@ -159,6 +173,9 @@ namespace PMS.Web.Controllers
             //}
 
             //JsonConvert.SerializeObject(buildingListViewModel);
+
+            // Keep Search Request in Session
+            Session["PageMetaData"] = request;
 
             return Json(buildingListViewModel, JsonRequestBehavior.AllowGet);
         }
