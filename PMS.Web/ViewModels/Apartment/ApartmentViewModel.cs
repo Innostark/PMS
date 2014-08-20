@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PMS.Models.RequestModels;
 
 namespace PMS.Web.ViewModels.Apartment
 {
@@ -12,6 +13,6 @@ namespace PMS.Web.ViewModels.Apartment
         /// <summary>
         /// Search Request
         /// </summary>
-        public BuildingSearchRequest SearchRequest { get; set; }
+        public ApartmentSearchRequest SearchRequest { get; set; }
     }
 }

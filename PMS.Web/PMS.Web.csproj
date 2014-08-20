@@ -280,6 +280,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="ViewModels\Apartment\ApartmentAjaxViewModel.cs" />
     <Compile Include="ViewModels\Apartment\ApartmentViewModel.cs" />
     <Compile Include="ViewModels\BuildingAjaxViewModel.cs" />
     <Compile Include="ViewModels\BuildingListViewModel.cs" />

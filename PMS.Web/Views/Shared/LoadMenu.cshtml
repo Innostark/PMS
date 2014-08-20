@@ -36,7 +36,7 @@
                 foreach (MenuRight menuRight in menuRightchildList)
                 {
                     // display childs
-                    <li class="@( Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "")">
+                    <li class="@( Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController ) == true ? "active innerSelected" : "")">
                         @*<span>@Request.Url.ToString().Contains( menuRight.Menu.MenuTargetController +"/"+ menuRight.Menu.MenuFunction))</span>*@
                         <span>@*@menuRight.Menu.MenuTargetController/@menuRight.Menu.MenuFunction*@ </span>
                         @*@Html.ActionLink(@"<i class='icon-bar-chart'></i>"+menuRight.Menu.MenuTitle + '-' + menuRight.Menu.MenuFunction, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController)*@

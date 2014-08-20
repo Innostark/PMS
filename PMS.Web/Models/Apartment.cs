@@ -52,6 +52,8 @@ namespace PMS.Web.Models
         public int NoOfDoorLocks { get; set; }
         [Required(ErrorMessage = "Mentioning Security Cameras Installation required")]
         public bool SecurityCamerasInstalled { get; set; }
+
+        public string BuildingName { get; set; }
        
     }
 }

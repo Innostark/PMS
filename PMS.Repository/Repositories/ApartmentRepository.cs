@@ -14,7 +14,7 @@ namespace PMS.Repository.Repositories
 {
     public sealed class ApartmentRepository : BaseRepository<Apartment>, IApartmentRepository
     {
-         #region Constructor
+        #region Constructor
 
         /// <summary>
         /// Constructor
@@ -59,5 +59,22 @@ namespace PMS.Repository.Repositories
                         { ApartmentsByColumn.SecurityCamerasInstalled, c => c.SecurityCamerasInstalled}
                     };
         #endregion
+        public ApartmentResponse GetAllApartments(ApartmentSearchRequest apartmentSearchRequest)
+        {
+            int fromRow = (apartmentSearchRequest.PageNo - 1) * apartmentSearchRequest.PageSize;
+            int toRow = apartmentSearchRequest.PageSize;
+            Expression<Func<Apartment, bool>> query =
+                s => (s.Building.UserId.Equals(apartmentSearchRequest.UserId)) &&
+                     (string.IsNullOrEmpty(apartmentSearchRequest.ApartmentNumber) ||
+                      s.ApartmentNo.Contains(apartmentSearchRequest.ApartmentNumber));
+                    //&&(string.IsNullOrEmpty(buildingSearchRequest.SearchString) || s.Name.Contains(buildingSearchRequest.SearchString));
+            IEnumerable<Apartment> apartments = apartmentSearchRequest.IsAsc ? DbSet.Where(query).OrderBy(apartmentClause[apartmentSearchRequest.ApartmentOrderBy]).Skip(fromRow).Take(toRow).ToList()
+                                           : DbSet.Where(query).OrderByDescending(apartmentClause[apartmentSearchRequest.ApartmentOrderBy]).Skip(fromRow).Take(toRow).ToList();
+            return new ApartmentResponse { Apartments= apartments, TotalCount = DbSet.Count(query) };
+        }
+        public Apartment FindApartmentById(int apartmentId)
+        {
+            return DbSet.FirstOrDefault(apartment => apartment.ApartmentId == apartmentId);
+        }
     }
 }

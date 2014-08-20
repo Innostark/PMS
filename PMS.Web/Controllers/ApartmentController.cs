@@ -1,8 +1,15 @@
-﻿using System.Web.Mvc;
-using PMS.Implementation.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
 using PMS.Interfaces.IServices;
+using PMS.Models.DomainModels;
+using PMS.Models.RequestModels;
 using PMS.Web.ViewModels.Apartment;
 using PMS.Web.ModelMappers;
+using PMS.Web.ViewModels.Common;
+using ModelState = System.Web.Http.ModelBinding.ModelState;
 
 namespace PMS.Web.Controllers
 {
@@ -15,23 +22,101 @@ namespace PMS.Web.Controllers
         {
             this.apartmentService = apartmentService;
         }
+
+        public ActionResult Index()
+        {
+            ApartmentSearchRequest apartmentViewModel = Session["PageMetaData"] as ApartmentSearchRequest;
+
+            Session["PageMetaData"] = null;
+
+            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
+
+            return View(new ApartmentViewModel
+            {
+                SearchRequest = apartmentViewModel ?? new ApartmentSearchRequest()
+            });
+        }
+
+        [HttpPost]
+        public ActionResult Index(ApartmentSearchRequest apartmentSearchRequest)
+        {
+            apartmentSearchRequest.UserId = Guid.Parse(Session["LoginID"] as string);
+            var apartments = apartmentService.GetAllApartments(apartmentSearchRequest);
+            IEnumerable<Models.Apartment> apartmentsList = apartments.Apartments.Select(x => x.CreateFrom()).ToList();
+            ApartmentAjaxViewModel apartmentListViewModel = new ApartmentAjaxViewModel
+            {
+                data = apartmentsList,
+                recordsTotal = apartments.TotalCount,
+                recordsFiltered = apartments.TotalCount
+            };
+
+            // Keep Search Request in Session
+            Session["PageMetaData"] = apartmentSearchRequest;
+
+            return Json(apartmentListViewModel, JsonRequestBehavior.AllowGet);
+        }
         // GET: Apartment
         public ActionResult AddEdit(int? id)
         {
-            return View();
+            Models.Apartment apartmentViewModel = new Models.Apartment();
+
+            if (id != null)
+            {
+
+                var apartment = apartmentService.FindApartmentById(id);
+                if (apartment != null)
+                {
+
+                    apartmentViewModel = apartment.CreateFrom();
+
+                    return View(apartmentViewModel);
+                }
+            }
+
+            return View(apartmentViewModel);
         }
         [HttpPost]
-        public ActionResult AddEdit(ApartmentViewModel apartmentViewModel)
+        public ActionResult AddEdit(Models.Apartment apartment)
         {
+            MessageViewModel messageViewModel = new MessageViewModel();
             //Add New Apartment
-            if (apartmentViewModel.Apartment.ApartmentId == 0)
+            if (apartment.ApartmentId == 0)
             {
-                var modelToSave = apartmentViewModel.Apartment.CreateFrom();
+                var modelToSave = apartment.CreateFrom();
                 apartmentService.AddApartment(modelToSave);
-                return View(new ApartmentViewModel());
+                messageViewModel.IsUpdated = true;
+                
             }
             //Update Apartment
-            return View();
+            else
+            {
+                
+                apartmentService.UpdateApartment(apartment.CreateFrom());
+                messageViewModel.IsSaved = true;
+            }
+
+            messageViewModel.Message = "Saved Successfully";
+
+            // Update Session
+            TempData["MessageVm"] = messageViewModel;
+
+            return RedirectToAction("Index");
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult Delete(int apartmentId)
+        {
+            var apartmentToBeDeleted = apartmentService.FindApartmentById(apartmentId);
+            try
+            {
+                apartmentService.DeleteApartment(apartmentToBeDeleted);
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to delete. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { response = "Successfully deleted!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
     }
 }
