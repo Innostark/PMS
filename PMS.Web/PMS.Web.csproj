@@ -234,6 +234,7 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
+    <Compile Include="Controllers\ServiceCompanyController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
@@ -249,6 +250,7 @@
     <Compile Include="Models\Building.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\ServiceCompany.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductResponse.cs" />
@@ -284,6 +286,7 @@
     <Compile Include="ViewModels\Domain\UserAjaxViewModel.cs" />
     <Compile Include="ViewModels\Products\ProductViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\ServiceCompany\ServiceCompanyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -972,6 +975,7 @@
     <Content Include="Views\ABuilding\AddEdit.cshtml" />
     <Content Include="Views\Account\Users.cshtml" />
     <Content Include="Views\ABuilding\Index.cshtml" />
+    <Content Include="Views\ServiceCompany\AddEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
