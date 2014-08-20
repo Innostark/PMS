@@ -33,7 +33,7 @@
                         <tr class="col-sm-12">
                             <td colspan="10">
                                 <label style="padding-right: 10px;font-weight: 700">@item.MenuTitle</label>
-                                @Html.CheckBoxFor(m => item.IsSelected, new { value = item.MenuId })
+                                @Html.CheckBoxFor(m => item.IsSelected, new { value = item.MenuId, @class = "parentCheckbox" })
                                 @*<input type="checkbox" name="ContentTypeFilter" value="@item.MenuTitle" checked='@(item.IsSelected)' />*@
                             </td>
                         </tr>
@@ -42,7 +42,7 @@
                             @foreach (var childItems in @Model.Rights.Where(childItem => childItem.ParentId == item.MenuId))
                             {
                                 <td class="col-sm-2">
-                                    @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId })
+                                    @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox" })
                                     @*<input type="checkbox" name="ContentTypeFilter" value="@childItems.MenuTitle" checked='@(childItems.IsSelected)' />*@
                                     <label style="padding-right: 10px;">@childItems.MenuTitle</label>
                                 </td>
@@ -72,6 +72,30 @@
                     selectedList = selectedList.substring(0, selectedList.length - 1);
                 return selectedList;
             }
+            
+            // Checkbox Checked event
+            $("input:checkbox").on('change', function () {
+                var element = $(this);
+                // Is Parent
+                if (element.hasClass("parentCheckbox")) {
+                    var childRow = element.closest("tr").next("tr");
+                    $.each(childRow.children().children("input:checkbox"), function(index, child) {
+                        $(child).prop('checked', element[0].checked);
+                    });
+                }
+                else {
+                    if (element[0].checked) {
+                        element.closest("tr").prev().children().children("input:checkbox").prop('checked', true);
+                    }
+                    else {
+                        var nextCheckboxes = element.parent("td").nextAll().children("input:checkbox");
+                        var prevCheckboxes = element.parent("td").prevAll().children("input:checkbox");
+                        if (nextCheckboxes.filter(":checked").length === 0 && prevCheckboxes.filter(":checked").length === 0) {
+                            element.closest("tr").prev().children().children("input:checkbox").prop('checked', false);
+                        }
+                    }
+                }
+            });
             
         </script>
     </div>
