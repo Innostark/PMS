@@ -73,6 +73,8 @@ namespace PMS.Repository.BaseRepository
         public DbSet<Department> Departments { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<DomainKeys> DomainKeys { get; set; }
+        public DbSet<ServiceCompany> ServiceCompanies { get; set; }
+        public DbSet<Apartment> Apartments { get; set; }
 
         #endregion
     }

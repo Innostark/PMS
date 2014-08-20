@@ -16,6 +16,8 @@ namespace PMS.Repository
             unityContainer.RegisterType<IBuildingRepository, BuildingRepository>();
             unityContainer.RegisterType<IMenuRepository, MenuRepository>();
             unityContainer.RegisterType<IDomainKeyRepository, DomainKeyRepository>();
+            unityContainer.RegisterType<IServiceCompanyRepository, ServiceCompanyRepository>();
+            unityContainer.RegisterType<IApartmentRepository, ApartmentRepository>();
             unityContainer.RegisterType<BaseDbContext>(new PerRequestLifetimeManager());
         }
     }

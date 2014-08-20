@@ -241,12 +241,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="ModelMappers\ApartmentMapper.cs" />
     <Compile Include="ModelMappers\BuildingMapper.cs" />
     <Compile Include="ModelMappers\CategoryMapper.cs" />
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\ProductResponseMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
+    <Compile Include="ModelMappers\ServiceCompanyMapper.cs" />
     <Compile Include="ModelMappers\UsersMappers.cs" />
+    <Compile Include="Models\Apartment.cs" />
     <Compile Include="Models\Building.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Department.cs" />
@@ -277,6 +280,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="ViewModels\Apartment\ApartmentViewModel.cs" />
     <Compile Include="ViewModels\BuildingAjaxViewModel.cs" />
     <Compile Include="ViewModels\BuildingListViewModel.cs" />
     <Compile Include="ViewModels\Buildings\ABuildingViewModel.cs" />
@@ -962,7 +966,7 @@
     <Content Include="Views\Shared\_ConfirmationDialog.cshtml" />
     <Content Include="Views\Shared\_Product.cshtml" />
     <Content Include="Views\Building\AddEdit.cshtml" />
-    <Content Include="Views\Apartment\AddEdit.cshtml" />
+    <Content Include="Views\Apartment\AddEdit1.cshtml" />
     <Content Include="Views\LandLord\AddEdit.cshtml" />
     <Content Include="Views\Building\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
@@ -976,6 +980,7 @@
     <Content Include="Views\Account\Users.cshtml" />
     <Content Include="Views\ABuilding\Index.cshtml" />
     <Content Include="Views\ServiceCompany\AddEdit.cshtml" />
+    <Content Include="Views\Apartment\AddEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />

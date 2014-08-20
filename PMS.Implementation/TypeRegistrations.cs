@@ -21,6 +21,8 @@ namespace PMS.Implementation
             unityContainer.RegisterType<IDepartmentService, DepartmentService>();
             unityContainer.RegisterType<IBuildingService, BuildingService>();
             unityContainer.RegisterType<IDomainKeyService, DomainKeyService>();
+            unityContainer.RegisterType<IServiceCompanyService, ServiceCompanyService>();
+            unityContainer.RegisterType<IApartmentService, ApartmentService>();
             unityContainer.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
  	    
 

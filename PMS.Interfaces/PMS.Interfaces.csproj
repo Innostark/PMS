@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IServices\IApartmentService.cs" />
     <Compile Include="IServices\IBuildingService.cs" />
     <Compile Include="IServices\IDepartmentService.cs" />
     <Compile Include="IServices\ICategoryService.cs" />
@@ -62,7 +63,9 @@
     <Compile Include="IServices\ILogger.cs" />
     <Compile Include="IServices\IMenuRightService.cs" />
     <Compile Include="IServices\IProductService.cs" />
+    <Compile Include="IServices\IServiceCompanyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IApartmentRepository.cs" />
     <Compile Include="Repository\IBaseRepository.cs" />
     <Compile Include="Repository\IApplicationUserRepository.cs" />
     <Compile Include="Repository\IBuildingRepository.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="Repository\IMenuRightRepository.cs" />
     <Compile Include="Repository\IDepartmentRepository.cs" />
     <Compile Include="Repository\IProductRepository.cs" />
+    <Compile Include="Repository\IServiceCompanyRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
