@@ -966,7 +966,6 @@
     <Content Include="Views\Shared\_ConfirmationDialog.cshtml" />
     <Content Include="Views\Shared\_Product.cshtml" />
     <Content Include="Views\Building\AddEdit.cshtml" />
-    <Content Include="Views\Apartment\AddEdit1.cshtml" />
     <Content Include="Views\LandLord\AddEdit.cshtml" />
     <Content Include="Views\Building\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
@@ -981,6 +980,7 @@
     <Content Include="Views\ABuilding\Index.cshtml" />
     <Content Include="Views\ServiceCompany\AddEdit.cshtml" />
     <Content Include="Views\Apartment\AddEdit.cshtml" />
+    <Content Include="Views\Apartment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />

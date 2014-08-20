@@ -9,5 +9,9 @@ namespace PMS.Web.ViewModels.Apartment
 
         //Take Data For Edit
         public Models.Apartment Apartment { get; set; }
+        /// <summary>
+        /// Search Request
+        /// </summary>
+        public BuildingSearchRequest SearchRequest { get; set; }
     }
 }
