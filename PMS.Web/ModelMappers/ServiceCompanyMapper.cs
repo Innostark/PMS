@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using PMS.Models.DomainModels;
+﻿using PMS.Models.DomainModels;
 
 namespace PMS.Web.ModelMappers
 {

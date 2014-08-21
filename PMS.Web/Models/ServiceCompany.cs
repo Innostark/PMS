@@ -29,5 +29,6 @@ namespace PMS.Web.Models
         public string AccountNumber { get; set; }
         [StringLength(250, ErrorMessage = "The {0} must be at least {2} characters long.")]
         public string Comment { get; set; }
+
     }
 }

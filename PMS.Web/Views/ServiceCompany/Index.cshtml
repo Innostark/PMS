@@ -1,12 +1,12 @@
-﻿@model PMS.Web.ViewModels.Apartment.ApartmentViewModel
+﻿@model PMS.Web.ViewModels.ServiceCompany.ServiceCompanyViewModel
 @{
-    ViewBag.Title = "Appartment";
+    ViewBag.Title = "Service Company";
 }
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <h3 class="page-title">
-        Apartments
+        Service Company
     </h3>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_0">
@@ -17,7 +17,7 @@
                     </div>
                     <div class="tools">
                         <input type="button" class="btn green " id="btnFltr" value="Filter" />
-                        <a href="~/Apartment/Index">
+                        <a href="~/ServiceCompany/Index">
                             <input type="button" class="btn green titleButton" value="Reset">
                         </a>
                         <a href="javascript:;" class="collapse">
@@ -31,17 +31,17 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <label class="control-label"> Search Apartment No: </label>
+                                        <label class="control-label"> Search Name: </label>
                                     </td>
                                     <td>
-                                        @Html.TextBox("ApartmentNumber", Model.SearchRequest.ApartmentNumber, new { @id = "ApartmentNumber", placeholder = "Search Apartment No" })
+                                        @Html.TextBox("SearchString", Model.SearchRequest.SearchString, new { @id = "SearchString", placeholder = "Search Name" })
                                     </td>
-                                    @*<td>
+                                    <td>
                                         <label class="control-label filterColumn"> Search Phone: </label>
                                     </td>
                                     <td>
                                         @Html.TextBox("PhoneNumber", Model.SearchRequest.PhoneNumber, new { @id = "PhoneNumber", placeholder = "Search Phone" })
-                                    </td>*@
+                                    </td>
                                     <td></td>
                                 </tr>
                             </table>
@@ -58,10 +58,10 @@
             <div class="portlet box grey-salt">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-user"></i>Apartments List
+                        <i class="fa fa-user"></i>Service Companies List
                     </div>
                     <div class="tools" style=" min-height: 50px;">
-                        <a href="AddEdit">
+                        <a href="~/ServiceCompany/AddEdit">
                             <input type="button" class="btn green titleButton" value="Create New">
                         </a>
                         <a href="javascript:;" class="collapse">
@@ -73,18 +73,16 @@
                 <div class="portlet-body form">
 
 
-                    <table id="apartmentTable" class="display" cellspacing="0" width="100%">
+                    <table id="serviceCompanyTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Apartment Number</th>
-                                <th>Building Name</th>
-                                <th>No Of Rooms</th>
-                                <th>No Of Rest Rooms</th>
-                                <th>No Of Almarah</th>
-                                <th>Floor Number</th>
-                                <th>Total Area</th>
-                                <th>Electricals</th>
+                                <th>Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>AccountNumber</th>
+                                <th>Comment</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -101,14 +99,14 @@
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
-        var oTable = $('#apartmentTable').dataTable({
-            "iDisplayLength": 11,
+        var oTable = $('#serviceCompanyTable').dataTable({
+            "iDisplayLength": 9,
             "displayStart": start || 0,
             "bFilter": false,
             "bLengthChange": false,
             "aaSorting": [sortBy],
             "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [9, 10] },
+                { 'bSortable': false, 'aTargets': [7, 8] },
                 {
                     "targets": [0],
                     "visible": false,
@@ -116,15 +114,13 @@
                 }
             ],
             "columns": [
-                 { "data": "ApartmentId" },
-                { "data": "ApartmentNo" },
-                { "data": "BuildingName" },
-                { "data": "NoOfRooms" },
-                { "data": "NoOfRestRoooms" },
-                { "data": "NoOfAlmarah" },
-                { "data": "FloorNumber" },
-                { "data": "TotalArea" },
-                { "data": "NoOfElectricalsInstalled" },
+                { "data": "ServiceCompanyId" },
+                { "data": "Name" },
+                { "data": "PhoneNumber" },
+                { "data": "Email" },
+                { "data": "Address" },
+                { "data": "AccountNumber" },
+                { "data": "Comment" },
                 {
                     "orderable": false,
                     "data": null,
@@ -139,7 +135,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                url: "/Apartment/Index",
+                url: "/ServiceCompany/Index",
                 type: "POST",
                 dataType: "json",
                 data: function (params) {
@@ -153,8 +149,8 @@
                         params.SortBy = 1;
                     }
                     params.IsAsc = params.order[0].dir === "asc";
-                    //params.SearchString = $('#SearchString').val();
-                    params.ApartmentNumber = $('#ApartmentNumber').val();
+                    params.SearchString = $('#SearchString').val();
+                    params.PhoneNumber = $('#PhoneNumber').val();
                 }
             }
         });
@@ -165,7 +161,7 @@
         });
 
 
-        $('#apartmentTable').on('click', '.delete', function (e) {
+        $('#serviceCompanyTable').on('click', '.delete', function (e) {
             e.preventDefault();
 
             if (confirm("Are you sure to delete this row ?") == false) {
@@ -174,11 +170,11 @@
 
             var nRow = $(this).parents('tr')[0];
             var aData = oTable.fnGetData(nRow);
-            var serviceUrl = '/Apartment/Delete';
+            var serviceUrl = '/ServiceCompany/Delete';
             $.ajax({
                 type: "POST",
                 url: serviceUrl,
-                data: "{ apartmentId:" + aData.ApartmentId + "}",
+                data: "{ serviceCompanyId:" + aData.ServiceCompanyId + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 complete: function(data) {
@@ -213,14 +209,18 @@
             function errorFunc(error) {
                 toastr.error(error.responseJSON.response);
             }
+
+
         });
 
         // Edit
-        $('#apartmentTable').on('click', '.edit', function (e) {
+        $('#serviceCompanyTable').on('click', '.edit', function (e) {
             e.preventDefault();
             var nRow = $(this).parents('tr')[0];
             var aData = oTable.fnGetData(nRow);
-            window.location.href = "/Apartment/AddEdit?id=" + aData.ApartmentId;
+            window.location.href = "/ServiceCompany/AddEdit?id=" + aData.ServiceCompanyId;
+
         });
+
     });
 </script>

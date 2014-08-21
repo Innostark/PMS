@@ -291,6 +291,7 @@
     <Compile Include="ViewModels\Domain\UserAjaxViewModel.cs" />
     <Compile Include="ViewModels\Products\ProductViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\ServiceCompany\ServiceCompanyAjaxViewModel.cs" />
     <Compile Include="ViewModels\ServiceCompany\ServiceCompanyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -982,6 +983,7 @@
     <Content Include="Views\ServiceCompany\AddEdit.cshtml" />
     <Content Include="Views\Apartment\AddEdit.cshtml" />
     <Content Include="Views\Apartment\Index.cshtml" />
+    <Content Include="Views\ServiceCompany\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PMS.Models.RequestModels;
 
 namespace PMS.Web.ViewModels.ServiceCompany
 {
@@ -8,5 +9,10 @@ namespace PMS.Web.ViewModels.ServiceCompany
 
         //Take Data For Edit
         public Models.ServiceCompany ServiceCompany { get; set; }
+
+        /// <summary>
+        /// Search Request
+        /// </summary>
+        public ServiceCompanySearchRequest SearchRequest { get; set; }
     }
 }
