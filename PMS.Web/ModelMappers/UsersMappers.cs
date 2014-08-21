@@ -21,6 +21,7 @@ namespace PMS.Web.ModelMappers
                        UpdatedDate = domainKeys.UpdatedDate != null ? domainKeys.UpdatedDate.Value.ToString("MMMM dd yyyy") : string.Empty,
                        UserId = domainKeys.UserId,
                        RoleName = roleName == "SuperAdmin"? "Admin": "LandLord",
+                       RoleName = roleName == "SuperAdmin"? "Admin": "User"
                        CompanyName = domainKeys.User.CompanyName,
                        IsPrimary = domainKeys.User.IsPrimary
                    };

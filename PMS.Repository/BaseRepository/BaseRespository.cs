@@ -126,7 +126,7 @@ namespace PMS.Repository.BaseRepository
 
         public IEnumerable<IdentityRole> Roles()
         {
-            return db.Roles;
+            return db.Roles.Where(r => !r.Name.Equals("SuperAdmin"));
         }
         #endregion
     }

@@ -3,7 +3,7 @@
     ViewBag.Title = "Rights Management";
 }
 <h2 class="page-header">Rights Management</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("RightsManagement", "RolesAdmin"))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
