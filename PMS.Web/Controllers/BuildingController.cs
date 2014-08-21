@@ -142,10 +142,12 @@ namespace PMS.Web.Controllers
         //[SiteAuthorize(PermissionKey = "Buildings")]
         public ActionResult Building()
         {
+            if (Request.UrlReferrer == null || Request.UrlReferrer.AbsolutePath == "/Building/Building")
+            {
+                Session["PageMetaData"] = null;
+            }
+
             BuildingSearchRequest buildingViewModel = Session["PageMetaData"] as BuildingSearchRequest;
-
-            Session["PageMetaData"] = null;
-
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
 
             return View(new BuildingViewModel
