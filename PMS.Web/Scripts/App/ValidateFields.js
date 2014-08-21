@@ -6,7 +6,7 @@
             var value = $(fields[i]).val();
             if (value.toString().length == 0) {
                 //checking session
-                if ((!document.getElementById("RoleName").value == "SuperAdmin") &&  ($(fields[i])[0].id == "DomainKey" || $(fields[i])[0].id == "ExpiryDate")){
+                if ((!document.getElementById("RoleName").value == "SuperAdmin") &&  ($(fields[i])[0].id == "ExpiryDate")){
                     continue;
                 }
                 missingCounter++;

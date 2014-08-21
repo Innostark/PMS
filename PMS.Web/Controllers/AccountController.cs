@@ -74,7 +74,7 @@ namespace IdentitySample.Controllers
                 UserManager.AddToRole(applicationUser.Id, "Admin");
                 DomainKeys domainKeys = new DomainKeys
                                         {
-                                            DomainKey = model.DomainKey,
+                                            DomainKey = Guid.NewGuid().ToString(),
                                             //ExpiryDate = (DateTime)model.ExpiryDate,
                                             ExpiryDate = Convert.ToDateTime(model.ExpiryDate),
                                             UserId = UserId,
