@@ -43,7 +43,7 @@
                                 <div class="col-md-4">
                                     <div class="input-icon">
                                         <i class="fa fa-building-o"></i>
-                                        @Html.TextBoxFor(model => model.BuildingId, new { @class = "form-control input-circle ", @placeholder = "Enter Building No", @id = "BuildingNo" })
+                                        @Html.DropDownListFor(model => model.BuildingId, new SelectList(Model.Buildings, "BuildingId", "Name"), new { @class = "form-control input-circle", @id = "BuildingNo" }) @*///, "-- Select Building --"*@
                                     </div>
                                     @Html.ValidationMessageFor(model => model.BuildingId)
                                 </div>

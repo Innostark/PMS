@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMS.Web.Models
 {
@@ -54,6 +55,7 @@ namespace PMS.Web.Models
         public bool SecurityCamerasInstalled { get; set; }
 
         public string BuildingName { get; set; }
+        public IList<Building> Buildings { get; set; } 
        
     }
 }

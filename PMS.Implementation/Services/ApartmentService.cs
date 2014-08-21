@@ -1,4 +1,7 @@
-﻿using PMS.Interfaces.IServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using PMS.Interfaces.IServices;
 using PMS.Interfaces.Repository;
 using PMS.Models.DomainModels;
 using PMS.Models.RequestModels;
@@ -9,10 +12,12 @@ namespace PMS.Implementation.Services
     public sealed class ApartmentService: IApartmentService
     {
         private readonly IApartmentRepository apartmentRepository;
+        private readonly IBuildingRepository buildingRepository;
 
-        public ApartmentService(IApartmentRepository apartmentRepository)
+        public ApartmentService(IApartmentRepository apartmentRepository, IBuildingRepository buildingRepository)
         {
             this.apartmentRepository = apartmentRepository;
+            this.buildingRepository = buildingRepository;
         }
 
         public void AddApartment(Apartment apartment)
@@ -45,6 +50,15 @@ namespace PMS.Implementation.Services
         {
             apartmentRepository.Delete(apartment);
             apartmentRepository.SaveChanges();
+        }
+
+        public IList<Building> GetUserBuildings(Guid userId)
+        {
+            BuildingSearchRequest buildingSearchRequest = new BuildingSearchRequest
+                                                          {
+                                                              UserId = userId
+                                                          };
+            return buildingRepository.GetAllBuildings(buildingSearchRequest).Buildings.ToList();
         }
     }
 }
