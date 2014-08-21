@@ -1,0 +1,55 @@
+﻿@model OSS.Web.ViewModels.BuildingListViewModel
+@Styles.Render("~/Content/PagedList.css")
+
+@{
+    ViewBag.Title = "Building";
+}
+<p>
+    @Html.ActionLink(@OSS.Web.Resources.Shared.Common.CreateNew, "Create")
+</p>
+
+@Html.Partial("~/Views/Shared/_ConfirmationDialog.cshtml")
+@using (Ajax.BeginForm
+
+            ("BuildingList", "Building",
+            new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "gridContent" }))
+{
+    <div class="page-container page-height">
+
+        <div class="portlet-title caption">
+            <i class="font-green-haze"></i>
+            <h2><span class="caption-subject font-green-haze bold uppercase">Buildings</span></h2>
+        </div>
+        <div>
+            <p>
+                @Html.TextBox("SearchString", "", new { @class = "searchInputs", @id = "SearchInput", @placeholder = "Search Name" })
+                @Html.TextBox("PhoneNumber", "", new { @class = "searchInputs", @id = "PhoneNumber", @placeholder = "Phone Number" })
+                <input type="submit" class=" btn btn-default btn-sm" value="Search" />
+                <a href="AddEdit"><input type="button" class="btn btn-success btn-sm" value="Create New" /></a>
+            </p>
+        </div>
+        <br />
+        <div id="">
+            @Html.Partial("_BuildingList", Model)
+        </div>
+    </div>
+}
+
+@section scripts
+{
+        <script src="~/Scripts/Common/confirmationDialog.js"></script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

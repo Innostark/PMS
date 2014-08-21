@@ -1,0 +1,46 @@
+﻿@model OSS.Web.ViewModels.Products.ProductViewModel
+@*@model PagedList.IPagedList<@model.ProductList>*@
+
+@Styles.Render("~/Content/PagedList.css")
+
+@{
+    ViewBag.Title = @OSS.Web.Resources.Shared.Common.Product;
+}
+
+
+<p>
+    @Html.ActionLink(@OSS.Web.Resources.Shared.Common.CreateNew, "Create")
+</p>
+
+@Html.Partial("~/Views/Shared/_ConfirmationDialog.cshtml")
+
+@using (Ajax.BeginForm
+
+            ("Index", "Product",
+            new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "gridContent" }))
+{
+    <div id="search-area">
+        <div >
+           
+            <p>
+                @Html.TextBox("SearchString", "asad", new { @id = "searchInput" })
+                @Html.DropDownList("CategoryId", new SelectList(@Model.Categories, "Id", "Name"), @OSS.Web.Resources.Products.Product.SelectCategory, new { id = "ddlCategries", @class = "dropdown" })
+                @Html.DropDownList("ProductId", new SelectList(@Model.Products, "Id", "Name"), "-Select-", new { id = "ddlProducts", @class = "dropdown" })
+                <input type="submit" value=@OSS.Web.Resources.Shared.Common.Search />   <input type="button" id="reset" value=@OSS.Web.Resources.Shared.Common.Reset />
+            </p>
+
+        </div>
+    </div>
+    <br />
+    <div id="grid-area">
+        @Html.Partial("_Product", Model)
+    </div>
+    
+}
+
+@section scripts
+{
+    <script src="~/Scripts/Common/confirmationDialog.js"></script>
+    <script src="~/Scripts/App/product.js"></script>
+}
+

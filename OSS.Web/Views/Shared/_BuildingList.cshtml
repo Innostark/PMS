@@ -1,0 +1,96 @@
+﻿@model OSS.Web.ViewModels.BuildingListViewModel
+@using PagedList.Mvc;
+@Html.AntiForgeryToken()
+
+@helper SortLink(string name, int id)
+{
+    @Ajax.ActionLink(name, "BuildingList",
+                new { Sortby = id, isasc = (id != @Model.BuildingSearchRequest.SortBy || (!@Model.BuildingSearchRequest.IsAsc)), @Model.BuildingSearchRequest.PageSize, @Model.BuildingSearchRequest.SearchString, @Model.BuildingSearchRequest.PhoneNumber },
+        new AjaxOptions
+        {
+            UpdateTargetId = "gridContent", // <-- DOM element ID to update
+            InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+            HttpMethod = "GET", // <-- HTTP method
+        })
+    if (id == @Model.BuildingSearchRequest.SortBy)
+    {
+        <span class="arrow @(@Model.BuildingSearchRequest.IsAsc ? "up" : "down")"></span>
+    }
+}
+
+<div id="gridContent">
+    <input type="hidden" id="SortBy" value="@Model.BuildingSearchRequest.SortBy" />
+    <input type="hidden" id="IsAsc" value="@Model.BuildingSearchRequest.IsAsc" />
+    <input type="hidden" id="PageSize" value="@Model.BuildingSearchRequest.PageSize" />
+    <input type="hidden" id="PageCount" value="@Model.BuildingList.PageCount" />
+    <input type="hidden" id="DeleteItemId" value="" />
+    <input type="hidden" id="CurrentPageNumber" value=@Model.BuildingSearchRequest.PageNo />
+    <input type="hidden" id="SearchString" name="SearchString" value=@Model.BuildingSearchRequest.SearchString />
+    <input type="hidden" id="PhoneNumber" value=@Model.BuildingSearchRequest.PhoneNumber />
+    <table id="buildingTable table" class="display dataTable" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th> @SortLink("Name", 1) </th>
+                <th> @SortLink("Phone Number", 2)  </th>
+                <th> @SortLink("Email", 3)</th>
+                <th> @SortLink("Address", 4)</th>
+                <th> @SortLink("Built date", 5)</th>
+                <th> @SortLink("No of Floors", 6)</th>
+                <th> @SortLink("No of Elevators", 7)</th>
+
+                <th class="editdelete"> Actions </th>
+                <th></th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            @foreach (var item in Model.BuildingList)
+            {
+                <tr style="border: gray">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BuiltDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoOfFloors)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoOfElevators)
+                    </td>
+                    <td class="editdelete">
+                        @Html.ActionLink(" ", "AddEdit", new { id = item.BuildingId }, new { @class = "edit" }) |
+                        <a class="delete" href="@Url.Action("Delete", new {buildingId = item.BuildingId })"></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div id="myPager">
+        <table id="pager-table">
+            <tr>
+                <td style="width: 15%">@OSS.Web.Resources.Shared.Common.TotalRecords @Model.TotalNoOfRec</td>
+                <td style="width: 67%">
+                    @Html.PagedListPager(Model.BuildingList, PageNo => Url.Action("BuildingList", new { PageNo, @Model.BuildingSearchRequest.SortBy, @Model.BuildingSearchRequest.IsAsc, @Model.BuildingSearchRequest.PageSize, @Model.BuildingSearchRequest.SearchString, @Model.BuildingSearchRequest.PhoneNumber }),
+                        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "gridContent" })
+                        )
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,152 @@
+﻿
+@model  OSS.Models.IdentityModels.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Register"; 
+}
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+      <h3 class="page-title">
+        Add/Edit User
+    </h3>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_0">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Manage your users
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form action="#" class="form-horizontal">
+                        <div class="form-body">
+                            <input type="hidden" id="RoleName" value="@Session["RoleName"]" />
+                            <input type="hidden" id="UserId" name="UserId" value=@Model.UserId />
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">First Name</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control input-circle mandatory", placeholder = "Enter First Name", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Last Name</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-circle mandatory", placeholder = "Enter Last Name", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Email Address</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-envelope"></i>
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-circle mandatory", placeholder = "Email Address", 
+                                       @readonly=(@Model==null || string.IsNullOrEmpty( @Model.UserId))?false:true})
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            @if (Model.UserId == null || Model.UserId == "")
+                            {
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Password</label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon">
+                                            <i class="fa fa-user"></i>
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control input-circle mandatory", placeholder = "Password" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Confirm Password</label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon">
+                                            <i class="fa fa-user"></i>
+                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control input-circle", placeholder = "Confirm Password" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Session["RoleName"].ToString().Equals("SuperAdmin"))
+                            {
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.CompanyName, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        <div class="input-icon">
+                                            <i class="fa fa-key"></i>
+                                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control input-circle mandatory", placeholder = "Company Name", @id = "CompanyName", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.IsPrimary, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        
+                                            @Html.CheckBoxFor(m => m.IsPrimary, new { @id = "IsPrimary" })   @*, @disabled = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? "" : "disabled"*@
+                                       
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Domain Key</label>
+                                        <div class="col-md-4">
+                                            <div class="input-icon">
+                                                <i class="fa fa-key"></i>
+                                                @Html.TextBoxFor(m => m.DomainKey, new { @class = "form-control input-circle", placeholder = "Domain Key", @id = "DomainKey", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true, disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                 
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Expiry Date</label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon">
+                                            <i class="fa fa-calendar"></i>
+                                            @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "form-control input-circle datepicker mandatory", @placeholder = "mm/dd/yyyy", @id = "ExpiryDate" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                           
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    @if (Session["RoleName"].ToString().Equals("SuperAdmin") || Session["RoleName"].ToString().Equals("Admin"))
+                                    {
+                                        <button type="submit" class=" btn btn-circle blue" onclick=" return (ValidateFields()) ">Save</button>
+                                    }
+                                    <a href="Users">
+                                        <button type="button" class="btn btn-circle default">Cancel</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}
+<script type="text/javascript" src="~/Scripts/App/ValidateFields.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            autoclose: true,
+            //startDate: '-3d'
+        });
+    });
+    $(function () {
+        $("[readonly='false']").removeAttr("readonly");
+    });
+</script> 

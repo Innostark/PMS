@@ -1,0 +1,66 @@
+﻿@model OSS.Web.ViewModels.Products.ProductViewModel
+
+
+@{
+    ViewBag.Title =@OSS.Web.Resources.Shared.Common.Create;
+}
+
+<h2>@OSS.Web.Resources.Shared.Common.Create</h2>
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>@OSS.Web.Resources.Shared.Common.Product</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Product.Id)
+        <div class="form-group">
+            @Html.Label(@OSS.Web.Resources.Products.Product.CategoryId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Product.CategoryId, new SelectList(Model.Categories, "Id", "Name"), @OSS.Web.Resources.Products.Product.SelectCategory, new { id = "ddlCategries" })
+                @Html.ValidationMessageFor(model => model.Product.CategoryId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(@OSS.Web.Resources.Products.Product.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Product.Name)
+                @Html.ValidationMessageFor(model => model.Product.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(@OSS.Web.Resources.Products.Product.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Product.Description)
+                @Html.ValidationMessageFor(model => model.Product.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(@OSS.Web.Resources.Products.Product.Price, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Product.Price)
+                @Html.ValidationMessageFor(model => model.Product.Price)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="@OSS.Web.Resources.Shared.Common.Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink(@OSS.Web.Resources.Shared.Common.BackToList, "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

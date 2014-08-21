@@ -1,0 +1,222 @@
+﻿@model OSS.Web.Models.Apartment
+@{
+    ViewBag.Title = "Add/Edit";
+}
+
+@using (Html.BeginForm("AddEdit", "Apartment", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <h3 class="page-title">
+        Apartment Add/Edit
+    </h3>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_0">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Manage your Apartments
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form action="#" class="form-horizontal">
+                        <div class="form-body">
+                            @Html.HiddenFor(model => model.ApartmentId)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ApartmentNo, "Apartment No", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.ApartmentNo, new { @class = "form-control input-circle ", @placeholder = "Enter Apartment Number", @id = "Name" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ApartmentNo)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.BuildingId, "Building", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.DropDownListFor(model => model.BuildingId, new SelectList(Model.Buildings, "BuildingId", "Name"), new { @class = "form-control input-circle", @id = "BuildingNo" }) @*///, "-- Select Building --"*@
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.BuildingId)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NoOfRooms, "No Of Rooms", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.NoOfRooms, new { @class = "form-control input-circle ", @placeholder = "Enter No Of Rooms", @id = "NoOfRooms" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NoOfRooms)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NoOfRestRoooms, "No Of Rest Rooms", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.NoOfRestRoooms, new { @class = "form-control input-circle ", @placeholder = "Enter No Of Rest Roooms", @id = "NoOfRestRoooms" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NoOfRestRoooms)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NoOfAlmarah, "No Of Almarah", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.NoOfAlmarah, new { @class = "form-control input-circle ", @placeholder = "Enter No Of Almarah", @id = "NoOfAlmarah" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NoOfAlmarah)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TotalArea, "Total Area", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.TotalArea, new { @class = "form-control input-circle ", @placeholder = "Enter Total Area", @id = "TotalArea" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.TotalArea)
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MasterBedSize, "Master Bed Size", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.MasterBedSize, new { @class = "form-control input-circle ", @placeholder = "Enter Master Bed Size", @id = "MasterBedSize" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.MasterBedSize)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.KitchenSize, "Kitchen Size", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.KitchenSize, new { @class = "form-control input-circle ", @placeholder = "Enter Kitchen Size", @id = "KitchenSize" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.KitchenSize)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NoOfWindows, "No Of Windows", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.NoOfWindows, new { @class = "form-control input-circle ", @placeholder = "Enter No Of Windows", @id = "NoOfWindows" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NoOfWindows)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NoOfDoors, "No Of Doors", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.NoOfDoors, new { @class = "form-control input-circle ", @placeholder = "Enter No Of Doors", @id = "NoOfDoors" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NoOfDoors)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NoOfWashRooms, "No Of WashRooms", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.NoOfWashRooms, new { @class = "form-control input-circle ", @placeholder = "Enter No Of WashRooms", @id = "NoOfWashRooms" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NoOfWashRooms)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FloorNumber, "Floor Number", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.FloorNumber, new { @class = "form-control input-circle ", @placeholder = "Enter Floor Number", @id = "FloorNumber" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FloorNumber)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NoOfElectricalsInstalled, "No Of Electricals Installed", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.NoOfElectricalsInstalled, new { @class = "form-control input-circle ", @placeholder = "Enter No Of Electricals Installed", @id = "NoOfElectricalsInstalled" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NoOfElectricalsInstalled)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NoOfDoorLocks, "No Of Door Locks", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextBoxFor(model => model.NoOfDoorLocks, new { @class = "form-control input-circle ", @placeholder = "Enter Name", @id = "Name" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NoOfDoorLocks)
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SecurityCamerasInstalled, "Security Cameras Installed", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                   
+                                    @Html.CheckBoxFor(model => model.SecurityCamerasInstalled, new { @class = "", @placeholder = "Enter Name", @id = "Name" })
+                                    @Html.ValidationMessageFor(model => model.SecurityCamerasInstalled)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Comment, "Comment", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextAreaFor(model => model.Comment, new { @class = "form-control input-circle ", @placeholder = "Enter Comment", @id = "Comment" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Comment)
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+
+                                    <button type="submit" class=" btn btn-circle blue">Save</button>
+
+                                    <a href="Index">
+                                        <button type="button" class="btn btn-circle default">Cancel</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            autoclose: true,
+            //startDate: '-3d'
+        });
+    });
+</script> 

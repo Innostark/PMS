@@ -1,0 +1,228 @@
+﻿@model OSS.Web.ViewModels.Buildings.BuildingViewModel
+@{
+    ViewBag.Title = "Building";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h3 class="page-title">
+        Buildings
+    </h3>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_0">
+            <div class="portlet box grey-salt">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Filters
+                    </div>
+                    <div class="tools">
+                        <input type="button" class="btn green " id="btnFltr" value="Filter" />
+                        <a href="~/Building/Building">
+                            <input type="button" class="btn green titleButton" value="Reset">
+                        </a>
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="portlet-body form">
+                    <div class="form-actions">
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label class="control-label"> Search Name: </label>
+                                    </td>
+                                    <td>
+                                        @Html.TextBox("SearchString", Model.SearchRequest.SearchString, new { @id = "SearchString", placeholder = "Search Name" })
+                                    </td>
+                                    <td>
+                                        <label class="control-label filterColumn"> Search Phone: </label>
+                                    </td>
+                                    <td>
+                                        @Html.TextBox("PhoneNumber", Model.SearchRequest.PhoneNumber, new { @id = "PhoneNumber", placeholder = "Search Phone" })
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+            <div class="portlet box grey-salt">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Buildings List
+                    </div>
+                    <div class="tools" style=" min-height: 50px;">
+                        <a href="AddEdit">
+                            <input type="button" class="btn green titleButton" value="Create New">
+                        </a>
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="portlet-body form">
+
+
+                    <table id="buildingTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Built Date</th>
+                                <th>No Of Floors</th>
+                                <th>No Of Elevators</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+        var oTable = $('#buildingTable').dataTable({
+            "iDisplayLength": 10,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [8, 9] },
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            "columns": [
+                { "data": "BuildingId" },
+                { "data": "Name" },
+                { "data": "PhoneNumber" },
+                { "data": "Email" },
+                { "data": "Address" },
+                { "data": "BuiltDate" },
+                { "data": "NoOfFloors" },
+                { "data": "NoOfElevators" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='edit' href='javascript:;'></a>"
+                },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='delete' href='javascript:;'></a>"
+                }
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "/Building/Building",
+                type: "POST",
+                dataType: "json",
+                data: function (params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    if (params.SortBy === 0) {
+                        params.SortBy = 1;
+                    }
+                    params.IsAsc = params.order[0].dir === "asc";
+                    params.SearchString = $('#SearchString').val();
+                    params.PhoneNumber = $('#PhoneNumber').val();
+                }
+            }
+        });
+
+        $('#btnFltr').on('click', function (e) {
+            oTable.fnDraw();
+
+        });
+
+
+        $('#buildingTable').on('click', '.delete', function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this row ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            var serviceUrl = '/Building/Delete';
+            $.ajax({
+                type: "POST",
+                url: serviceUrl,
+                data: "{ buildingId:" + aData.BuildingId + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                complete: function(data) {
+                    if (data.responseJSON.status === 200) {
+                        successFunc(data);
+                    }
+                    else {
+                        errorFunc(data);
+                    }
+                }
+            });
+
+            function successFunc(data) {
+
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
+                    displayStart = oTable.fnSettings()._iDisplayStart,
+                    displayLength = oTable.fnSettings()._iDisplayLength;
+
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if (totalRcd <= displayStart) {
+                    oTable.fnPageChange(page - 1);
+                }
+                else {
+                    oTable.fnPageChange(page);
+                }
+
+                toastr.success(data.responseJSON.response);
+            }
+
+            function errorFunc(error) {
+                toastr.error(error.responseJSON.response);
+            }
+
+
+        });
+
+        // Edit
+        $('#buildingTable').on('click', '.edit', function (e) {
+            e.preventDefault();
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            window.location.href = "/Building/AddEdit?id=" + aData.BuildingId;
+
+        });
+
+    });
+</script>
