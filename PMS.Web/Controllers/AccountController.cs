@@ -24,6 +24,7 @@ using PMS.Web.Controllers;
 using PMS.Web.ModelMappers;
 using PMS.Web.ViewModels.Domain;
 using PMS.Web.ViewModels.Common;
+using WebGrease.Css.Extensions;
 
 namespace IdentitySample.Controllers
 {
@@ -61,8 +62,8 @@ namespace IdentitySample.Controllers
             var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
             if (!roleManager.RoleExists("Admin"))
                 roleManager.Create(new IdentityRole("Admin"));
-            if (!roleManager.RoleExists("Landlord"))
-                roleManager.Create(new IdentityRole("Landlord"));
+            if (!roleManager.RoleExists("User"))
+                roleManager.Create(new IdentityRole("User"));
         }
 
         private void SetUserRoles(ApplicationUser applicationUser, String UserId, RegisterViewModel model)
@@ -87,7 +88,7 @@ namespace IdentitySample.Controllers
             //else is Manadatory that Current user is "Admin", and Always Creates new user with Role As "Admin"
             else
             {
-                UserManager.AddToRole(applicationUser.Id, "Landlord");
+                UserManager.AddToRole(applicationUser.Id, "User");
                 DomainKeys adminDomainKeys = domainKeyService.GetDomainKeyByUserId(Session["LoginID"] as string);
                 DomainKeys domainKeys = new DomainKeys
                 {
@@ -324,7 +325,22 @@ namespace IdentitySample.Controllers
                 DomainKeys domainKey=domainKeyService.GetDomainKeyByUserId(model.UserId);
                 domainKey.ExpiryDate = Convert.ToDateTime(model.ExpiryDate);
                 domainKey.UpdatedDate = DateTime.Now;
-                domainKeyService.UpdateDomainKey(domainKey);
+                string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(domainKey.User.Roles.ToList()[0].RoleId).Name;
+                if (role.ToLower().Contains("admin"))
+                {
+                    List<DomainKeys> domainKeys = domainKeyService.GetAllUserForAdmin(model.UserId).ToList();
+                    domainKeys.Add(domainKey);
+                    domainKeys.ForEach(d =>
+                    {
+                        d.ExpiryDate = domainKey.ExpiryDate;
+                    });
+                    domainKeyService.UpdateDomainKeys(domainKeys);
+                }
+                else
+                {
+                    domainKeyService.UpdateDomainKey(domainKey);     
+                }
+                
                 TempData["message"] = new MessageViewModel { Message = "User has been updated.", IsUpdated = true };
          
                 return RedirectToAction("Users");

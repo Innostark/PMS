@@ -9,5 +9,10 @@ namespace PMS.Interfaces.Repository
     {
         DomainKeyResponse GetAllUsersByUserId(UserSearchRequest userSearchRequest);
         DomainKeys GetDomainKeyByUserId(string userId);
+
+        /// <summary>
+        /// Get Users for Admin
+        /// </summary>
+        IEnumerable<DomainKeys> GetAllUserForAdmin(string adminId);
     }
 }

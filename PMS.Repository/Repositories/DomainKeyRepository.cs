@@ -70,5 +70,13 @@ namespace PMS.Repository.Repositories
         {
             return DbSet.SingleOrDefault(x=>x.UserId==userId);
         }
+
+        /// <summary>
+        /// All Users for Admin
+        /// </summary>
+        public IEnumerable<DomainKeys> GetAllUserForAdmin(string adminId)
+        {
+            return DbSet.Where(user => user.UpdatedBy == adminId).ToList();
+        }
     }
 }

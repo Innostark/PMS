@@ -55,6 +55,11 @@ namespace PMS.Web.Controllers
         [ChildActionOnly]
         public ActionResult LoadMenu()
         {
+            if (Session["MenuItems"] != null)
+            {
+                return View(Session["MenuItems"] as MenuViewModel);
+            }
+
             MenuViewModel menuVM = new MenuViewModel();
             string userName = HttpContext.User.Identity.Name;
             if (!String.IsNullOrEmpty(userName))
@@ -78,6 +83,8 @@ namespace PMS.Web.Controllers
                     }
                 }
             }
+
+            Session["MenuItems"] = menuVM;
             return View(menuVM);
         }
 	}

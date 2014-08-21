@@ -21,7 +21,7 @@ namespace PMS.Web.ModelMappers
                        UpdatedDate = domainKeys.UpdatedDate != null ? domainKeys.UpdatedDate.Value.ToString("MMMM dd yyyy") : string.Empty,
                        UserId = domainKeys.UserId,
                        //RoleName = (domainKeys.User.Roles.ToList().FirstOrDefault(x => x.UserId == domainKeys.UserId).).Name
-                       RoleName = roleName == "SuperAdmin"? "Admin": "LandLord"
+                       RoleName = roleName == "SuperAdmin"? "Admin": "User"
                    };
         }
 
