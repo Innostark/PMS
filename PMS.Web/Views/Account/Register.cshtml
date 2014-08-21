@@ -99,7 +99,7 @@
                                         <div class="col-md-4">
                                             <div class="input-icon">
                                                 <i class="fa fa-key"></i>
-                                                @Html.TextBoxFor(m => m.DomainKey, new { @class = "form-control input-circle mandatory", placeholder = "Domain Key", @id = "DomainKey", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
+                                                @Html.TextBoxFor(m => m.DomainKey, new { @class = "form-control input-circle", placeholder = "Domain Key", @id = "DomainKey", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true, disabled = "disabled" })
                                             </div>
                                         </div>
                                     </div>
