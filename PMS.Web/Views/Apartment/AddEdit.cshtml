@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.BuildingId, "Building Id", new { @class = "col-md-3 control-label" })
+                                @Html.LabelFor(model => model.BuildingId, "Building", new { @class = "col-md-3 control-label" })
                                 <div class="col-md-4">
                                     <div class="input-icon">
                                         <i class="fa fa-building-o"></i>
@@ -88,16 +88,7 @@
                                     @Html.ValidationMessageFor(model => model.TotalArea)
                                 </div>
                             </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Comment, "Comment", new { @class = "col-md-3 control-label" })
-                                <div class="col-md-4">
-                                    <div class="input-icon">
-                                        <i class="fa fa-building-o"></i>
-                                        @Html.TextAreaFor(model => model.Comment, new { @class = "form-control input-circle ", @placeholder = "Enter Comment", @id = "Comment" })
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.Comment)
-                                </div>
-                            </div>
+                            
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.MasterBedSize, "Master Bed Size", new { @class = "col-md-3 control-label" })
@@ -179,12 +170,23 @@
                                     @Html.ValidationMessageFor(model => model.NoOfDoorLocks)
                                 </div>
                             </div>
+                            
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SecurityCamerasInstalled, "Security Cameras Installed", new { @class = "col-md-3 control-label" })
                                 <div class="col-md-4">
                                    
-                                        @Html.CheckBoxFor(model => model.SecurityCamerasInstalled, new { @class = "", @placeholder = "Enter Name", @id = "Name" })
+                                    @Html.CheckBoxFor(model => model.SecurityCamerasInstalled, new { @class = "", @placeholder = "Enter Name", @id = "Name" })
                                     @Html.ValidationMessageFor(model => model.SecurityCamerasInstalled)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Comment, "Comment", new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-icon">
+                                        <i class="fa fa-building-o"></i>
+                                        @Html.TextAreaFor(model => model.Comment, new { @class = "form-control input-circle ", @placeholder = "Enter Comment", @id = "Comment" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Comment)
                                 </div>
                             </div>
 
