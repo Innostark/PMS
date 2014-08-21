@@ -126,11 +126,13 @@
     <Compile Include="RequestModels\BuildingSearchRequest.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
+    <Compile Include="RequestModels\ServiceCompanySearchRequest.cs" />
     <Compile Include="RequestModels\UserSearchRequest.cs" />
     <Compile Include="ResponseModels\ApartmentResponse.cs" />
     <Compile Include="ResponseModels\BuildingResponse.cs" />
     <Compile Include="ResponseModels\DomainKeyResponse.cs" />
     <Compile Include="ResponseModels\ProductResponse.cs" />
+    <Compile Include="ResponseModels\ServiceCompanyResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

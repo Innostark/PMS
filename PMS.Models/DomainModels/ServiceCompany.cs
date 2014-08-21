@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PMS.Models.DomainModels
 {
@@ -12,5 +15,7 @@ namespace PMS.Models.DomainModels
         public string Address { get; set; }
         public string AccountNumber { get; set; }
         public string Comment { get; set; }
+        public Guid UserId { get; set; }
+        //public virtual IdentityUser User { get; set; }
     }
 }

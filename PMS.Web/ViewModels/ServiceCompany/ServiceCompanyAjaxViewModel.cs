@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using PMS.Models.RequestModels;
 
-namespace PMS.Web.ViewModels.Apartment
+namespace PMS.Web.ViewModels.ServiceCompany
 {
-    public class ApartmentAjaxViewModel
+    public class ServiceCompanyAjaxViewModel
     {
         /// <summary>
         /// To draw table
@@ -23,11 +26,11 @@ namespace PMS.Web.ViewModels.Apartment
         /// <summary>
         /// Data
         /// </summary>
-        public IEnumerable<Models.Apartment> data;
+        public IEnumerable<Models.ServiceCompany> data;
 
         /// <summary>
         /// Search Request
         /// </summary>
-        public ApartmentSearchRequest ApartmentSearchRequest { get; set; }
+        public ServiceCompanySearchRequest ServiceCompanySearchRequest{ get; set; }
     }
 }

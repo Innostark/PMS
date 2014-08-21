@@ -58,22 +58,19 @@ namespace PMS.Web.Controllers
         // GET: Apartment
         public ActionResult AddEdit(int? id)
         {
-            Models.Apartment apartmentViewModel = new Models.Apartment();
-
+            Models.Apartment apartmentToEdit = new Models.Apartment();
+            apartmentToEdit.Buildings = apartmentService.GetUserBuildings(Guid.Parse(Session["LoginID"] as string)).Select(x=> x.CreateFrom()).ToList();
             if (id != null)
             {
-
                 var apartment = apartmentService.FindApartmentById(id);
                 if (apartment != null)
                 {
-
-                    apartmentViewModel = apartment.CreateFrom();
-
-                    return View(apartmentViewModel);
+                    apartmentToEdit = apartment.CreateFrom();
+                    return View(apartmentToEdit);
                 }
             }
 
-            return View(apartmentViewModel);
+            return View(apartmentToEdit);
         }
         [HttpPost]
         public ActionResult AddEdit(Models.Apartment apartment)
