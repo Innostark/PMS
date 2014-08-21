@@ -6,7 +6,7 @@ namespace PMS.Web.ModelMappers
 {
     public static class UsersMappers
     {
-        public static Models.Users CreateFrom(this DomainKeys domainKeys, string roleName)
+        public static Models.Users CreateFrom(this DomainKeys domainKeys, string roleName, string loggedInUserCompanyName)
         {
             return new Models.Users
                    {
@@ -20,9 +20,8 @@ namespace PMS.Web.ModelMappers
                        UpdatedBy = domainKeys.UpdatedBy,
                        UpdatedDate = domainKeys.UpdatedDate != null ? domainKeys.UpdatedDate.Value.ToString("MMMM dd yyyy") : string.Empty,
                        UserId = domainKeys.UserId,
-                       RoleName = roleName == "SuperAdmin"? "Admin": "LandLord",
-                       RoleName = roleName == "SuperAdmin"? "Admin": "User"
-                       CompanyName = domainKeys.User.CompanyName,
+                       RoleName = roleName == "SuperAdmin"? "Admin": "User",
+                       CompanyName = roleName.ToLower() == "admin"?loggedInUserCompanyName: domainKeys.User.CompanyName,
                        IsPrimary = domainKeys.User.IsPrimary
                    };
         }

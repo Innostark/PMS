@@ -669,7 +669,13 @@ namespace IdentitySample.Controllers
             //var users = domainKeyService.GetAllUsersByUserId(Session["LoginId"].ToString());
             userSearchRequest.UserId = Guid.Parse(Session["LoginID"] as string);
             var users = domainKeyService.GetAllUsersByUserId(userSearchRequest);
-            IEnumerable<PMS.Web.Models.Users> usersList = users.Users.Select(x => x.CreateFrom(Session["RoleName"].ToString())).ToList();
+            var loggedInUserCompanyName = "";
+            if (Session["RoleName"].ToString().ToLower() == "admin")
+            {
+                var loggedInUser = domainKeyService.GetDomainKeyByUserId(Session["LoginID"] as string);
+                loggedInUserCompanyName = loggedInUser.User.CompanyName;
+            }
+            IEnumerable<PMS.Web.Models.Users> usersList = users.Users.Select(x => x.CreateFrom(Session["RoleName"].ToString(),loggedInUserCompanyName)).ToList();
             UserAjaxViewModel userAjaxViewModel = new UserAjaxViewModel
                                                   {
                                                       data = usersList,
