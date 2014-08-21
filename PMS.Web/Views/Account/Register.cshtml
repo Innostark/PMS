@@ -75,20 +75,35 @@
                                     </div>
                                 </div>
                             }
-                            @if (Session["RoleName"].ToString().Equals("SuperAdmin") ) 
+                            @if (Session["RoleName"].ToString().Equals("SuperAdmin"))
                             {
-                                if (Model.UserId == null || Model.UserId == "")
-                                 {
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.CompanyName, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        <div class="input-icon">
+                                            <i class="fa fa-key"></i>
+                                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control input-circle mandatory", placeholder = "Company Name", @id = "CompanyName", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.IsPrimary, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        
+                                            @Html.CheckBoxFor(m => m.IsPrimary, new { @id = "IsPrimary" })   @*, @disabled = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? "" : "disabled"*@
+                                       
+                                    </div>
+                                </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Domain Key</label>
                                         <div class="col-md-4">
                                             <div class="input-icon">
                                                 <i class="fa fa-key"></i>
-                                                @Html.TextBoxFor(m => m.DomainKey, new {@class = "form-control input-circle mandatory", placeholder = "Domain Key", @id = "DomainKey"})
+                                                @Html.TextBoxFor(m => m.DomainKey, new { @class = "form-control input-circle mandatory", placeholder = "Domain Key", @id = "DomainKey", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
                                             </div>
                                         </div>
                                     </div>
-                                 }
+                                 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Expiry Date</label>
                                     <div class="col-md-4">
@@ -99,26 +114,12 @@
                                     </div>
                                 </div>
                             }
-                            @if (Model.UserId != null && Model.UserId != "")
-                            {
-                                @*<div class="form-group">
-                                    <label class="col-md-3 control-label">Email</label>
-                                    <div class="col-md-4">
-                                        <label>@Model.Email</label>
-                                    </div>
-                                </div>*@
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Domain Key</label>
-                                    <div class="col-md-4">
-                                        <label>@Model.DomainKey</label>
-                                    </div>
-                                </div>
-                            }
+                           
                         </div>
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-offset-3 col-md-9">
-                                    @if (Session["RoleName"].ToString().Equals("SuperAdmin"))
+                                    @if (Session["RoleName"].ToString().Equals("SuperAdmin") || Session["RoleName"].ToString().Equals("Admin"))
                                     {
                                         <button type="submit" class=" btn btn-circle blue" onclick=" return (ValidateFields()) ">Save</button>
                                     }
@@ -146,8 +147,6 @@
         });
     });
     $(function () {
-        
         $("[readonly='false']").removeAttr("readonly");
-       
     });
 </script> 

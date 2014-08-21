@@ -78,12 +78,15 @@ namespace PMS.Models.IdentityModels.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
+        public bool IsPrimary { get; set; }
+        
+        [Display(Name = "Company Name")]
+        public string CompanyName { get; set; }
         public string DomainKey { get; set; }
         public string ExpiryDate { get; set; }
         public string UserId { get; set; }

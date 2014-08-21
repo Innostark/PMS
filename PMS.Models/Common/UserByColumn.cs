@@ -30,6 +30,14 @@
         /// ExpiryDate
         /// </summary>
         ExpiryDate = 7,
+        /// <summary>
+        /// CompanyName
+        /// </summary>
+        CompanyName = 8,
+        /// <summary>
+        /// IsPrimary
+        /// </summary>
+        IsPrimary = 9,
 
     }
 }

@@ -21,5 +21,10 @@ namespace PMS.Web.Models
         public string UpdatedBy { get; set; }
         //Role Name
         public string RoleName { get; set; }
+        //Company Name
+        public string CompanyName { get; set; }
+        //is Primary
+        public bool IsPrimary { get; set; }
+        
     }
 }

@@ -20,8 +20,9 @@ namespace PMS.Web.ModelMappers
                        UpdatedBy = domainKeys.UpdatedBy,
                        UpdatedDate = domainKeys.UpdatedDate != null ? domainKeys.UpdatedDate.Value.ToString("MMMM dd yyyy") : string.Empty,
                        UserId = domainKeys.UserId,
-                       //RoleName = (domainKeys.User.Roles.ToList().FirstOrDefault(x => x.UserId == domainKeys.UserId).).Name
-                       RoleName = roleName == "SuperAdmin"? "Admin": "LandLord"
+                       RoleName = roleName == "SuperAdmin"? "Admin": "LandLord",
+                       CompanyName = domainKeys.User.CompanyName,
+                       IsPrimary = domainKeys.User.IsPrimary
                    };
         }
 
@@ -34,7 +35,9 @@ namespace PMS.Web.ModelMappers
                        Email = user.Email,
                        ExpiryDate = domainKeys.ExpiryDate.ToString("d"),
                        FirstName = user.FirstName,
-                       LastName = user.LastName
+                       LastName = user.LastName,
+                       CompanyName = user.CompanyName,
+                       IsPrimary = user.IsPrimary
                    };
         }
 

@@ -334,7 +334,7 @@ namespace IdentitySample.Controllers
 
                 CreateRoles();
 
-                var user = new ApplicationUser {FirstName = model.FirstName,LastName = model.LastName,UserName = model.Email, Email = model.Email};
+                var user = new ApplicationUser {FirstName = model.FirstName,LastName = model.LastName,UserName = model.Email, Email = model.Email, CompanyName = model.CompanyName,IsPrimary = model.IsPrimary};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

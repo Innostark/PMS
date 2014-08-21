@@ -42,7 +42,9 @@ namespace PMS.Repository.Repositories
                         { UserByColumn.UpdatedBy, c => c.UpdatedBy},
                         { UserByColumn.UpdatedDate, c => c.UpdatedDate},
                         { UserByColumn.RoleName, c => c.User.Roles},
-                        { UserByColumn.ExpiryDate, c => c.ExpiryDate}
+                        { UserByColumn.ExpiryDate, c => c.ExpiryDate},
+                        { UserByColumn.CompanyName, c => c.User.CompanyName},
+                        { UserByColumn.IsPrimary, c => c.User.IsPrimary}
                     };
 
         public DomainKeyResponse GetAllUsersByUserId(UserSearchRequest userSearchRequest)
